@@ -1,0 +1,160 @@
+@import url("https://use.fontawesome.com/releases/v6.4.2/css/all.css");
+
+body {
+     background-color: #936c3d;
+ }
+
+.navbar .logo {
+     max-height: 50px;
+     padding-right: 100px;
+}
+
+.container, .container-fluid {
+     padding-top: 90px;
+}
+
+.bg-text {
+     background-color: rgb(0,0,0); /* Fallback color */
+     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+     color: white;
+     font-weight: bold;
+     border: 3px solid #f1f1f1;
+     z-index: 2;
+     width: 80%;
+     padding: 20px;
+     text-align: center;
+}
+
+.brand-section {
+     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
+}
+
+td, th {
+     padding: 3px 8px;
+}
+
+/*.card.offer, .offer-details .list-group-item {
+     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
+}*/
+
+  
+.card-img-top {
+    width: 100%;
+    height: 220px; /* Set the desired fixed height */
+    object-fit: cover; /* This property ensures the image covers the entire container */
+    object-position: center; /* This centers the image within the container */
+}
+  
+
+.main-form {
+     background-image: linear-gradient(to bottom right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8));
+     padding: 0px 30px;
+     border-top-right-radius: 20px;
+     border-bottom-right-radius: 20px;
+     font-size: 16px;
+}
+
+.logged-user {
+     color: white;
+}
+
+.small-images {
+    white-space: nowrap;
+    overflow-x: auto;
+    border: 2px solid #cccccca9; /* Add a common border */
+    border-radius: 8px; /* Optional: Add border radius */
+    padding: 5px; /* Optional: Add padding */
+}
+
+.bg-custom {
+    background-image: linear-gradient(to bottom right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8)); 
+    color: white;
+}
+
+.bg-custom-reversed {
+    background-image: linear-gradient(to top right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8)); 
+    color: white;
+}
+
+.border-custom{
+    border: 2px solid #cccccca9; 
+    border-radius: 8px; 
+}
+
+.embed-responsive {
+    height: 400px;
+}
+
+.small-images img {
+    max-height: 80px;
+    margin-right: 5px;
+    border: none; /* Remove individual borders */
+}
+
+.main-image {
+    position: relative;
+    height: 400px; 
+    overflow: hidden;
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio; may crop image */
+}
+
+.main-image button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.main-image button.prev {
+    left: 0;
+    color: #343a40;
+}
+
+.main-image button.next {
+    right: 0;
+    color: #343a40;
+}
+.main-image button:hover i {
+    color: #fff; /* Change the icon color on hover */
+}
+
+ ul.custom-list {
+    padding-left: 1.25em; /* Adjust as needed */
+}
+
+ul.custom-list li {
+    list-style-type: disc;
+}
+
+.register-image{
+    background-image: linear-gradient(to bottom left, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8));
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+}
+
+.add-body{
+    background-image: url('/static/imgtic/img/2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+
+.btn-custom {
+    padding: 0;
+    font-size: 1rem;
+    line-height: 0.7rem;
+}
+
+
