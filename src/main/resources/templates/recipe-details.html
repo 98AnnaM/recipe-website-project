@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta name="_csrf_header" content="csrf-token-header-value">
-    <meta name="_csrf" content="csrf-token-value">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Carousel Example</title>
