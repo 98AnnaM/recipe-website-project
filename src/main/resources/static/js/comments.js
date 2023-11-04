@@ -25,8 +25,6 @@ async function handleCommentSubmit(event){
     const url = form.action;
     const formData = new FormData(form);
 
-
-
     try {
         const responseData = await postFormDataAsJson({url, formData});
 
@@ -82,11 +80,6 @@ function formatDate(dateString) {
     return new Date(dateString).toLocaleString('en-US', options).replace(',', '');
 }
 
-
-
-
-
-
 function deleteComment(commentId){
     fetch(`http://localhost:8080/api/${recipeId}/comments/${commentId}`, {
         method: 'DELETE',
@@ -104,20 +97,15 @@ function deleteComment(commentId){
 }
 
 
-
-
-
-
-
 function asComment(comment) {
     let commentHtml = `<div id="commentCntr-${comment.commentId}">`
 
-    commentHtml += `<h4>${comment.user}</h4>`
-    commentHtml += `<p>${comment.message}</p>`
+    commentHtml += `<h4 style="text-decoration: underline;">${comment.user}</h4>`
+    commentHtml += `<p class="font-italic">${comment.message}</p>`
     commentHtml += `<span>${formatDate(comment.created)}</span>`
 
     if (comment.canDelete){
-        commentHtml += `<button class="btn btn-danger" onclick="deleteComment(${comment.commentId})">Delete</button>`
+        commentHtml += `<button class="btn btn-outline-danger btn-sm ml-5" onclick="deleteComment(${comment.commentId})">Delete</button>`
     }
 
     commentHtml += `</div>`
