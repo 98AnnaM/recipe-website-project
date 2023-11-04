@@ -1,4 +1,4 @@
-const routeId = document.getElementById('routeId').value
+const recipeId = document.getElementById('recipeId').value
 
 const csrfHeaderName = document.head.querySelector('[name="_csrf_header"]').content;
 const csrfHeaderValue = document.head.querySelector('[name="_csrf"]').content;
@@ -35,19 +35,19 @@ async function handleCommentSubmit(event){
         form.reset();
     } catch (error) {
 
-            let errorObj = JSON.parse(error.message);
+        let errorObj = JSON.parse(error.message);
 
-            if (errorObj.fieldWithErrors) {
-                errorObj.fieldWithErrors.forEach(
-                    e => {
-                        let elementWithError = document.getElementById(e);
-                        if (elementWithError) {
-                            elementWithError.classList.add("is-invalid");
-                        }
+        if (errorObj.fieldWithErrors) {
+            errorObj.fieldWithErrors.forEach(
+                e => {
+                    let elementWithError = document.getElementById(e);
+                    if (elementWithError) {
+                        elementWithError.classList.add("is-invalid");
                     }
+                }
 
-                )
-            }
+            )
+        }
     }
     console.log('going to submit a comment!')
 }
@@ -88,7 +88,7 @@ function formatDate(dateString) {
 
 
 function deleteComment(commentId){
-    fetch(`http://localhost:8080/api/${routeId}/comments/${commentId}`, {
+    fetch(`http://localhost:8080/api/${recipeId}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
             [csrfHeaderName]: csrfHeaderValue
@@ -125,7 +125,7 @@ function asComment(comment) {
     return commentHtml
 }
 
-fetch(`http://localhost:8080/api/${routeId}/comments`).
+fetch(`http://localhost:8080/api/${recipeId}/comments`).
 then(response => response.json()).
 then(data => {
     for (let comment of data) {
