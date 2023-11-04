@@ -17,7 +17,7 @@ $(document).ready(function(){
     // Manual navigation buttons
     $('#prevButton').click(function(){
         var currentImage = $('#mainImage').attr('src');
-        var prevImage = $('.small-images img[src="'+currentImage+'"]').prev().attr('src');
+        var prevImage = $('.small-images img[src="'+currentImage+'"]').parent().prev().find('img').attr('src');
         if (prevImage) {
             changeMainImage(prevImage);
         }
@@ -25,7 +25,7 @@ $(document).ready(function(){
 
     $('#nextButton').click(function(){
         var currentImage = $('#mainImage').attr('src');
-        var nextImage = $('.small-images img[src="'+currentImage+'"]').next().attr('src');
+        var nextImage = $('.small-images img[src="'+currentImage+'"]').parent().next().find('img').attr('src');
         if (nextImage) {
             changeMainImage(nextImage);
         }
