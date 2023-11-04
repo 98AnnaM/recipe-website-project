@@ -1,12 +1,14 @@
 package bg.example.recepeWebsite.model.view;
 
 import bg.example.recepeWebsite.model.entity.*;
+import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 
 import java.util.List;
 
 public class RecipeDetailsViewModel {
 
+    private Long id;
     private String name;
     private String products;
     private String description;
@@ -17,6 +19,24 @@ public class RecipeDetailsViewModel {
     private List<CommentEntity> comments;
     private int timeNeeded;
     private int portions;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    private CategoryNameEnum category;
+
+    public CategoryNameEnum getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryNameEnum category) {
+        this.category = category;
+    }
 
     public String getName() {
         return name;

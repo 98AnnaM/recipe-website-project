@@ -28,7 +28,8 @@
     </header>
 
     <!-- Main -->
-    <div class="container-fluid">
+    <div th:object="${recipe}"
+            class="container-fluid">
         
 
         <!-- Row 1 -->
@@ -49,15 +50,9 @@
                     <div class="col-12">
                         <!-- List of Small Images -->
                         <div class="small-images mt-3 d-flex overflow-auto">
-                            <img src="/images/soup1.jpg" alt="Image 1" class="img-thumbnail me-2">
-                            <img src="/images/soup2.jpg" alt="Image 2" class="img-thumbnail me-2">
-                            <img src="/images/soup1.jpg" alt="Image 1" class="img-thumbnail me-2">
-                            <img src="/images/soup2.jpg" alt="Image 2" class="img-thumbnail me-2">
-                            <img src="/images/soup1.jpg" alt="Image 1" class="img-thumbnail me-2">
-                            <img src="/images/soup2.jpg" alt="Image 2" class="img-thumbnail me-2">
-                            <img src="/images/soup1.jpg" alt="Image 1" class="img-thumbnail me-2">
-                            <img src="/images/soup2.jpg" alt="Image 2" class="img-thumbnail me-2">
-                            <!-- Add more small images as needed -->
+                            <div th:each="p : *{pictures}">
+                                <img th:src="${p.url}"         alt="Image 1" class="img-thumbnail me-2">
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 mb-2">
@@ -75,19 +70,32 @@
 
             <!-- Meal info -->
             <div class="col-sm-12 col-lg-6">
-                <h2 class="text-left mt-3">Картофена крем супа</h2>
-                <p class="text-left">Добавено от : Мария Иванова</p>
+                <h2 th:text="*{name}" class="text-left mt-3">Recipe title</h2>
+                <p th:text="|Добавено от : *{author}|" class="text-left"></p>
 
                 <!-- Content in 2 columns -->
                 <div class="row">
                     <div class="col-sm-3 text-center mx-1 mb-1 bg-custom border-custom">
                         <p><i class="fa-regular fa-clock fa-3x mt-3"></i></p>
-                        <p>Приготвяне:</p>
-                        <p>40мин.</p>
+                        <p class="mb-0">Приготвяне:</p>
+                        <p th:text="|*{timeNeeded} мин.|">40мин.</p>
                         <p><i class="fa-solid fa-bowl-rice fa-3x"></i></p>
-                        <p>Порции: 5</p>
-                        <p><i class="fa-solid fa-drumstick-bite fa-3x"></i></p>
-                        <p>С месо</p>
+                        <p th:text="|Порции: *{portions}|">Порции: 5</p>
+                        <div th:switch="${recipe.category.name()}">
+                            <div th:case="'WITH_MEAT'">
+                                <p><i class="fa-solid fa-drumstick-bite fa-2x"></i></p>
+                                <p>С месо</p>
+                            </div><div th:case="'VEGAN'">
+                            <p><i class="fa-solid fa-seedling fa-2x"></i></p>
+                            <p>Веган</p>
+                        </div>
+                            <div th:case="'VEGETARIAN'">
+                                <p><i class="fa-solid fa-egg fa-2x"></i></p>
+                                <p>Вегетарианска</p>
+                            </div>
+                        </div>
+                        <p><i class="fa-solid fa-stairs fa-2x"></i></p>
+                        <p th:text="*{#strings.capitalize(#strings.toLowerCase(level))}">Лесна</p>
                     </div>
 
                     <div class="col-sm-8 mx-1 mb-1 bg-custom border-custom">
@@ -116,14 +124,7 @@
             <!-- Column 3 -->
             <div class="col-sm-12 col-lg-7 pl-4 py-4 pr-5">
                 <h2>Начин на приготвяне</h2>
-                <p>
-                    Обелете картофите и ги сложете заедно с почистените моркови да се сварят напълно в подсолена вода.
-                    Водата трябва да покрива зеленчуците в тенджерата. Щом са готови се пасира всичко направо в
-                    тенджерата.
-                    При нужда се оставя да поври, за да се сгъсти. Добавят се маслото и разбърканата с вилица сметана с
-                    жълтък. Овкусява се със сол, черен пипер и чубрица.
-                    Картофената супа се поднася с крутони по желание.
-                </p>
+                <p th:text="*{description}"></p>
             </div>
             <!-- Column 4 -->
             <div class="embed-responsive embed-responsive-1by1 col-sm-12 col-lg-5 border-custom">
@@ -137,39 +138,52 @@
         <div class="row mx-4 mb-5 bg-custom">
             <div class="col-12 p-4">
                 <h2>Comments</h2>
-                <div>
-                    <!-- Comments submission -->
-                    <form id="commentForm" method="POST" action="/">
-                        <div class="form-group">
-                            <h4>Leave a comment</h4>
-                            <label for="message">Message</label>
-                            <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
-                            <small id="messageError" class="invalid-feedback">
-                                Message should be at least 10 characters.
-                            </small>
-                        </div>
+                <section class="comments">
+                    <h1>Comments</h1>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Post Comment</button>
-                        </div>
-                    </form>
-                    <!-- Comments submission -->
-                </div>
+                    <div>
+                        <!-- Comments submission -->
+                        <form id="commentForm" method="POST"
+                              th:action="@{/api/{recipeId}/comments(recipeId=${recipe.id})}">
+                            <div class="form-group">
+                                <h4>Leave a comment</h4>
+                                <label for="message">Message</label>
+                                <textarea name="message"
+                                          id="message"
+                                          cols="30"
+                                          rows="5"
+                                          class="form-control"
+                                          style="background-color: white;"></textarea>
+                                <small id="messageError" class="invalid-feedback">
+                                    Message should be at least 10 characters.
+                                </small>
+                            </div>
 
-                <!-- All comments section -->
-                <div>
-                    <span id="commentCtnr"><!-- Comments section, filled in by script --></span>
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn"
+                                       id="postComment"
+                                       value="Post Comment"/>
+                            </div>
+                        </form>
+                        <!-- Comments submission -->
+                    </div>
+
+                    <!-- All comments section -->
+                    <div>
+
+                        <span id="commentCtnr"><!-- Comments section, filled in by script --></span>
+                    </div>
+                    <!-- EO: All comments section -->
+                </section>
+
+            </div>
                 </div>
             </div>
         </div>
         <!-- EO: Row 3 -->
 
-
-
-        <!-- Scripts: track and comments 
-<script th:src="@{/js/track.js}"></script>
-<script th:src="@{/js/comments.js}"></script>
--->
+    <script th:src="@{/js/comments.js}"></script>
     </div>
     <!-- EO: Main -->
 
