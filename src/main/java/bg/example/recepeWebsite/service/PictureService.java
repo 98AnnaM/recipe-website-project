@@ -89,6 +89,7 @@ public class PictureService {
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
     }
 
+    @Transactional
     public void uploadPicture(Long ownerId, Long recipeId, MultipartFile file) throws IOException {
         RecipeEntity recipe = recipeRepository.findById(recipeId).get();
         recipe.getPictures().add(this.createAndSavePictureEntity(ownerId, file));

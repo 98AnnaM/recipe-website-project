@@ -169,7 +169,7 @@
                         <label for="formFileMultiple" class="text-white font-weight-bold">Upload photos</label>
                         <input th:field="*{pictureFiles}"
                                th:errorclass="is-invalid"
-                                class="form-control" type="file" id="formFileMultiple" multiple>
+                                class="form-control" type="file" id="formFileMultiple" multiple accept="image/*">
                         <p class="invalid-feedback text-danger">
                             Minimum one photo must be added.
                         </p>
@@ -188,7 +188,7 @@
 
                 <div class="form-group">
                     <label class="text-white font-weight-bold" for="videoUrl">Video URL</label>
-                    <input th:field="*{video_url}"
+                    <input th:field="*{videoUrl}"
                            th:errorclass="is-invalid"
                             id="videoUrl" type="url" class="form-control" placeholder="Put recepe video URL here">
                     <p class="invalid-feedback text-danger">

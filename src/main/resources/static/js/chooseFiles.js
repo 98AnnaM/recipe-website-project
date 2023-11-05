@@ -1,8 +1,15 @@
 document.getElementById('formFileMultiple').addEventListener('change', function() {
     var selectedFilesDiv = document.getElementById('selectedFiles');
+    var allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
     for (var i = 0; i < this.files.length; i++) {
         var file = this.files[i];
+
+        if (allowedTypes.indexOf(file.type) === -1) {
+            alert('Please upload an image file (JPEG, PNG, GIF).');
+            continue; // Skip this file
+        }
+
         var fileItem = document.createElement('div');
         fileItem.classList.add('d-flex', 'align-items-center', 'mb-2');
         fileItem.innerHTML = `

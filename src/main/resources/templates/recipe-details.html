@@ -62,7 +62,25 @@
                         <div class="action mt-3">
                             <button class="btn btn-success btn-sm"><i class="fas fa-heart-circle-plus"></i>
                                 Favourite</button>
-                            <button class="btn btn-info btn-sm"><i class="fas fa-camera"></i> Add Photo</button>
+
+
+                            <form th:object="${uploadPictureDto}"
+                                  th:action="@{'/recipes/details/' + ${recipe.id} + '/picture/add'}"
+                                  th:method="post"
+                                  enctype="multipart/form-data" id="uploadForm">
+                                <div class="form-group">
+                                    <input th:field="*{recipeId}" type="hidden" th:value="${recipe.id}" name="recipeId"/>
+                                </div>
+                                <div class="image-upload">
+                                    <label for="picture">
+                                        <p class="btn btn-info btn-sm"><i class="fas fa-camera"></i> Add Photo</p>
+                                    </label>
+                                    <input th:field="*{picture}" style="display: none" id="picture" type="file" name="picture"
+                                           onchange="validateAndUploadFile()" accept="image/*" />
+                                </div>
+                            </form>
+
+
                             <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
                             <th:block th:if="*{canDelete}">
                                 <a th:href="@{/recipes/edit/{id}(id=*{id})}"
@@ -187,6 +205,7 @@
         <!-- EO: Row 3 -->
 
     <script th:src="@{/js/comments.js}"></script>
+    <script th:src="@{/js/uploadPicture.js}"></script>
     </div>
     <!-- EO: Main -->
 
