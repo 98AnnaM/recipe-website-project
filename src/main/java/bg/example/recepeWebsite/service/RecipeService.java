@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -123,6 +125,7 @@ public class RecipeService {
                     recipeDetailsViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
                     recipeDetailsViewModel.getPictures().forEach(p -> p.setCanNotDelete(!p.getAuthor().getUsername().equals(principalName)));
                     recipeDetailsViewModel.setCanDelete(isOwner(principalName, id));
+                    recipeDetailsViewModel.setVideoId(extractVideoId(recipe.getVideoUrl()));
 
                     return recipeDetailsViewModel;
                 })
@@ -183,9 +186,21 @@ public class RecipeService {
                     .setPortions(editRecipeDto.getPortions())
                             .setTimeNeeded(editRecipeDto.getTimeNeeded())
                             .setDescription(editRecipeDto.getDescription())
-                            .setVideo_url(editRecipeDto.getVideo_url())
+                            .setVideoUrl(editRecipeDto.getVideoUrl())
                             .setProducts(editRecipeDto.getProducts());
 
         recipeRepository.save(updateRecipe);
+    }
+
+    public static String extractVideoId(String videoUrl) {
+        String pattern = "(?<=v=|\\/videos\\/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|%2Fvideos%2F|%2Fvi%2F|v=|%2Fv%2F)([a-zA-Z0-9_-]{11})";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(videoUrl);
+
+        if (matcher.find()) {
+            return matcher.group();
+        }
+
+        return null; // Video ID not found
     }
 }

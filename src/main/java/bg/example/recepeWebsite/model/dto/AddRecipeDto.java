@@ -34,7 +34,7 @@ public class AddRecipeDto {
     @NotNull
     private LevelEnum level;
 
-    private String video_url;
+    private String videoUrl;
 
 
 
@@ -90,12 +90,12 @@ public class AddRecipeDto {
         return this;
     }
 
-    public String getVideo_url() {
-        return video_url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public AddRecipeDto setVideo_url(String video_url) {
-        this.video_url = video_url;
+    public AddRecipeDto setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
         return this;
     }
 

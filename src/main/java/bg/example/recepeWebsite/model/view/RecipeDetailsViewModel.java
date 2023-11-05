@@ -14,7 +14,7 @@ public class RecipeDetailsViewModel {
     private String description;
     private LevelEnum level;
     private String author;
-    private String video_url;
+    private String videoId;
     private List<PictureViewModel> pictures;
     private List<CommentEntity> comments;
     private int timeNeeded;
@@ -91,12 +91,12 @@ public class RecipeDetailsViewModel {
         return this;
     }
 
-    public String getVideo_url() {
-        return video_url;
+    public String getVideoId() {
+        return videoId;
     }
 
-    public RecipeDetailsViewModel setVideo_url(String video_url) {
-        this.video_url = video_url;
+    public RecipeDetailsViewModel setVideoId(String videoId) {
+        this.videoId = videoId;
         return this;
     }
 

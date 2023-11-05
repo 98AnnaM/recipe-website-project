@@ -3,8 +3,6 @@ package bg.example.recepeWebsite.model.dto;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
-import bg.example.recepeWebsite.model.validation.AtLeastOneFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -29,7 +27,7 @@ public class EditRecipeDto {
     @NotNull
     private LevelEnum level;
 
-    private String video_url;
+    private String videoUrl;
 
     private List<TypeNameEnum> types;
 
@@ -75,12 +73,12 @@ public class EditRecipeDto {
         this.level = level;
     }
 
-    public String getVideo_url() {
-        return video_url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setVideo_url(String video_url) {
-        this.video_url = video_url;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public List<TypeNameEnum> getTypes() {

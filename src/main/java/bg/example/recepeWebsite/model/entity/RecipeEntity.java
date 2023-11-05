@@ -4,7 +4,6 @@ import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import javax.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +15,7 @@ public class RecipeEntity extends BaseEntity {
     private String description;
     private LevelEnum level;
     private UserEntity author;
-    private String video_url;
+    private String videoUrl;
     private List<PictureEntity> pictures;
     private List<TypeEntity> types;
     private CategoryNameEnum category;
@@ -54,8 +53,8 @@ public class RecipeEntity extends BaseEntity {
     }
 
     @Column
-    public String getVideo_url() {
-        return video_url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
 
@@ -115,8 +114,8 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
-    public RecipeEntity setVideo_url(String video_url) {
-        this.video_url = video_url;
+    public RecipeEntity setVideoUrl(String video_url) {
+        this.videoUrl = video_url;
         return this;
     }
 
