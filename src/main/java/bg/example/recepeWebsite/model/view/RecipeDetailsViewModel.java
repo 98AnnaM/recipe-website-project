@@ -10,7 +10,7 @@ public class RecipeDetailsViewModel {
 
     private Long id;
     private String name;
-    private String products;
+    private List<String> products;
     private String description;
     private LevelEnum level;
     private String author;
@@ -19,6 +19,15 @@ public class RecipeDetailsViewModel {
     private List<CommentEntity> comments;
     private int timeNeeded;
     private int portions;
+    private boolean canDelete;
+
+    public boolean isCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(boolean canDelete) {
+        this.canDelete = canDelete;
+    }
 
     public Long getId() {
         return id;
@@ -47,13 +56,12 @@ public class RecipeDetailsViewModel {
         return this;
     }
 
-    public String getProducts() {
+    public List<String> getProducts() {
         return products;
     }
 
-    public RecipeDetailsViewModel setProducts(String products) {
+    public void setProducts(List<String> products) {
         this.products = products;
-        return this;
     }
 
     public String getDescription() {

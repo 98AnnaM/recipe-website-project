@@ -1,16 +1,21 @@
 package bg.example.recepeWebsite.web;
 
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
+import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.dto.UploadPictureDto;
+import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.model.user.CustomUserDetails;
 import bg.example.recepeWebsite.service.CloudinaryService;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import javax.validation.Valid;
 
+import bg.example.recepeWebsite.service.TypeService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/recipes")
@@ -27,11 +33,13 @@ public class RecipeController {
     private final RecipeService recipeService;
     private final CloudinaryService cloudinaryService;
     private final PictureService pictureService;
+    private final TypeService typeService;
 
-    public RecipeController(RecipeService recipeService, CloudinaryService cloudinaryService, PictureService pictureService) {
+    public RecipeController(RecipeService recipeService, CloudinaryService cloudinaryService, PictureService pictureService, TypeService typeService) {
         this.recipeService = recipeService;
         this.cloudinaryService = cloudinaryService;
         this.pictureService = pictureService;
+        this.typeService = typeService;
     }
 
     @ModelAttribute
@@ -44,6 +52,11 @@ public class RecipeController {
         return new UploadPictureDto();
     }
 
+    @ModelAttribute("allTypes")
+    List<TypeNameEnum> allTypes() {
+        return typeService.getAllTypes();
+    }
+
 
     @GetMapping("/all")
     public String allRecipes(Model model) {
@@ -53,7 +66,7 @@ public class RecipeController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/add")
-    public String addRecipe() {
+    public String addRecipe(Model model) {
         return "add-recipe";
     }
 
@@ -117,6 +130,36 @@ public class RecipeController {
         pictureService.deletePicture(pictureId);
         return "redirect:/recipes/details/" + recipeId;
 
+    }
+
+    @PreAuthorize("@recipeService.isOwner(#principal.name, #recipeId)")
+    @GetMapping("/edit/{id}")
+    public String editRecipe(
+            Principal principal,
+            @PathVariable("id") Long recipeId,
+            Model model){
+
+        EditRecipeDto recipe = recipeService.getRecipeEditDetails(recipeId);
+
+        model.addAttribute("recipe", recipe);
+        return "recipe-update";
+    }
+
+    @PutMapping("/edit/{id}")
+    public String update(@PathVariable("id") Long id,
+                         @Valid EditRecipeDto recipeModel,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("recipeModel", recipeModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeModel", bindingResult);
+            return "redirect:/recipes/edit/{id}";
+        }
+
+        recipeService.updateRecipeById(recipeModel, id, userDetails);
+
+        return "redirect:/recipes/details/" + id;
     }
 
 

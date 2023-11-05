@@ -1,23 +1,27 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.errors.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
+import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
+import bg.example.recepeWebsite.model.entity.TypeEntity;
+import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
+import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.user.CustomUserDetails;
 import bg.example.recepeWebsite.model.view.RecipeDetailsViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,15 +119,73 @@ public class RecipeService {
                     RecipeDetailsViewModel recipeDetailsViewModel = modelMapper
                             .map(recipe, RecipeDetailsViewModel.class);
 
+                    recipeDetailsViewModel.setProducts(Arrays.stream(recipe.getProducts().split("[\r\n]+")).collect(Collectors.toList()));
                     recipeDetailsViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
                     recipeDetailsViewModel.getPictures().forEach(p -> p.setCanNotDelete(!p.getAuthor().getUsername().equals(principalName)));
+                    recipeDetailsViewModel.setCanDelete(isOwner(principalName, id));
 
                     return recipeDetailsViewModel;
                 })
                 .orElse(null);
     }
 
+    public boolean isOwner(String userName, Long recipeId) {
+        boolean isOwner = recipeRepository.
+                findById(recipeId).
+                filter(o -> o.getAuthor().getUsername().equals(userName)).
+                isPresent();
+
+        if (isOwner){
+            return true;
+        }
+
+        return userRepository
+                .findByUsername(userName)
+                .filter(this::isAdmin)
+                .isPresent();
+    }
+
+    private boolean isAdmin(UserEntity user) {
+        return user.getRoles().
+                stream().
+                anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
+    }
 
 
+    @Transactional
+    public EditRecipeDto getRecipeEditDetails(Long recipeId){
 
+        RecipeEntity recipeEntity = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + recipeId + "not found"));
+
+        EditRecipeDto editRecipeDto = modelMapper.map(recipeEntity, EditRecipeDto.class);
+        editRecipeDto.setTypes(recipeEntity.getTypes()
+                .stream()
+                .map(TypeEntity::getName)
+                .collect(Collectors.toList()));
+
+        return editRecipeDto;
+    }
+
+
+    public void updateRecipeById(EditRecipeDto editRecipeDto, Long id, UserDetails userDetails) {
+        RecipeEntity updateRecipe = this.recipeRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with id: " + id + "not found!"));
+
+        updateRecipe.setAuthor(userRepository.findByUsername(userDetails.getUsername()).orElseThrow());
+        updateRecipe.setTypes(editRecipeDto.getTypes()
+                .stream()
+                .map(typeService::findByTypeName)
+                .collect(Collectors.toList()));
+        updateRecipe.setName(editRecipeDto.getName())
+                    .setLevel(editRecipeDto.getLevel())
+                    .setCategory(editRecipeDto.getCategory())
+                    .setPortions(editRecipeDto.getPortions())
+                            .setTimeNeeded(editRecipeDto.getTimeNeeded())
+                            .setDescription(editRecipeDto.getDescription())
+                            .setVideo_url(editRecipeDto.getVideo_url())
+                            .setProducts(editRecipeDto.getProducts());
+
+        recipeRepository.save(updateRecipe);
+    }
 }

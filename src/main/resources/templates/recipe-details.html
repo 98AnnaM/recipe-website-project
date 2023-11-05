@@ -64,6 +64,17 @@
                                 Favourite</button>
                             <button class="btn btn-info btn-sm"><i class="fas fa-camera"></i> Add Photo</button>
                             <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
+                            <th:block th:if="*{canDelete}">
+                                <a th:href="@{/recipes/edit/{id}(id=*{id})}"
+                                   class="btn btn-info btn-sm" >Update</a>
+
+
+<!--                                <form th:action="@{/recipes/{id}(id=*{id})}"-->
+<!--                                      th:method="delete"-->
+<!--                                      style="display: inline-block;">-->
+<!--                                    <input type="submit" value="Delete">-->
+<!--                                </form>-->
+                            </th:block>
                         </div>
                     </div>
 
@@ -103,17 +114,8 @@
 
                     <div class="col-sm-8 mx-1 mb-1 pl-3 bg-custom border-custom">
                         <h2 class="mb-3">Продукти</h2>
-                        <ul class="custom-list">
-                            <li>500 г картофи - 4 броя</li>
-                            <li>250 мл прясно мляко</li>
-                            <li>1 с.л. брашно</li>
-                            <li>1 жълтък</li>
-                            <li>25 г краве масло - 2 с.л.</li>
-                            <li>1 морков</li>
-                            <li>2 колелца кромид лук</li>
-                            <li>сол на вкус</li>
-                            <li>4 филии хляб</li>
-                            <li>2 с.л. олио</li>
+                        <ul th:each="p : *{products}" class="custom-list">
+                            <li th:text="${p}"></li>
                         </ul>
                     </div>
                 </div>
