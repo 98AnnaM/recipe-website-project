@@ -59,21 +59,21 @@
                         </div>
                     </div>
                     <div class="col-12 mb-2">
-                        <div class="action mt-3">
-                            <button class="btn btn-success btn-sm"><i class="fas fa-heart-circle-plus"></i>
+                        <div class="action d-flex align-items-start mt-2">
+                            <button class="btn btn-success btn-sm mr-2"><i class="fas fa-heart-circle-plus"></i>
                                 Favourite</button>
 
 
                             <form th:object="${uploadPictureDto}"
                                   th:action="@{'/recipes/details/' + ${recipe.id} + '/picture/add'}"
                                   th:method="post"
-                                  enctype="multipart/form-data" id="uploadForm">
-                                <div class="form-group">
+                                  enctype="multipart/form-data" id="uploadForm" class="d-inline-block">
+                                <div class="form-group m-0">
                                     <input th:field="*{recipeId}" type="hidden" th:value="${recipe.id}" name="recipeId"/>
                                 </div>
                                 <div class="image-upload">
                                     <label for="picture">
-                                        <p class="btn btn-info btn-sm"><i class="fas fa-camera"></i> Add Photo</p>
+                                        <p class="btn btn-info btn-sm mr-2"><i class="fas fa-camera"></i> Add Photo</p>
                                     </label>
                                     <input th:field="*{picture}" style="display: none" id="picture" type="file" name="picture"
                                            onchange="validateAndUploadFile()" accept="image/*" />
@@ -81,10 +81,10 @@
                             </form>
 
 
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
+                            <button class="btn btn-danger btn-sm mr-2"><i class="fas fa-trash-alt"></i> Delete</button>
                             <th:block th:if="*{canDelete}">
                                 <a th:href="@{/recipes/edit/{id}(id=*{id})}"
-                                   class="btn btn-info btn-sm" >Update</a>
+                                   class="btn btn-info btn-sm mr-2" ><i class="fa-solid fa-wrench"></i> Update</a>
 
 
 <!--                                <form th:action="@{/recipes/{id}(id=*{id})}"-->
