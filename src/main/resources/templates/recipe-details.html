@@ -81,7 +81,7 @@
                             </div>
                             <div class="image-upload">
                                 <label for="picture">
-                                    <p class="btn btn-info btn-sm mr-2"><i class="fas fa-camera"></i> Add Photo</p>
+                                    <p class="btn btn-info btn-sm mr-2" id="addPhotoButton"><i class="fas fa-camera"></i> Add Photo</p>
                                 </label>
                                 <input th:field="*{picture}" style="display: none" id="picture" type="file" name="picture"
                                        onchange="validateAndUploadFile()" accept="image/*" />
@@ -119,7 +119,7 @@
                                             <form th:action="@{/recipes/delete/{id}(id=*{id})}"
                                                   th:method="delete"
                                                   class="d-inline-block"
-                                                  onsubmit="showDeleteModal(event)">
+                                                  onsubmit="showDeleteSpinner(event)">
                                                 <input class="btn btn-secondary" type="submit" value="Delete">
                                             </form>
                                         </div>

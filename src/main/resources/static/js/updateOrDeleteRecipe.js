@@ -11,11 +11,14 @@ function validateAndUploadFile() {
         return;
     }
 
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('spinner').style.display = 'block';
+
     var form = document.getElementById('uploadForm');
     form.submit();
 }
 
-function showDeleteModal(event) {
+function showDeleteSpinner(event) {
     // Show the overlay and spinner
     document.getElementById('overlay').style.display = 'flex';
     document.getElementById('spinner').style.display = 'block';
@@ -23,5 +26,7 @@ function showDeleteModal(event) {
     var deleteButton = event.target.querySelector('input[type="submit"]');
     deleteButton.disabled = true;
 }
+
+
 
 
