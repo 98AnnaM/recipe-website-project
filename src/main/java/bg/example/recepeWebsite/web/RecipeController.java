@@ -3,7 +3,6 @@ package bg.example.recepeWebsite.web;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.dto.UploadPictureDto;
-import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.model.user.CustomUserDetails;
@@ -25,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/recipes")
@@ -123,7 +123,7 @@ public class RecipeController {
     }
 
     @PreAuthorize("isAuthenticated() && @pictureService.isOwner(#principal.name, #pictureId)")
-    @DeleteMapping("/details/{recipeId}")
+    @DeleteMapping("/details/{recipeId}/picture/delete")
     public String deletePicture(@PathVariable("recipeId") Long recipeId,
                                 @RequestParam("pictureId") Long pictureId,
                                 Principal principal){
@@ -160,6 +160,16 @@ public class RecipeController {
         recipeService.updateRecipeById(recipeModel, id, userDetails);
 
         return "redirect:/recipes/details/" + id;
+    }
+
+    @PreAuthorize("isAuthenticated() && @recipeService.isOwner(#principal.name, #recipeId)")
+    @DeleteMapping("/delete/{id}")
+    public String deleteRecipe(
+            Principal principal,
+            @PathVariable("id") Long recipeId){
+        recipeService.deleteRecipeById(recipeId);
+
+        return "redirect:/recipes/all";
     }
 
 

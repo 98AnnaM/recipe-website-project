@@ -203,4 +203,8 @@ public class RecipeService {
 
         return null; // Video ID not found
     }
+
+    public void deleteRecipeById(Long recipeId) {
+        recipeRepository.deleteById(recipeId);
+    }
 }
