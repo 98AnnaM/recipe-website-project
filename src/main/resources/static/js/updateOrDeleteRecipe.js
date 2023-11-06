@@ -1,3 +1,5 @@
+
+// Validate and upload new picture
 function validateAndUploadFile() {
     var fileInput = document.getElementById('picture');
     var file = fileInput.files[0];
@@ -14,16 +16,12 @@ function validateAndUploadFile() {
 }
 
 function showDeleteModal(event) {
-    event.preventDefault();
-    $('#deleteModal').modal('show'); // Show the spinner modal
+    // Show the overlay and spinner
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('spinner').style.display = 'block';
 
     var deleteButton = event.target.querySelector('input[type="submit"]');
     deleteButton.disabled = true;
-
-    setTimeout(function () {
-        event.target.submit(); // Submit the form after a delay (you can adjust the delay time)
-    }, 1000); // Adjust the delay time (in milliseconds) as needed
 }
-
 
 

@@ -31,4 +31,12 @@ document.getElementById('formFileMultiple').addEventListener('change', function(
     }
 });
 
+//Add logic for showing spinner
+document.getElementById('recipeForm').addEventListener('submit', function(event) {
+    // Show the overlay and spinner
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('spinner').style.display = 'block';
 
+    // Disable the submit button to prevent multiple submissions
+    document.getElementById('submitBtn').disabled = true;
+});
