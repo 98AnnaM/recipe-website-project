@@ -204,7 +204,13 @@ public class RecipeService {
         return null; // Video ID not found
     }
 
+    @Transactional
     public void deleteRecipeById(Long recipeId) {
-        recipeRepository.deleteById(recipeId);
+        RecipeEntity recipe = recipeRepository.findById(recipeId).orElse(null);
+
+        if (recipe != null) {
+            recipe.getPictures().forEach(picture -> pictureService.deletePicture(picture.getId()));
+            recipeRepository.deleteById(recipeId);
+        }
     }
 }

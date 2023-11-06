@@ -14,4 +14,6 @@ public interface PictureRepository extends JpaRepository<PictureEntity, Long> {
     List<String> findAllUrls();
 
     void deleteAllById(Long id);
+
+
 }

@@ -63,9 +63,10 @@ public class PictureService {
             cloudinaryService.delete(publicId);
         }
 
-        pictureRepository.deleteAllById(id);
+        pictureRepository.delete(picture.get());
 
     }
+
 
     public boolean isOwner(String userName, Long pictureId) {
         boolean isOwner = pictureRepository.
