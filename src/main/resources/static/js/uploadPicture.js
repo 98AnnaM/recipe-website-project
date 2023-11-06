@@ -12,3 +12,18 @@ function validateAndUploadFile() {
     var form = document.getElementById('uploadForm');
     form.submit();
 }
+
+function showDeleteModal(event) {
+    event.preventDefault();
+    $('#deleteModal').modal('show'); // Show the spinner modal
+
+    var deleteButton = event.target.querySelector('input[type="submit"]');
+    deleteButton.disabled = true;
+
+    setTimeout(function () {
+        event.target.submit(); // Submit the form after a delay (you can adjust the delay time)
+    }, 1000); // Adjust the delay time (in milliseconds) as needed
+}
+
+
+
