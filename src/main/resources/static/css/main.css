@@ -123,6 +123,11 @@ td, th {
     right: 0;
     color: #343a40;
 }
+#deleteMainImageButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 .main-image button:hover i {
     color: #fff; /* Change the icon color on hover */
 }

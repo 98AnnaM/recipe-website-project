@@ -37,7 +37,7 @@
 </header>
 
 <!-- Main -->
-<input type="hidden" name="recipeId" id="recipeId" th:value="${recipe.id}">
+
 <div th:object="${recipe}"
      class="container-fluid">
 
@@ -55,13 +55,22 @@
                         <button id="nextButton" class="btn btn-dark btn-sm next"><i
                                 class="fas fa-chevron-right"></i></button>
                         <img id="mainImage" class="d-block w-100" alt="Main Image">
+                        <form id="deleteMainImageForm"
+                              th:action="@{/recipes/details/{recipeId}/picture/delete(recipeId = ${recipe.id})}"
+                              th:method="delete">
+                            <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                            <input type="hidden" name="pictureId" id="mainPictureId">
+                            <input type="submit" value="Delete" id="deleteMainImageButton"/>
+                        </form>
                     </div>
                 </div>
                 <div class="col-12">
                     <!-- List of Small Images -->
                     <div class="small-images mt-3 d-flex overflow-auto">
-                        <div th:each="p : *{pictures}">
-                            <img th:src="${p.url}" alt="Image 1">
+                        <div th:each="p, index : *{pictures}">
+                            <img th:src="${p.url}"
+                                 th:data-picture-id="${p.id}"
+                                 th:data-can-not-delete="${p.canNotDelete}" alt="Image 1">
                         </div>
                     </div>
                 </div>
