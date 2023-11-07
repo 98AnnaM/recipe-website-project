@@ -14,8 +14,8 @@ document.getElementById('formFileMultiple').addEventListener('change', function(
         fileItem.classList.add('d-flex', 'align-items-center', 'mb-2');
         fileItem.innerHTML = `
             <span>${file.name}</span>
-            <button type="button" class="btn btn-light btn-custom ml-2 remove-file" data-index="${i}">
-                <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn btn-light p-0 lh-1 text-md ml-2 remove-file" data-index="${i}" style="width: 1.2rem; height: 1.2rem; line-height: 1;">
+               <span aria-hidden="true" class="text-md">&times;</span>
             </button>
         `;
         selectedFilesDiv.appendChild(fileItem);

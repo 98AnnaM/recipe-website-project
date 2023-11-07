@@ -10,6 +10,17 @@ public class PictureEntity extends BaseEntity {
     private UserEntity author;
     private String publicId;
     private String title;
+    private RecipeEntity recipe;
+
+    @ManyToOne()
+    public RecipeEntity getRecipe() {
+        return recipe;
+    }
+
+    public PictureEntity setRecipe(RecipeEntity recipe) {
+        this.recipe = recipe;
+        return this;
+    }
 
     public PictureEntity() {
     }

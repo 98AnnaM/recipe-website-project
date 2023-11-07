@@ -35,7 +35,7 @@ public class PictureService {
         return this.pictureRepository.findAllUrls();
     }
 
-    public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file) throws IOException {
+    public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId) throws IOException {
 
         final CloudinaryImage upload = cloudinaryService
                 .uploadImage(file);
@@ -44,7 +44,8 @@ public class PictureService {
                 .setAuthor(userRepository.findById(userId).get())
                 .setUrl(upload.getUrl())
                 .setPublicId(upload.getPublicId())
-                .setTitle(file.getOriginalFilename());
+                .setTitle(file.getOriginalFilename())
+                .setRecipe(recipeRepository.findById(recipeId).orElse(null));
 
 
         return pictureRepository.save(newPicture);
@@ -63,7 +64,7 @@ public class PictureService {
             cloudinaryService.delete(publicId);
         }
 
-        pictureRepository.delete(picture.get());
+        pictureRepository.deleteById(id);
 
     }
 
@@ -90,13 +91,6 @@ public class PictureService {
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
     }
 
-    @Transactional
-    public void uploadPicture(Long ownerId, Long recipeId, MultipartFile file) throws IOException {
-        RecipeEntity recipe = recipeRepository.findById(recipeId).get();
-        recipe.getPictures().add(this.createAndSavePictureEntity(ownerId, file));
-        this.recipeRepository.save(recipe);
-
-    }
 
 
 }

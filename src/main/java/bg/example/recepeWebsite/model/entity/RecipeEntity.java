@@ -57,13 +57,12 @@ public class RecipeEntity extends BaseEntity {
         return videoUrl;
     }
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "recipes",fetch = FetchType.LAZY)
     public List<TypeEntity> getTypes() {
         return types;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     public List<PictureEntity> getPictures() {
         return pictures;
     }

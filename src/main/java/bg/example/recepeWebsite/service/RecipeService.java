@@ -102,8 +102,9 @@ public class RecipeService {
 
 
         newRecipe.setPictures(new ArrayList<>());
+        newRecipe = this.recipeRepository.save(newRecipe);
         for (MultipartFile file : addRecipeDto.getPictureFiles()) {
-            PictureEntity picture = pictureService.createAndSavePictureEntity(userDetails.getId(), file);
+            PictureEntity picture = pictureService.createAndSavePictureEntity(userDetails.getId(), file, newRecipe.getId());
             newRecipe.getPictures().add(picture);
         }
 

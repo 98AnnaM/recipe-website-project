@@ -117,8 +117,7 @@ public class RecipeController {
                              @PathVariable Long id,
                              @AuthenticationPrincipal CustomUserDetails principal) throws IOException {
 
-        pictureService.uploadPicture(principal.getId(), id, uploadPictureDto.getPicture());
-
+        pictureService.createAndSavePictureEntity(principal.getId(), uploadPictureDto.getPicture(), id);
         return "redirect:/recipes/details/" + id;
     }
 

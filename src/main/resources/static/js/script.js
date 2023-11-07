@@ -46,4 +46,14 @@ $(document).ready(function(){
         }
     });
 
+    // Add an event listener for form submission
+    $('#deleteMainImageForm').submit(function(event) {
+        // Show the overlay and spinner
+        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('spinner').style.display = 'block';
+
+        var deleteButton = event.target.querySelector('input[type="submit"]');
+        deleteButton.disabled = true;
+    });
+
 });

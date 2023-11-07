@@ -2,9 +2,7 @@ package bg.example.recepeWebsite.model.entity;
 
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -14,6 +12,7 @@ public class TypeEntity extends BaseEntity {
     private TypeNameEnum name;
     private List<RecipeEntity> recipes;
 
+    @Enumerated(EnumType.STRING)
     public TypeNameEnum getName() {
         return name;
     }
@@ -23,7 +22,7 @@ public class TypeEntity extends BaseEntity {
         return this;
     }
 
-    @OneToMany
+    @ManyToMany
     public List<RecipeEntity> getRecipes() {
         return recipes;
     }
