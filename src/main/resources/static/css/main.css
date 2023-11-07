@@ -123,11 +123,19 @@ td, th {
     right: 0;
     color: #343a40;
 }
-#deleteMainImageButton {
+#deleteImg {
     position: absolute;
     right: 0;
     top: 0;
 }
+#customDelIcon{
+    position: absolute;
+    top: 7px;
+    right: 53px;
+    z-index: 1;
+}
+
+
 .main-image button:hover i {
     color: #fff; /* Change the icon color on hover */
 }

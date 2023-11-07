@@ -60,7 +60,11 @@
                               th:method="delete">
                             <input type="hidden" name="recipeId" th:value="${recipe.id}">
                             <input type="hidden" name="pictureId" id="mainPictureId">
-                            <input type="submit" value="Delete" id="deleteMainImageButton"/>
+                            <div id="deleteImg">
+                                <i class="fas fa-trash-alt" id="customDelIcon"></i>
+                                <input type="submit" class="btn btn-danger btn-sm pl-4" value="Delete" id="deleteMainImageButton"/>
+                            </div>
+
                         </form>
                     </div>
                 </div>
