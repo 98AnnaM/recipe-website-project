@@ -103,7 +103,8 @@ td, th {
     object-fit: cover; /* Maintain aspect ratio; may crop image */
 }
 
-.main-image button {
+.main-image button.prev,
+.main-image button.next{
      background-color: transparent;
      border: none;
      font-size: 2rem;
@@ -113,18 +114,6 @@ td, th {
      top: 50%;
      transform: translateY(-50%);
  }
-
-.main-image button.exclude-me {
-    background-color: #cc4036;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: initial;
-    outline: initial; /* Reset outline to default */
-    transform: initial; /* Reset transform to default */
-    position: absolute;
-    top: 0;
-    right: 0;
-}
 
 .main-image button.prev {
     left: 0;
@@ -140,15 +129,10 @@ td, th {
     right: 0;
     top: 0;
 }
-#customDelIcon{
-    position: absolute;
-    top: 7px;
-    right: 53px;
-    z-index: 1;
-}
 
-
-.main-image button:hover i {
+.main-image button.prev:hover,
+.main-image button.next:hover{
+    background-color: black;
     color: #fff; /* Change the icon color on hover */
 }
 
