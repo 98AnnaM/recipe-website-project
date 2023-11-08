@@ -16,60 +16,119 @@
 <header>
   <nav th:replace="~{fragments/commons::navigation}"></nav>
 </header>
-<div class="container-fluid">
-  <h2 class="text-center text-white">Search for recipes</h2>
-  <form
+<div class="container-fluid justify-content-center align-items-center">
+  <div class="row">
+    <form th:action="@{/recipes/search}"
           th:method="GET"
-          th:action="@{/recipes/search}"
           th:object="${searchRecipeDto}"
-          class="form-inline"
-          style="justify-content: center; margin-top: 50px;"
-  >
-    <div style="position: relative">
-      <input
-              th:field="*{name}"
-              th:errorclass="is-invalid"
-              class="form-control mr-sm-2"
-              style="width: 280px;"
-              type="search"
-              placeholder="Recipe name..."
-              aria-label="Search"
-              id="name"
-      />
-      <input
-              th:field="*{minTimeNeeded}"
-              th:errorclass="is-invalid"
-              class="form-control mr-sm-2"
-              style="width: 280px;"
-              type="search"
-              placeholder="Min time needed..."
-              aria-label="Search"
-              id="minTimeNeeded"
-      />
-      <input
-              th:field="*{maxTimeNeeded}"
-              th:errorclass="is-invalid"
-              class="form-control mr-sm-2"
-              style="width: 280px;"
-              type="search"
-              placeholder="Max time needed..."
-              aria-label="Search"
-              id="maxTimeNeeded"
-      />
-      <small
-              id="searchRecipeHelpInline"
-              class="bg-danger text-light rounded invalid-feedback"
-              style="width: 97%; position: absolute; padding: 3px 15px; text-align: center;"
-      >
-        Try writing something this time.
-      </small>
-    </div>
-    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-  </form>
+          class="col-sm-12 col-lg-10 mx-auto"
+          id="searchRecipeForm">
+
+      <h2 class="text-center text-white my-4">Search Recipes</h2>
+
+      <div class="row px-3">
+        <div class="form-group col-sm-12 col-md-4  mx-0 px-2">
+          <label for="name" class="text-white font-weight-bold">Recipe name</label>
+          <input th:field="*{name}"
+                 th:errorclass="is-invalid"
+                 id="name"
+                 type="text"
+                 class="form-control"
+                 placeholder="Recipe name" />
+          <p th:each="err : ${#fields.errors('name')}"
+             th:text="${err}"  id="inputNameError"
+             class="invalid-feedback text-danger mb-0">Recipe name must be between 5 and 30 symbols!</p>
+        </div>
+        <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
+          <label for="minTimeNeeded" class="text-white font-weight-bold">Min Time</label>
+          <input th:field="*{minTimeNeeded}"
+                 th:errorclass="is-invalid"
+                 id="minTimeNeeded" type="number" min="0" max="480" step="5" class="form-control"
+                 placeholder="Min mins" />
+          <p th:each="err : ${#fields.errors('minTimeNeeded')}"
+             th:text="${err}"
+             class="invalid-feedback text-danger mb-0">
+            Enter time needed in minutes.
+          </p>
+        </div>
+        <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
+          <label for="maxTimeNeeded" class="text-white font-weight-bold">Max Time</label>
+          <input th:field="*{maxTimeNeeded}"
+                 th:errorclass="is-invalid"
+                 id="maxTimeNeeded" type="number" min="0" max="480" step="5" class="form-control"
+                 placeholder="Max mins" />
+          <p th:each="err : ${#fields.errors('maxTimeNeeded')}"
+             th:text="${err}"
+             class="invalid-feedback text-danger mb-0">
+            Enter time needed in minutes.
+          </p>
+        </div>
+        <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
+          <label class="text-center text-white font-weight-bold" for="hardnessLevel">Hardness level</label>
+          <select  th:field="*{level}"
+                   th:errorclass="is-invalid"
+                   id="hardnessLevel" class="form-control">
+            <option value="" selected>Select level of hardness</option>
+            <option th:each="l : ${T(bg.example.recepeWebsite.model.entity.enums.LevelEnum).values()}"
+                    th:value="${l}"
+                    th:text="${l}">Select level</option>
+          </select>
+          <p class="invalid-feedback text-danger mb-0">
+            Level must be selected.
+          </p>
+        </div>
+        <div class="form-group col-sm-12 col-md-2  mx-0 px-1">
+          <label class="text-center text-white font-weight-bold" for="category">Category</label>
+          <select th:field="*{category}"
+                  th:errorclass="is-invalid"
+                  id="category" class="form-control">
+            <option value="">Select category</option>
+            <option th:each="c : ${T(bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum).values()}"
+                    th:value="${c}"
+                    th:text="${c}">Select Category</option>
+          </select>
+          <p class="invalid-feedback text-danger mb-0">
+            Category must be selected.
+          </p>
+        </div>
+      </div>
+
+      <div class="row px-3 align-items-end">
+        <div class="form-group col-lg-11 mx-0 px-2">
+          <label class="text-center text-white font-weight-bold" for="category">Choose types</label>
+          <div class="container m-0 p-1">
+            <div class="row text-white">
+              <div class="col-lg-2"
+                   th:each="t, iterStat : ${allTypes}">
+                <div class="form-check d-flex align-items-center">
+                  <input th:field="*{types}"
+                         th:value="${t}"
+                         class="form-check-input form-check-lg"
+                         type="checkbox"
+                         th:id="'check' + ${iterStat.index}">
+                  <label class="form-check-label text-white"
+                         th:for="'check' + ${iterStat.index}"
+                         th:text="${#strings.capitalize(#strings.toLowerCase(t))}"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-1 mx-0 px-1">
+          <div class="button-holder d-flex justify-content-end">
+            <input id="submitBtn" type="submit" class="btn btn-info btn-lg mb-3" value="Search" />
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
 </div>
 
 <div class="row mx-2 mb-4 bg-custom border-custom">
-  <h2 class="text-center text-white m-auto py-5" th:text="|Results for recipes with ${result}|"></h2>
+  <h2 class="text-center text-white m-auto d-block">Results for recipes with</h2>
+  <p class="text-center text-white m-auto py-5 d-block" th:text="${result}"></p>
 </div>
 
 <div class="card-group">

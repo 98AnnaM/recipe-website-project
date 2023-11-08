@@ -96,6 +96,7 @@ public class RecipeService {
     }
 
 
+    @Transactional
     public void addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) throws IOException {
 
         RecipeEntity newRecipe = modelMapper.map(addRecipeDto, RecipeEntity.class);

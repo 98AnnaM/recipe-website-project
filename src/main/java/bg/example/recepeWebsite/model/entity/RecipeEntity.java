@@ -10,82 +10,38 @@ import java.util.List;
 @Table(name = "recipes")
 public class RecipeEntity extends BaseEntity {
 
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String products;
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private LevelEnum level;
+    @ManyToOne(optional = false)
     private UserEntity author;
+    @Column
     private String videoUrl;
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     private List<PictureEntity> pictures;
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<TypeEntity> types;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private CategoryNameEnum category;
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CommentEntity> comments;
+    @Column(nullable = false)
     private Integer timeNeeded;
+    @Column(nullable = false)
     private Integer portions;
 
     public RecipeEntity() {
     }
 
-    @Column(nullable = false)
     public String getName() {
         return name;
-    }
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    public String getProducts() {
-        return products;
-    }
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    public String getDescription() {
-        return description;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    public LevelEnum getLevel() {
-        return level;
-    }
-
-    @ManyToOne(optional = false)
-    public UserEntity getAuthor() {
-        return author;
-    }
-
-    @Column
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    @ManyToMany(mappedBy = "recipes",fetch = FetchType.LAZY)
-    public List<TypeEntity> getTypes() {
-        return types;
-    }
-
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
-    public List<PictureEntity> getPictures() {
-        return pictures;
-    }
-
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<CommentEntity> getComments() {
-        return comments;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    public CategoryNameEnum getCategory() {
-        return category;
-    }
-
-    @Column(nullable = false)
-    public Integer getTimeNeeded() {
-        return timeNeeded;
-    }
-
-    @Column(nullable = false)
-    public Integer getPortions() {
-        return portions;
     }
 
     public RecipeEntity setName(String name) {
@@ -93,9 +49,17 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
+    public String getProducts() {
+        return products;
+    }
+
     public RecipeEntity setProducts(String products) {
         this.products = products;
         return this;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public RecipeEntity setDescription(String description) {
@@ -103,9 +67,17 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
+    public LevelEnum getLevel() {
+        return level;
+    }
+
     public RecipeEntity setLevel(LevelEnum level) {
         this.level = level;
         return this;
+    }
+
+    public UserEntity getAuthor() {
+        return author;
     }
 
     public RecipeEntity setAuthor(UserEntity author) {
@@ -113,9 +85,17 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
-    public RecipeEntity setVideoUrl(String video_url) {
-        this.videoUrl = video_url;
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public RecipeEntity setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
         return this;
+    }
+
+    public List<PictureEntity> getPictures() {
+        return pictures;
     }
 
     public RecipeEntity setPictures(List<PictureEntity> pictures) {
@@ -123,9 +103,17 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
+    public List<TypeEntity> getTypes() {
+        return types;
+    }
+
     public RecipeEntity setTypes(List<TypeEntity> types) {
         this.types = types;
         return this;
+    }
+
+    public CategoryNameEnum getCategory() {
+        return category;
     }
 
     public RecipeEntity setCategory(CategoryNameEnum category) {
@@ -133,14 +121,26 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
     public RecipeEntity setComments(List<CommentEntity> comments) {
         this.comments = comments;
         return this;
     }
 
+    public Integer getTimeNeeded() {
+        return timeNeeded;
+    }
+
     public RecipeEntity setTimeNeeded(Integer timeNeeded) {
         this.timeNeeded = timeNeeded;
         return this;
+    }
+
+    public Integer getPortions() {
+        return portions;
     }
 
     public RecipeEntity setPortions(Integer portions) {

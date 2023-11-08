@@ -3,9 +3,11 @@ package bg.example.recepeWebsite.repository;
 import bg.example.recepeWebsite.model.dto.SearchRecipeDto;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.TypeEntity;
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.util.List;
 
 public class RecipeSpecification implements Specification<RecipeEntity> {
 
@@ -47,7 +49,8 @@ public class RecipeSpecification implements Specification<RecipeEntity> {
         }
 
         if (searchRecipeDto.getTypes() != null && !searchRecipeDto.getTypes().isEmpty()) {
-            Join<RecipeEntity, TypeEntity> typeJoin = root.join("types");
+            List<TypeNameEnum> typeNames = searchRecipeDto.getTypes();
+
             Subquery<Long> subquery = query.subquery(Long.class);
             Root<RecipeEntity> subRoot = subquery.from(RecipeEntity.class);
             Join<RecipeEntity, TypeEntity> subTypeJoin = subRoot.join("types");
@@ -55,13 +58,14 @@ public class RecipeSpecification implements Specification<RecipeEntity> {
             subquery.select(cb.count(subRoot));
             subquery.where(
                     cb.equal(subRoot.get("id"), root.get("id")),
-                    cb.isTrue(subTypeJoin.in(searchRecipeDto.getTypes()))
+                    subTypeJoin.get("name").in(typeNames)
             );
 
             p.getExpressions().add(
-                    cb.equal(subquery, (long) searchRecipeDto.getTypes().size())
+                    cb.equal(subquery, (long) typeNames.size())
             );
         }
+
 
         return p;
     }

@@ -3,6 +3,7 @@ package bg.example.recepeWebsite.model.dto;
 import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,7 @@ public class SearchRecipeDto {
 
     private String name;
     private LevelEnum level;
-    private List<TypeEntity> types;
+    private List<TypeNameEnum> types;
     private CategoryNameEnum category;
     private Integer minTimeNeeded;
     private Integer maxTimeNeeded;
@@ -32,11 +33,11 @@ public class SearchRecipeDto {
         this.level = level;
     }
 
-    public List<TypeEntity> getTypes() {
+    public List<TypeNameEnum> getTypes() {
         return types;
     }
 
-    public void setTypes(List<TypeEntity> types) {
+    public void setTypes(List<TypeNameEnum> types) {
         this.types = types;
     }
 
@@ -87,7 +88,7 @@ public class SearchRecipeDto {
 
         if (types != null){
             List<String> typeNames = types.stream()
-                    .map(typeEntity -> typeEntity.getName().name())
+                    .map(TypeNameEnum::name)
                     .collect(Collectors.toList());
 
             String result = String.join(", ", typeNames);

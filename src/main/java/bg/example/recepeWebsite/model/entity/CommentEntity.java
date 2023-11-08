@@ -8,16 +8,20 @@ import java.time.LocalDateTime;
 @Table(name = "comments")
 public class CommentEntity extends BaseEntity {
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String textContent;
+    @Column(name = "created", nullable = false)
     private LocalDateTime created;
+    @ManyToOne(optional = false)
     private UserEntity author;
+    @ManyToOne(optional = false)
     private RecipeEntity recipe;
 
     public CommentEntity() {
     }
 
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+
     public String getTextContent() {
         return textContent;
     }
@@ -26,7 +30,7 @@ public class CommentEntity extends BaseEntity {
         this.textContent = textContent;
     }
 
-    @Column(name = "created", nullable = false)
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -35,7 +39,7 @@ public class CommentEntity extends BaseEntity {
         this.created = created;
     }
 
-    @ManyToOne(optional = false)
+
     public UserEntity getAuthor() {
         return author;
     }
@@ -44,7 +48,7 @@ public class CommentEntity extends BaseEntity {
         this.author = author;
     }
 
-    @ManyToOne(optional = false)
+
     public RecipeEntity getRecipe() {
         return recipe;
     }

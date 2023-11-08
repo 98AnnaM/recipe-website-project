@@ -57,7 +57,7 @@ public class UserService {
         newUser.setRoles(roleRepository.findAll()
                 .stream()
                 .filter(r -> r.getRole() == (RoleNameEnum.USER))
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toList()));
 
         userRepository.save(newUser);
         //login(newUser);

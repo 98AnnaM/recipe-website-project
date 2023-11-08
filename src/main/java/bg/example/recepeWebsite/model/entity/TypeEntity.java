@@ -9,10 +9,10 @@ import java.util.List;
 @Table(name = "types")
 public class TypeEntity extends BaseEntity {
 
-    private TypeNameEnum name;
-    private List<RecipeEntity> recipes;
-
     @Enumerated(EnumType.STRING)
+    private TypeNameEnum name;
+
+
     public TypeNameEnum getName() {
         return name;
     }
@@ -22,13 +22,4 @@ public class TypeEntity extends BaseEntity {
         return this;
     }
 
-    @ManyToMany
-    public List<RecipeEntity> getRecipes() {
-        return recipes;
-    }
-
-    public TypeEntity setRecipes(List<RecipeEntity> recipes) {
-        this.recipes = recipes;
-        return this;
-    }
 }

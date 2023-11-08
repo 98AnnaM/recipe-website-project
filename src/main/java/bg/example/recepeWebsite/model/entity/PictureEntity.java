@@ -6,13 +6,17 @@ import javax.persistence.*;
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String url;
+    @ManyToOne(optional = false)
     private UserEntity author;
+    @Column
     private String publicId;
     private String title;
+    @ManyToOne()
     private RecipeEntity recipe;
 
-    @ManyToOne()
+
     public RecipeEntity getRecipe() {
         return recipe;
     }
@@ -25,23 +29,19 @@ public class PictureEntity extends BaseEntity {
     public PictureEntity() {
     }
 
-
-    @Column
     public String getPublicId() {
         return publicId;
     }
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+
     public String getUrl() {
         return url;
     }
 
-    @ManyToOne(optional = false)
+
     public UserEntity getAuthor() {
         return author;
     }
-
-
 
     @Column
     public String getTitle() {
