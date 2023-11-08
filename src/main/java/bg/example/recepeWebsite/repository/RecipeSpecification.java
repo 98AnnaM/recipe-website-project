@@ -49,23 +49,11 @@ public class RecipeSpecification implements Specification<RecipeEntity> {
         }
 
         if (searchRecipeDto.getTypes() != null && !searchRecipeDto.getTypes().isEmpty()) {
-            List<TypeNameEnum> typeNames = searchRecipeDto.getTypes();
-
-            Subquery<Long> subquery = query.subquery(Long.class);
-            Root<RecipeEntity> subRoot = subquery.from(RecipeEntity.class);
-            Join<RecipeEntity, TypeEntity> subTypeJoin = subRoot.join("types");
-
-            subquery.select(cb.count(subRoot));
-            subquery.where(
-                    cb.equal(subRoot.get("id"), root.get("id")),
-                    subTypeJoin.get("name").in(typeNames)
-            );
-
-            p.getExpressions().add(
-                    cb.equal(subquery, (long) typeNames.size())
-            );
+            for (TypeNameEnum type : searchRecipeDto.getTypes()) {
+                p.getExpressions().add(
+                        cb.equal(root.join("types").get("name"), type));
+            }
         }
-
         return p;
     }
 }
