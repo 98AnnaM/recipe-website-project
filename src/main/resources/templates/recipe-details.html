@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -102,6 +103,7 @@
                 </div>
                 <div class="col-12 mb-2">
                     <div class="action d-flex align-items-start mt-2">
+                        <th:block sec:authorize="isAuthenticated()">
                         <button class="btn btn-success btn-sm mr-2"><i class="fas fa-heart-circle-plus"></i>
                             Favourite</button>
 
@@ -122,6 +124,7 @@
                                        onchange="validateAndUploadFile()" accept="image/*" />
                             </div>
                         </form>
+                        </th:block>
 
                         <th:block th:if="*{canDelete}">
                             <button class="btn btn-danger btn-sm mr-2"  data-toggle="modal" data-target="#exampleModalCenter">
