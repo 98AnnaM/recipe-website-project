@@ -86,7 +86,7 @@ public class SearchRecipeDto {
             sb.append(String.format("Level: " + level + " "));
         }
 
-        if (types != null){
+        if (types != null && !types.isEmpty()){
             List<String> typeNames = types.stream()
                     .map(TypeNameEnum::name)
                     .collect(Collectors.toList());
