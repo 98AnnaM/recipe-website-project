@@ -20,8 +20,8 @@ public class RecipeEntity extends BaseEntity {
     private List<TypeEntity> types;
     private CategoryNameEnum category;
     private List<CommentEntity> comments;
-    private int timeNeeded;
-    private int portions;
+    private Integer timeNeeded;
+    private Integer portions;
 
     public RecipeEntity() {
     }
@@ -79,12 +79,12 @@ public class RecipeEntity extends BaseEntity {
     }
 
     @Column(nullable = false)
-    public int getTimeNeeded() {
+    public Integer getTimeNeeded() {
         return timeNeeded;
     }
 
     @Column(nullable = false)
-    public int getPortions() {
+    public Integer getPortions() {
         return portions;
     }
 
@@ -138,12 +138,12 @@ public class RecipeEntity extends BaseEntity {
         return this;
     }
 
-    public RecipeEntity setTimeNeeded(int timeNeeded) {
+    public RecipeEntity setTimeNeeded(Integer timeNeeded) {
         this.timeNeeded = timeNeeded;
         return this;
     }
 
-    public RecipeEntity setPortions(int portions) {
+    public RecipeEntity setPortions(Integer portions) {
         this.portions = portions;
         return this;
     }

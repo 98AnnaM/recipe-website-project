@@ -36,8 +36,6 @@ public class AddRecipeDto {
 
     private String videoUrl;
 
-
-
     private List<TypeNameEnum> types;
 
     @NotNull
@@ -45,102 +43,93 @@ public class AddRecipeDto {
 
     @NotNull
     @Positive
-    private int timeNeeded;
+    private Integer timeNeeded;
 
+    @NotNull
     @Positive
-    private int portions;
+    private Integer portions;
 
     public AddRecipeDto() {
         this.pictureFiles = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public AddRecipeDto setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getProducts() {
-        return products;
-    }
-
-    public AddRecipeDto setProducts(String products) {
-        this.products = products;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public AddRecipeDto setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public LevelEnum getLevel() {
-        return level;
-    }
-
-    public AddRecipeDto setLevel(LevelEnum level) {
-        this.level = level;
-        return this;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public AddRecipeDto setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-        return this;
     }
 
     public List<MultipartFile> getPictureFiles() {
         return pictureFiles;
     }
 
-    public AddRecipeDto setPictureFiles(List<MultipartFile> pictureFiles) {
+    public void setPictureFiles(List<MultipartFile> pictureFiles) {
         this.pictureFiles = pictureFiles;
-        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getProducts() {
+        return products;
+    }
+
+    public void setProducts(String products) {
+        this.products = products;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LevelEnum getLevel() {
+        return level;
+    }
+
+    public void setLevel(LevelEnum level) {
+        this.level = level;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public List<TypeNameEnum> getTypes() {
         return types;
     }
 
-    public AddRecipeDto setTypes(List<TypeNameEnum> types) {
+    public void setTypes(List<TypeNameEnum> types) {
         this.types = types;
-        return this;
     }
 
     public CategoryNameEnum getCategory() {
         return category;
     }
 
-    public AddRecipeDto setCategory(CategoryNameEnum category) {
+    public void setCategory(CategoryNameEnum category) {
         this.category = category;
-        return this;
     }
 
-    public int getTimeNeeded() {
+    public Integer getTimeNeeded() {
         return timeNeeded;
     }
 
-    public AddRecipeDto setTimeNeeded(int timeNeeded) {
+    public void setTimeNeeded(Integer timeNeeded) {
         this.timeNeeded = timeNeeded;
-        return this;
     }
 
-    public int getPortions() {
+    public Integer getPortions() {
         return portions;
     }
 
-    public AddRecipeDto setPortions(int portions) {
+    public void setPortions(Integer portions) {
         this.portions = portions;
-        return this;
     }
 }

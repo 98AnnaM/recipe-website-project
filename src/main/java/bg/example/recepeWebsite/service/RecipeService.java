@@ -3,6 +3,7 @@ package bg.example.recepeWebsite.service;
 import bg.example.recepeWebsite.errors.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
+import bg.example.recepeWebsite.model.dto.SearchRecipeDto;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.TypeEntity;
@@ -13,13 +14,18 @@ import bg.example.recepeWebsite.model.user.CustomUserDetails;
 import bg.example.recepeWebsite.model.view.RecipeDetailsViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.repository.RecipeRepository;
+import bg.example.recepeWebsite.repository.RecipeSpecification;
 import bg.example.recepeWebsite.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -51,7 +57,6 @@ public class RecipeService {
                 .map(this::map)
                 .collect(Collectors.toList());
     }
-
 
     @Transactional
     public List<RecipeViewModel> findAllFilteredRecipesViewModels(CategoryNameEnum category) {
@@ -90,6 +95,7 @@ public class RecipeService {
         return recipeDetailsViewModel;
     }
 
+
     public void addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) throws IOException {
 
         RecipeEntity newRecipe = modelMapper.map(addRecipeDto, RecipeEntity.class);
@@ -110,9 +116,6 @@ public class RecipeService {
 
         recipeRepository.save(newRecipe);
     }
-
-
-
 
     @Transactional
     public RecipeDetailsViewModel findRecipeDetailsViewModelById(Long id, String principalName) {
@@ -214,4 +217,13 @@ public class RecipeService {
             recipeRepository.deleteById(recipeId);
         }
     }
+@Transactional
+    public List<RecipeViewModel> searchRecipe(SearchRecipeDto searchRecipeDto) {
+        return this.recipeRepository
+                .findAll(new RecipeSpecification(searchRecipeDto))
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -17,8 +17,8 @@ public class RecipeDetailsViewModel {
     private String videoId;
     private List<PictureViewModel> pictures;
     private List<CommentEntity> comments;
-    private int timeNeeded;
-    private int portions;
+    private Integer timeNeeded;
+    private Integer portions;
     private boolean canDelete;
 
     public boolean isCanDelete() {
@@ -118,21 +118,19 @@ public class RecipeDetailsViewModel {
         return this;
     }
 
-    public int getTimeNeeded() {
+    public Integer getTimeNeeded() {
         return timeNeeded;
     }
 
-    public RecipeDetailsViewModel setTimeNeeded(int timeNeeded) {
+    public void setTimeNeeded(Integer timeNeeded) {
         this.timeNeeded = timeNeeded;
-        return this;
     }
 
-    public int getPortions() {
+    public Integer getPortions() {
         return portions;
     }
 
-    public RecipeDetailsViewModel setPortions(int portions) {
+    public void setPortions(Integer portions) {
         this.portions = portions;
-        return this;
     }
 }

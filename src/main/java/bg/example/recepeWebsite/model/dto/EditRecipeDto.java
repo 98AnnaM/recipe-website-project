@@ -36,10 +36,19 @@ public class EditRecipeDto {
 
     @NotNull
     @Positive
-    private int timeNeeded;
+    private Integer timeNeeded;
 
+    @NotNull
     @Positive
-    private int portions;
+    private Integer portions;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -97,27 +106,19 @@ public class EditRecipeDto {
         this.category = category;
     }
 
-    public int getTimeNeeded() {
+    public Integer getTimeNeeded() {
         return timeNeeded;
     }
 
-    public void setTimeNeeded(int timeNeeded) {
+    public void setTimeNeeded(Integer timeNeeded) {
         this.timeNeeded = timeNeeded;
     }
 
-    public int getPortions() {
+    public Integer getPortions() {
         return portions;
     }
 
-    public void setPortions(int portions) {
+    public void setPortions(Integer portions) {
         this.portions = portions;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

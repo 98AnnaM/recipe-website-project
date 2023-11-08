@@ -2,6 +2,7 @@ package bg.example.recepeWebsite.web;
 
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
+import bg.example.recepeWebsite.model.dto.SearchRecipeDto;
 import bg.example.recepeWebsite.model.dto.UploadPictureDto;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
@@ -169,6 +170,32 @@ public class RecipeController {
         recipeService.deleteRecipeById(recipeId);
 
         return "redirect:/recipes/all";
+    }
+
+    @GetMapping("/search")
+    public String searchQuery(@Valid SearchRecipeDto searchRecipeDto,
+                              BindingResult bindingResult,
+                              Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("searchRecipeDto", searchRecipeDto);
+            model.addAttribute(
+                    "org.springframework.validation.BindingResult.searchRecipeDto",
+                    bindingResult);
+            return "recipe-search";
+        }
+
+        if (!model.containsAttribute("searchRecipeDto")) {
+            model.addAttribute("searchRecipeDto", searchRecipeDto);
+            model.addAttribute("result", searchRecipeDto.toString());
+        }
+
+        if (!searchRecipeDto.isEmpty()) {
+            model.addAttribute("recipes", recipeService.searchRecipe(searchRecipeDto));
+            model.addAttribute("result", searchRecipeDto.toString());
+        }
+
+        return "recipe-search";
     }
 
 
