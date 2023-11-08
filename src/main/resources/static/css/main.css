@@ -104,14 +104,26 @@ td, th {
 }
 
 .main-image button {
-    background-color: transparent;
-    border: none;
-    font-size: 2rem;
+     background-color: transparent;
+     border: none;
+     font-size: 2rem;
+     cursor: pointer;
+     outline: none;
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+ }
+
+.main-image button.exclude-me {
+    background-color: #cc4036;
+    border: 3px solid rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    outline: none;
+    font-size: initial;
+    outline: initial; /* Reset outline to default */
+    transform: initial; /* Reset transform to default */
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    right: 0;
 }
 
 .main-image button.prev {

@@ -3,7 +3,7 @@ $(document).ready(function(){
     function changeMainImage(src, pictureId, canNotDelete) {
         $('#mainImage').attr('src', src);
         $('#mainPictureId').val(pictureId); // Use .val() to set the value
-        var submitButton = $('#deleteMainImageButton');
+        var submitButton = $('#deleteImg');
         if (canNotDelete) {
             submitButton.prop('disabled', true); // Disable the submit button
         } else {

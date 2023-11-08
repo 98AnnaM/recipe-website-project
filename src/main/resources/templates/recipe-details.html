@@ -55,17 +55,39 @@
                         <button id="nextButton" class="btn btn-dark btn-sm next"><i
                                 class="fas fa-chevron-right"></i></button>
                         <img id="mainImage" class="d-block w-100" alt="Main Image">
-                        <form id="deleteMainImageForm"
-                              th:action="@{/recipes/details/{recipeId}/picture/delete(recipeId = ${recipe.id})}"
-                              th:method="delete">
-                            <input type="hidden" name="recipeId" th:value="${recipe.id}">
-                            <input type="hidden" name="pictureId" id="mainPictureId">
-                            <div id="deleteImg">
-                                <i class="fas fa-trash-alt" id="customDelIcon"></i>
-                                <input type="submit" class="btn btn-danger btn-sm pl-4" value="Delete" id="deleteMainImageButton"/>
+                        <button id="deleteImg" class="btn btn-danger btn-sm exclude-me"  data-toggle="modal" data-target="#deletePicModal">
+                            <i class="fas fa-trash-alt"></i> Delete</button>
+                        <div class="modal fade"
+                             id="deletePicModal"
+                             tabindex="-1"
+                             role="dialog"
+                             aria-labelledby="exampleModalCenterTitle"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-dark" id="deletePicTitle">Picture deletion</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-dark">Are you sure you want to delete this picture?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <!-- Modify the form to trigger the modal -->
+                                        <form id="deleteMainImageForm"
+                                              th:action="@{/recipes/details/{recipeId}/picture/delete(recipeId = ${recipe.id})}"
+                                              th:method="delete">
+                                            <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                                            <input type="hidden" name="pictureId" id="mainPictureId">
+                                            <input type="submit" class="btn btn-secondary" value="Delete" id="deleteMainImageButton"/>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12">
