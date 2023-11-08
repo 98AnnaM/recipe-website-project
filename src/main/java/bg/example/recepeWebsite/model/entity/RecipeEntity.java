@@ -23,9 +23,9 @@ public class RecipeEntity extends BaseEntity {
     private UserEntity author;
     @Column
     private String videoUrl;
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe")
     private List<PictureEntity> pictures;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<TypeEntity> types;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

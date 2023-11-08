@@ -30,12 +30,12 @@ public class RecipeSpecification implements Specification<RecipeEntity> {
 
         if (searchRecipeDto.getLevel() != null) {
             p.getExpressions().add(
-                    cb.and(cb.equal(root.join("level"), searchRecipeDto.getLevel())));
+                    cb.equal(root.get("level"), searchRecipeDto.getLevel()));
         }
 
         if (searchRecipeDto.getCategory() != null) {
             p.getExpressions().add(
-                    cb.and(cb.equal(root.join("category"), searchRecipeDto.getCategory())));
+                    cb.equal(root.get("category"), searchRecipeDto.getCategory()));
         }
 
         if (searchRecipeDto.getMinTimeNeeded() != null) {
@@ -65,7 +65,6 @@ public class RecipeSpecification implements Specification<RecipeEntity> {
                     cb.equal(subquery, (long) typeNames.size())
             );
         }
-
 
         return p;
     }

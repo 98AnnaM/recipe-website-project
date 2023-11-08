@@ -12,6 +12,7 @@ public class PictureEntity extends BaseEntity {
     private UserEntity author;
     @Column
     private String publicId;
+    @Column
     private String title;
     @ManyToOne()
     private RecipeEntity recipe;
