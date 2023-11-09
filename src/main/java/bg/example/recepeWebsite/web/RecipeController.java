@@ -64,7 +64,7 @@ public class RecipeController {
 
     @GetMapping("/all")
     public String allRecipes(Model model,
-                             @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                             @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
         model.addAttribute("recipes", recipeService.findAllRecipeViewModels(pageable));
         return "all-recipes";
     }
