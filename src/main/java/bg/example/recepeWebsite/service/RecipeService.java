@@ -1,6 +1,6 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.errors.ObjectNotFoundException;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.dto.SearchRecipeDto;

@@ -194,6 +194,20 @@ ul.custom-list li {
     border: 1px solid #999999;
 }
 
+select {
+    background-color: #4e555b;
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #4e555b;
+}
+
+.dropdown-item:hover {
+    background-color: #555;
+    color: #fff;
+}
+
 
 
 

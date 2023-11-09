@@ -1,8 +1,7 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.errors.ObjectNotFoundException;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
-import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.repository.PictureRepository;

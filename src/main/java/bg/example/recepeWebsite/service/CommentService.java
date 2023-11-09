@@ -1,6 +1,6 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.errors.ObjectNotFoundException;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.CommentServiceModel;
 import bg.example.recepeWebsite.model.entity.CommentEntity;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
