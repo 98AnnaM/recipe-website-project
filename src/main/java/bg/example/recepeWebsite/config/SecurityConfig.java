@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .antMatchers("/recipes/**").permitAll()
                 .antMatchers("/api/**", "/maintenance/**").permitAll()
                 .antMatchers("/users/register", "/users/login").anonymous()
-                .antMatchers("/users/profile", "/recipes/add").authenticated()
+                .antMatchers("/users/profile", "/recipes/add", "/users/profile/**").authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -22,5 +22,7 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Long>,
             "WHERE size(r.comments) = (SELECT max(size(r2.comments)) FROM RecipeEntity r2)" +
             "ORDER BY r.id ASC")
     List<RecipeEntity> findRecipeWithMostComments();
+
+    Page<RecipeEntity> findAllByAuthor_Id(Long authorId, Pageable pageable);
 }
 

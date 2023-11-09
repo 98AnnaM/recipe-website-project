@@ -219,4 +219,10 @@ public class RecipeService {
                 .map(this::map);
     }
 
+    @Transactional
+    public Page<RecipeViewModel> findAllByUserId(Long id, Pageable pageable) {
+        return this.recipeRepository.
+                findAllByAuthor_Id(id, pageable)
+                .map(this::map);
+    }
 }

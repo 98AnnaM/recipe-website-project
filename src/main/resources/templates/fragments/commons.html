@@ -63,13 +63,13 @@
                     User
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown"  sec:authorize="isAuthenticated()">
-                    <a class="dropdown-item" th:href="@{/users/profile}" th:text="#{navbar_user_profile}">Profile</a>
+                    <a class="dropdown-item" th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}" th:text="#{navbar_user_profile}">Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/users/addedRecipes}" th:text="#{navbar_user_addedRecipes}">My recipes</a>
+                    <a class="dropdown-item" th:href="@{/users/profile/{id}/addedRecipes(id=${#authentication.principal.id})}" th:text="#{navbar_user_addedRecipes}">My recipes</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/users/addedPictures}" th:text="#{navbar_user_addedPics}">My photos</a>
+                    <a class="dropdown-item" th:href="@{/users/profile/{id}/addedPictures(id=${#authentication.principal.id})}" th:text="#{navbar_user_addedPics}">My photos</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/users/favorite}" th:text="#{navbar_user_favorites}">Favorite recipes</a>
+                    <a class="dropdown-item" th:href="@{/users/profile/{id}/favoriteRecipes(id=${#authentication.principal.id})}" th:text="#{navbar_user_favorites}">Favorite recipes</a>
                 </div>
             </li>
             <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
