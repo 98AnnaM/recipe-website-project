@@ -35,7 +35,9 @@
                  type="text"
                  class="form-control"
                  placeholder="Recipe name" />
-          <p class="invalid-feedback text-danger mb-0">Recipe name must be less than 30 symbols!</p>
+          <p th:each="err : ${#fields.errors('name')}"
+             th:text="${err}"  id="inputNameError"
+             class="invalid-feedback text-danger mb-0">Recipe name must be between 5 and 30 symbols!</p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
           <label for="minTimeNeeded" class="text-white font-weight-bold">Min Time</label>
@@ -43,8 +45,10 @@
                  th:errorclass="is-invalid"
                  id="minTimeNeeded" type="number" min="0" max="480" step="5" class="form-control"
                  placeholder="Min mins" />
-          <p class="invalid-feedback text-danger mb-0">
-            Time must be positive number in minutes.
+          <p th:each="err : ${#fields.errors('minTimeNeeded')}"
+             th:text="${err}"
+             class="invalid-feedback text-danger mb-0">
+            Enter time needed in minutes.
           </p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
@@ -53,8 +57,10 @@
                  th:errorclass="is-invalid"
                  id="maxTimeNeeded" type="number" min="0" max="480" step="5" class="form-control"
                  placeholder="Max mins" />
-          <p class="invalid-feedback text-danger mb-0">
-            Time must be positive number in minutes.
+          <p th:each="err : ${#fields.errors('maxTimeNeeded')}"
+             th:text="${err}"
+             class="invalid-feedback text-danger mb-0">
+            Enter time needed in minutes.
           </p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
@@ -67,6 +73,9 @@
                     th:value="${l}"
                     th:text="${l}">Select level</option>
           </select>
+          <p class="invalid-feedback text-danger mb-0">
+            Level must be selected.
+          </p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-1">
           <label class="text-center text-white font-weight-bold" for="category">Category</label>
@@ -78,6 +87,9 @@
                     th:value="${c}"
                     th:text="${c}">Select Category</option>
           </select>
+          <p class="invalid-feedback text-danger mb-0">
+            Category must be selected.
+          </p>
         </div>
       </div>
 
@@ -178,8 +190,49 @@
 </div>
 
 </div>
-<h5 th:if="${recipes != null && recipes.size == 0}" class="text-sm-center text-white mb-5"
-    th:text="|No results found for recipes with ${result} !|"></h5>
+
+<th:block th:if="${recipes != null}">
+  <h3 th:if="${recipes.isEmpty()}" class="text-sm-center text-white mb-5"
+      th:text="|No results found for recipes with ${result}|"></h3>
+  <nav th:unless="${recipes.isEmpty()}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${recipes.hasPrevious() ? '' : 'disabled'}">
+        <a th:if="${recipes.hasPrevious()}"
+           th:href="@{/recipes/all(size=${recipes.getSize()},page=${recipes.getNumber() - 1})}"
+           class="page-link" href="#">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a th:unless="${recipes.hasPrevious()}"
+           class="page-link" href="#">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      <li class="page-item" th:each="page : ${#numbers.sequence(0, recipes.getTotalPages()-1)}"
+          th:classappend="${page == recipes.getNumber() ? 'disabled' : ''}">
+        <a th:unless="${page == recipes.getNumber()}"
+           th:href="@{/recipes/all(size=${recipes.getSize()},page=${page})}"
+           class="page-link" href="#"
+           th:text="${page + 1}">Number</a>
+        <span th:if="${page == recipes.getNumber()}" class="page-link" th:text="${page + 1}">Number</span>
+      </li>
+      <li class="page-item" th:classappend="${recipes.hasNext() ? '' : 'disabled'}">
+        <a th:if="${recipes.hasNext()}"
+           th:href="@{/recipes/all(size=${recipes.getSize()},page=${recipes.getNumber() + 1})}"
+           class="page-link" href="#">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+        <a th:unless="${recipes.hasNext()}"
+           class="page-link" href="#">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</th:block>
+
 </div>
 
 <footer th:replace="~{fragments/commons::footer}"></footer>

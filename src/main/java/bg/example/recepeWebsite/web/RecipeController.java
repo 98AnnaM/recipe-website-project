@@ -179,7 +179,8 @@ public class RecipeController {
     @GetMapping("/search")
     public String searchQuery(@Valid SearchRecipeDto searchRecipeDto,
                               BindingResult bindingResult,
-                              Model model) {
+                              Model model,
+                              @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 16) Pageable pageable) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("searchRecipeDto", searchRecipeDto);
@@ -195,7 +196,7 @@ public class RecipeController {
         }
 
         if (!searchRecipeDto.isEmpty()) {
-            model.addAttribute("recipes", recipeService.searchRecipe(searchRecipeDto));
+            model.addAttribute("recipes", recipeService.searchRecipe(searchRecipeDto, pageable));
             model.addAttribute("result", searchRecipeDto.toString());
         }
 
