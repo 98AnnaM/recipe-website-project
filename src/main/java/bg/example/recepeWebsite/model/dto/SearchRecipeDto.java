@@ -5,16 +5,21 @@ import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchRecipeDto {
 
+    @Size(max = 30)
     private String name;
     private LevelEnum level;
     private List<TypeNameEnum> types;
     private CategoryNameEnum category;
+    @Positive
     private Integer minTimeNeeded;
+    @Positive
     private Integer maxTimeNeeded;
 
     public String getName() {

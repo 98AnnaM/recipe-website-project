@@ -35,9 +35,7 @@
                  type="text"
                  class="form-control"
                  placeholder="Recipe name" />
-          <p th:each="err : ${#fields.errors('name')}"
-             th:text="${err}"  id="inputNameError"
-             class="invalid-feedback text-danger mb-0">Recipe name must be between 5 and 30 symbols!</p>
+          <p class="invalid-feedback text-danger mb-0">Recipe name must be less than 30 symbols!</p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
           <label for="minTimeNeeded" class="text-white font-weight-bold">Min Time</label>
@@ -45,10 +43,8 @@
                  th:errorclass="is-invalid"
                  id="minTimeNeeded" type="number" min="0" max="480" step="5" class="form-control"
                  placeholder="Min mins" />
-          <p th:each="err : ${#fields.errors('minTimeNeeded')}"
-             th:text="${err}"
-             class="invalid-feedback text-danger mb-0">
-            Enter time needed in minutes.
+          <p class="invalid-feedback text-danger mb-0">
+            Time must be positive number in minutes.
           </p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
@@ -57,10 +53,8 @@
                  th:errorclass="is-invalid"
                  id="maxTimeNeeded" type="number" min="0" max="480" step="5" class="form-control"
                  placeholder="Max mins" />
-          <p th:each="err : ${#fields.errors('maxTimeNeeded')}"
-             th:text="${err}"
-             class="invalid-feedback text-danger mb-0">
-            Enter time needed in minutes.
+          <p class="invalid-feedback text-danger mb-0">
+            Time must be positive number in minutes.
           </p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-2">
@@ -73,9 +67,6 @@
                     th:value="${l}"
                     th:text="${l}">Select level</option>
           </select>
-          <p class="invalid-feedback text-danger mb-0">
-            Level must be selected.
-          </p>
         </div>
         <div class="form-group col-sm-12 col-md-2  mx-0 px-1">
           <label class="text-center text-white font-weight-bold" for="category">Category</label>
@@ -87,9 +78,6 @@
                     th:value="${c}"
                     th:text="${c}">Select Category</option>
           </select>
-          <p class="invalid-feedback text-danger mb-0">
-            Category must be selected.
-          </p>
         </div>
       </div>
 
