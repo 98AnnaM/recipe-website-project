@@ -192,8 +192,8 @@
 </div>
 
 <th:block th:if="${recipes != null}">
-  <h3 th:if="${recipes.isEmpty()}" class="text-sm-center text-white mb-5"
-      th:text="|No results found for recipes with ${result}|"></h3>
+  <h5 th:if="${recipes.isEmpty()}" class="text-sm-center text-white mb-5"
+      th:text="|No results found for recipes with ${result}|"></h5>
   <nav th:unless="${recipes.isEmpty()}">
     <ul class="pagination justify-content-center">
       <li class="page-item" th:classappend="${recipes.hasPrevious() ? '' : 'disabled'}">
