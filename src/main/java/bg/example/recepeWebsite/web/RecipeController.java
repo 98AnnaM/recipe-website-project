@@ -13,6 +13,9 @@ import bg.example.recepeWebsite.service.RecipeService;
 import javax.validation.Valid;
 
 import bg.example.recepeWebsite.service.TypeService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,8 +63,9 @@ public class RecipeController {
 
 
     @GetMapping("/all")
-    public String allRecipes(Model model) {
-        model.addAttribute("recipes", recipeService.findAllRecipeViewModels());
+    public String allRecipes(Model model,
+                             @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+        model.addAttribute("recipes", recipeService.findAllRecipeViewModels(pageable));
         return "all-recipes";
     }
 

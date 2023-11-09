@@ -179,6 +179,21 @@ ul.custom-list li {
     z-index: 9999; /* Ensure it's on top of everything */
 }
 
+.pagination .page-item.disabled .page-link {
+    color: #777777;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color:  #ffffff; /* Your desired background color on hover */
+    color: #343a40; /* Your desired text color on hover */
+}
+
+.pagination .page-item .page-link{
+    background-color: #343a40;
+    color: #ffffff;
+    border: 1px solid #999999;
+}
+
 
 
 

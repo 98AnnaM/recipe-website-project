@@ -17,6 +17,8 @@ import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.RecipeSpecification;
 import bg.example.recepeWebsite.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -50,12 +52,10 @@ public class RecipeService {
     }
 
     @Transactional
-    public List<RecipeViewModel> findAllRecipeViewModels() {
+    public Page<RecipeViewModel> findAllRecipeViewModels(Pageable pageable) {
         return this.recipeRepository.
-                findAll()
-                .stream()
-                .map(this::map)
-                .collect(Collectors.toList());
+                findAll(pageable)
+                .map(this::map);
     }
 
     @Transactional
