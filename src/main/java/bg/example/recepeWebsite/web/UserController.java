@@ -1,10 +1,8 @@
 package bg.example.recepeWebsite.web;
 
-import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
-import bg.example.recepeWebsite.model.view.RecipeViewModel;
+import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import bg.example.recepeWebsite.service.UserService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -21,10 +19,12 @@ public class UserController {
 
     private final UserService userService;
     private final RecipeService recipeService;
+    private final PictureService pictureService;
 
-    public UserController(UserService userService, RecipeService recipeService) {
+    public UserController(UserService userService, RecipeService recipeService, PictureService pictureService) {
         this.userService = userService;
         this.recipeService = recipeService;
+        this.pictureService = pictureService;
     }
 
     @PreAuthorize("#id == authentication.principal.id")
@@ -42,11 +42,22 @@ public class UserController {
                                Model model,
                                @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
 
-        Page<RecipeViewModel> pagesWithRecipes =  recipeService.findAllByUserId(id, pageable);
-        model.addAttribute("recipes", pagesWithRecipes);
+        model.addAttribute("recipes", recipeService.findAllByUserId(id, pageable));
         model.addAttribute("heading", String.format("Recipes added by %s", userService.findById(id).getUsername()));
 
         return "all-recipes";
+    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @GetMapping("/{id}/addedPictures")
+    public String addedPictures(@PathVariable Long id,
+                               Model model,
+                               @PageableDefault(page = 0, size = 8) Pageable pageable) {
+
+        model.addAttribute("pictureURLs", pictureService.findAllUrlsByUserId(id, pageable));
+        model.addAttribute("heading", String.format("Photos added by %s", userService.findById(id).getUsername()));
+
+        return "user-pictures";
     }
 
 }

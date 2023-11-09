@@ -190,7 +190,7 @@
     <ul class="pagination justify-content-center">
       <li class="page-item" th:classappend="${recipes.hasPrevious() ? '' : 'disabled'}">
         <a th:if="${recipes.hasPrevious()}"
-           th:href="@{/recipes/all(size=${recipes.getSize()},page=${recipes.getNumber() - 1})}"
+           th:href="@{/recipes/search(size=${recipes.getSize()},page=${recipes.getNumber() - 1})}"
            class="page-link" href="#">
           <span aria-hidden="true">&laquo;</span>
           <span class="sr-only">Previous</span>
@@ -203,14 +203,14 @@
       <li class="page-item" th:each="page : ${#numbers.sequence(0, recipes.getTotalPages()-1)}"
           th:classappend="${page == recipes.getNumber() ? 'disabled' : ''}">
         <a th:unless="${page == recipes.getNumber()}"
-           th:href="@{/recipes/all(size=${recipes.getSize()},page=${page})}"
+           th:href="@{/recipes/search(size=${recipes.getSize()},page=${page})}"
            class="page-link" href="#"
            th:text="${page + 1}">Number</a>
         <span th:if="${page == recipes.getNumber()}" class="page-link" th:text="${page + 1}">Number</span>
       </li>
       <li class="page-item" th:classappend="${recipes.hasNext() ? '' : 'disabled'}">
         <a th:if="${recipes.hasNext()}"
-           th:href="@{/recipes/all(size=${recipes.getSize()},page=${recipes.getNumber() + 1})}"
+           th:href="@{/recipes/search(size=${recipes.getSize()},page=${recipes.getNumber() + 1})}"
            class="page-link" href="#">
           <span aria-hidden="true">&raquo;</span>
           <span class="sr-only">Next</span>

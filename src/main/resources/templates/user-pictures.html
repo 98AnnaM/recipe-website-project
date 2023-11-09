@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/commons::head}"></head>
+
+<body>
+
+    <header>
+        <nav th:replace="~{fragments/commons::navigation}"></nav>
+    </header>
+
+    <!-- Main -->
+    <div class="container-fluid">
+
+        <div class="row mx-2 mb-4 bg-custom border-custom">
+            <h2 class="text-center text-white m-auto py-5" th:text="${heading}">My Pictures</h2>
+        </div>
+
+        
+
+            <div class="row">
+                <div    th:each="p : ${pictureURLs}" th:object="${p}"
+                        class="col-sm-12 col-md-6 col-lg-3 mb-4">
+
+                    <img th:src="${p}" class="d-block w-100" alt="Main Image">
+
+                </div>
+            </div>
+        
+
+
+    </div>
+    <!-- EO: Main -->
+
+    <nav th:unless="${pictureURLs.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${pictureURLs.hasPrevious() ? '' : 'disabled'}">
+                <a th:if="${pictureURLs.hasPrevious()}"
+                   th:href="@{/users/profile/{id}(id=${#authentication.principal.id})/addedPictures(size=${pictureURLs.getSize()},page=${pictureURLs.getNumber() - 1})}"
+                   class="page-link" href="#">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a th:unless="${pictureURLs.hasPrevious()}"
+                   class="page-link" href="#">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            <li class="page-item" th:each="page : ${#numbers.sequence(0, pictureURLs.getTotalPages()-1)}"
+                th:classappend="${page == pictureURLs.getNumber() ? 'disabled' : ''}">
+                <a th:unless="${page == pictureURLs.getNumber()}"
+                   th:href="@{/users/profile/{id}(id=${#authentication.principal.id})/addedPictures(size=${pictureURLs.getSize()},page=${page})}"
+                   class="page-link" href="#"
+                   th:text="${page + 1}">Number</a>
+                <span th:if="${page == pictureURLs.getNumber()}" class="page-link" th:text="${page + 1}">Number</span>
+            </li>
+            <li class="page-item" th:classappend="${pictureURLs.hasNext() ? '' : 'disabled'}">
+                <a th:if="${pictureURLs.hasNext()}"
+                   th:href="@{/users/profile/{id}(id=${#authentication.principal.id})/addedPictures(size=${pictureURLs.getSize()},page=${pictureURLs.getNumber() + 1})}"
+                   class="page-link" href="#">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <a th:unless="${pictureURLs.hasNext()}"
+                   class="page-link" href="#">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+
+</html>

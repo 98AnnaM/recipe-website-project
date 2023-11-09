@@ -7,6 +7,8 @@ import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.repository.PictureRepository;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,8 +32,11 @@ public class PictureService {
         this.cloudinaryService = cloudinaryService;
     }
 
-    public List<String> findAllUrls() {
-        return this.pictureRepository.findAllUrls();
+    public Page<String> findAllUrlsByUserId(Long id, Pageable pageable) {
+        Page<String> urls = this.pictureRepository
+                .findAllUrlsByUserId(id, pageable);
+
+        return urls;
     }
 
     public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId) throws IOException {
