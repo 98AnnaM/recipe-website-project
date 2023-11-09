@@ -7,12 +7,14 @@ import bg.example.recepeWebsite.model.dto.UploadPictureDto;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.model.user.CustomUserDetails;
+import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.service.CloudinaryService;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import javax.validation.Valid;
 
 import bg.example.recepeWebsite.service.TypeService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -28,7 +30,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/recipes")
@@ -65,7 +66,36 @@ public class RecipeController {
     @GetMapping("/all")
     public String allRecipes(Model model,
                              @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
-        model.addAttribute("recipes", recipeService.findAllRecipeViewModels(pageable));
+        Page<RecipeViewModel> pagesWithAllRecipes = recipeService.findAllRecipeViewModels(pageable);
+        model.addAttribute("recipes", pagesWithAllRecipes);
+        model.addAttribute("heading", String.format("All recipes (%s)", pagesWithAllRecipes.getTotalElements()));
+        return "all-recipes";
+    }
+
+    @GetMapping("/vegetarian")
+    public String vegetarianRecipes(Model model,
+                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
+        Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGETARIAN, pageable);
+        model.addAttribute("recipes", pagesWithVeganRecipes);
+        model.addAttribute("heading", String.format("Vegetarian recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
+        return "all-recipes";
+    }
+
+    @GetMapping("/withMeat")
+    public String withMeatRecipes(Model model,
+                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
+        Page<RecipeViewModel> pagesWithMeatRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.WITH_MEAT, pageable);
+        model.addAttribute("recipes", pagesWithMeatRecipes);
+        model.addAttribute("heading", String.format("Recipes with meat (%s)", pagesWithMeatRecipes.getTotalElements()));
+        return "all-recipes";
+    }
+
+    @GetMapping("/vegan")
+    public String veganRecipes(Model model,
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
+        Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGAN, pageable);
+        model.addAttribute("recipes", pagesWithVeganRecipes);
+        model.addAttribute("heading", String.format("Vegan recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
         return "all-recipes";
     }
 
@@ -102,19 +132,11 @@ public class RecipeController {
 
     }
 
-    @GetMapping("/vegetarian")
-    public String vegetarianRecipes(Model model) {
-        model.addAttribute("recipes", recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGETARIAN));
-        return "all-recipes";
-    }
-
     @GetMapping("/mostCommented")
     public String getMostCommentedRecipe(Model model) {
         model.addAttribute("recipe", recipeService.findMostCommentedRecipeViewModel());
         return "recipe-details";
     }
-
-
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/details/{id}/picture/add")

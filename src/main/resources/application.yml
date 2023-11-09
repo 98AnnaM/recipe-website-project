@@ -36,3 +36,9 @@ cloudinary:
   api-key: 993835859763347
   api-secret: 5n9D9b6XK_SdxIobbfHv_YP1rp0
   cloud-name: dkcphgfnh
+
+mail:
+  host: "localhost"
+  port: 1025
+  username: "bestcook@bestcook.com"
+  password: ""

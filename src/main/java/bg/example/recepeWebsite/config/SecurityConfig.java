@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/about").permitAll()
                 .antMatchers("/recipes/**").permitAll()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/**", "/maintenance/**").permitAll()
                 .antMatchers("/users/register", "/users/login").anonymous()
                 .antMatchers("/users/profile", "/recipes/add").authenticated()
                 .anyRequest()

@@ -44,10 +44,10 @@
                    aria-haspopup="true" aria-expanded="false" th:text="#{navbar_recipes}">
                     Recipes
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown"  sec:authorize="isAuthenticated()">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" th:href="@{/recipes/all}" th:text="#{navbar_all_recipes}">All Recipes</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/recipes/meat}" th:text="#{navbar_meat_recipes}">Recipes with meat</a>
+                    <a class="dropdown-item" th:href="@{/recipes/withMeat}" th:text="#{navbar_meat_recipes}">Recipes with meat</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" th:href="@{/recipes/vegetarian}" th:text="#{navbar_vegetarian_recipes}">Vegetarian Recipes</a>
                     <div class="dropdown-divider"></div>

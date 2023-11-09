@@ -2,7 +2,6 @@ package bg.example.recepeWebsite.service;
 
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.model.entity.UserEntity;
-import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.repository.RoleRepository;
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,13 +26,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UserDetailsService userDetailsService;
+    private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService, EmailService emailService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.userDetailsService = userDetailsService;
+        this.emailService = emailService;
     }
 
     private void login(UserEntity userEntity){
@@ -50,9 +52,9 @@ public class UserService {
 
     }
 
-    public void register(UserRegisterDto userModel) {
-        UserEntity newUser = modelMapper.map(userModel, UserEntity.class);
-        newUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
+    public void registerAndLogin(UserRegisterDto userRegisterDto, Locale preferedLocale) {
+        UserEntity newUser = modelMapper.map(userRegisterDto, UserEntity.class);
+        newUser.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
 
         newUser.setRoles(roleRepository.findAll()
                 .stream()
@@ -60,7 +62,11 @@ public class UserService {
                 .collect(Collectors.toList()));
 
         userRepository.save(newUser);
-        //login(newUser);
+        this.userRepository.save(newUser);
+        login(newUser);
+        emailService.sendRegistrationEmail(newUser.getEmail(),
+                newUser.getFirstName() + " " + newUser.getLastName(),
+                preferedLocale);
     }
 
     public UserView findById(Long id) {

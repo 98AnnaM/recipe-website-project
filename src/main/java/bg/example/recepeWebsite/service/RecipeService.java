@@ -21,13 +21,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import javax.transaction.Transactional;;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -59,12 +55,10 @@ public class RecipeService {
     }
 
     @Transactional
-    public List<RecipeViewModel> findAllFilteredRecipesViewModels(CategoryNameEnum category) {
+    public Page<RecipeViewModel> findAllFilteredRecipesViewModels(CategoryNameEnum category, Pageable pageable) {
         return this.recipeRepository.
-                findAllByCategoryName(category)
-                .stream()
-                .map(this::map)
-                .collect(Collectors.toList());
+                findAllByCategory(category, pageable)
+                .map(this::map);
 
     }
 
