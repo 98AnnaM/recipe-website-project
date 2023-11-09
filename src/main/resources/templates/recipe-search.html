@@ -131,9 +131,6 @@
   <p class="text-center text-white d-block pt-2" th:text="${result}"></p>
 </div>
 
-
-
-
 <div class="card-group mx-3 px-0">
 
   <div    th:each="r : ${recipes}" th:object="${r}"
@@ -190,6 +187,11 @@
 
 
 
+</div>
+
+</div>
+<h5 th:if="${recipes != null && recipes.size == 0}" class="text-sm-center text-white mb-5"
+    th:text="|No results found for recipes with ${result} !|"></h5>
 </div>
 
 <footer th:replace="~{fragments/commons::footer}"></footer>
