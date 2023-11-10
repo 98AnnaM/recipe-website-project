@@ -1,5 +1,6 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
@@ -7,6 +8,7 @@ import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.repository.PictureRepository;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,19 +25,21 @@ public class PictureService {
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
     private final CloudinaryService cloudinaryService;
+    private final ModelMapper modelMapper;
 
-    public PictureService(PictureRepository pictureRepository, UserRepository userRepository, RecipeRepository recipeRepository, CloudinaryService cloudinaryService) {
+    public PictureService(PictureRepository pictureRepository, UserRepository userRepository, RecipeRepository recipeRepository, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.pictureRepository = pictureRepository;
         this.userRepository = userRepository;
         this.recipeRepository = recipeRepository;
         this.cloudinaryService = cloudinaryService;
+        this.modelMapper = modelMapper;
     }
 
-    public Page<String> findAllUrlsByUserId(Long id, Pageable pageable) {
-        Page<String> urls = this.pictureRepository
-                .findAllUrlsByUserId(id, pageable);
+    public Page<PictureViewModel> findAllPictureViewModelsByUsername(String principalName, Pageable pageable) {
+        Page<PictureEntity> pictures = this.pictureRepository
+                .findAllByAuthor_Username(principalName, pageable);
 
-        return urls;
+        return pictures.map(picture -> this.map(picture, principalName));
     }
 
     public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId) throws IOException {
@@ -93,6 +96,14 @@ public class PictureService {
         return user.getRoles().
                 stream().
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
+    }
+
+    public PictureViewModel map(PictureEntity picture, String principalName){
+        PictureViewModel pictureViewModel = modelMapper.map(picture, PictureViewModel.class);
+        pictureViewModel.setRecipeId(picture.getRecipe().getId())
+                .setAuthorUsername(picture.getAuthor().getUsername())
+                .setCanNotDelete(picture.getAuthor().getUsername().equals(principalName));
+        return pictureViewModel;
     }
 
 

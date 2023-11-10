@@ -1,5 +1,6 @@
 package bg.example.recepeWebsite.web;
 
+import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
@@ -59,10 +60,10 @@ public class UserController {
                                Model model,
                                @PageableDefault(page = 0, size = 1) Pageable pageable) {
 
-        model.addAttribute("pictures", pictureService.findAllUrlsByUserId(id, pageable));
-        model.addAttribute("heading", String.format("Photos added by %s", userService.findById(id).getUsername()));
-        model.addAttribute("baseUrl", String.format("/users/profile/%s/addedPictures", id));
-
+        String principalUserName = userService.findById(id).getUsername();
+        Page<PictureViewModel> pictures =  pictureService.findAllPictureViewModelsByUsername(principalUserName ,pageable);
+        model.addAttribute("pictures", pictures);
+        model.addAttribute("heading", String.format("Photos added by %s (%s)", principalUserName, pictures.getTotalElements()));
         return "user-pictures";
     }
 

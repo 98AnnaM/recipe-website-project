@@ -13,8 +13,7 @@ import java.util.List;
 @Repository
 public interface PictureRepository extends JpaRepository<PictureEntity, Long> {
 
-    @Query("SELECT p.url FROM PictureEntity p WHERE p.author.id = :authorId")
-    Page<String> findAllUrlsByUserId(@Param("authorId") Long authorId, Pageable pageable);
+    Page<PictureEntity> findAllByAuthor_Username(String username, Pageable pageable);
 
     void deleteAllById(Long id);
 

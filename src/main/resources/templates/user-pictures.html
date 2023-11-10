@@ -12,8 +12,9 @@
 <!-- Main -->
 <div class="container-fluid">
 
-    <div class="row mx-2 mb-4 bg-custom border-custom">
-        <h2 class="text-center text-white m-auto py-5" th:text="${heading}">All Pictures</h2>
+    <div class="mx-4 mb-4 bg-custom border-custom">
+        <h2 class="text-center text-white d-block mb-0 mt-4" th:text="${heading}">All Pictures</h2>
+        <p class="text-center text-white d-block mb-4">Click on the photo if you want to see the whole recipe</p>
     </div>
 
     <div class="card-group">
@@ -21,7 +22,9 @@
         <div    th:each="p : ${pictures}" th:object="${p}"
                 class="col-sm-12 col-md-6 col-lg-3 mb-4">
             <div class="card h-100 bg-custom border-custom">
-                <img class="card-img-top" th:src="${p}" alt="Card image cap">
+                <a th:href="@{|/recipes/details/*{recipeId}|}">
+                    <img class="card-img-top" th:src="*{url}" alt="Card image cap">
+                </a>
             </div>
         </div>
     </div>
@@ -34,7 +37,7 @@
     <ul class="pagination justify-content-center">
         <li class="page-item" th:classappend="${pictures.hasPrevious() ? '' : 'disabled'}">
             <a th:if="${pictures.hasPrevious()}"
-               th:href="@{|${baseUrl}/?size=${pictures.getSize()}&page=${pictures.getNumber() - 1}|}"
+               th:href="@{|/users/profile/${#authentication.principal.id}/addedPictures/?size=${pictures.getSize()}&page=${pictures.getNumber() - 1}|}"
                class="page-link" href="#">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
@@ -47,14 +50,14 @@
         <li class="page-item" th:each="page : ${#numbers.sequence(0, pictures.getTotalPages()-1)}"
             th:classappend="${page == pictures.getNumber() ? 'disabled' : ''}">
             <a th:unless="${page == pictures.getNumber()}"
-               th:href="@{|${baseUrl}/?size=${pictures.getSize()}&page=${page}|}"
+               th:href="@{|/users/profile/${#authentication.principal.id}/addedPictures/?size=${pictures.getSize()}&page=${page}|}"
                class="page-link" href="#"
                th:text="${page + 1}">Number</a>
             <span th:if="${page == pictures.getNumber()}" class="page-link" th:text="${page + 1}">Number</span>
         </li>
         <li class="page-item" th:classappend="${pictures.hasNext() ? '' : 'disabled'}">
             <a th:if="${pictures.hasNext()}"
-               th:href="@{|${baseUrl}/?size=${pictures.getSize()}&page=${pictures.getNumber() + 1}|}"
+               th:href="@{|/users/profile/${#authentication.principal.id}/addedPictures/?size=${pictures.getSize()}&page=${pictures.getNumber() + 1}|}"
                class="page-link" href="#">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Next</span>

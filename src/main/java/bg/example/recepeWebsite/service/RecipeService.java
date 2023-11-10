@@ -1,5 +1,6 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
@@ -120,12 +121,15 @@ public class RecipeService {
                     RecipeDetailsViewModel recipeDetailsViewModel = modelMapper
                             .map(recipe, RecipeDetailsViewModel.class);
 
+                    recipeDetailsViewModel.setPictures(recipe.getPictures()
+                            .stream()
+                            .map(p -> pictureService.map(p, principalName))
+                            .collect(Collectors.toList()));
+
                     recipeDetailsViewModel.setProducts(Arrays.stream(recipe.getProducts().split("[\r\n]+")).collect(Collectors.toList()));
                     recipeDetailsViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
-                    recipeDetailsViewModel.getPictures().forEach(p -> p.setCanNotDelete(!p.getAuthor().getUsername().equals(principalName)));
                     recipeDetailsViewModel.setCanDelete(isOwner(principalName, id));
                     recipeDetailsViewModel.setVideoId(extractVideoId(recipe.getVideoUrl()));
-
                     return recipeDetailsViewModel;
                 })
                 .orElse(null);
