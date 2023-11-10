@@ -23,6 +23,42 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<RoleEntity> roles;
 
+    @OneToMany(mappedBy = "author")
+    private List<RecipeEntity> addedRecipes;
+
+    @ManyToMany()
+    private List<RecipeEntity> favorites;
+
+    @OneToMany(mappedBy = "author")
+    private List<PictureEntity> addedPictures;
+
+    public List<RecipeEntity> getAddedRecipes() {
+        return addedRecipes;
+    }
+
+    public UserEntity setAddedRecipes(List<RecipeEntity> addedRecipes) {
+        this.addedRecipes = addedRecipes;
+        return this;
+    }
+
+    public List<RecipeEntity> getFavorites() {
+        return favorites;
+    }
+
+    public UserEntity setFavorites(List<RecipeEntity> favorites) {
+        this.favorites = favorites;
+        return this;
+    }
+
+    public List<PictureEntity> getAddedPictures() {
+        return addedPictures;
+    }
+
+    public UserEntity setAddedPictures(List<PictureEntity> addedPictures) {
+        this.addedPictures = addedPictures;
+        return this;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -53,11 +53,10 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <!-- Modify the form to trigger the modal -->
-                                <form th:action="@{/recipes/details/{recipeId}/picture/delete(recipeId = *{recipeId})}"
+                                <form th:action="@{/users/profile/{userId}/deletePicture(userId = *{})}"
                                       th:method="delete"
                                       class="d-inline-block"
                                       onsubmit="showDeleteSpinner(event)">
-                                    <input type="hidden" name="recipeId" th:value="*{recipeId}">
                                     <input type="hidden" name="pictureId" th:value="*{id}">
                                     <input class="btn btn-secondary" type="submit" value="Delete">
                                 </form>

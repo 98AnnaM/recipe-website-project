@@ -12,9 +12,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users/profile")
@@ -66,5 +66,14 @@ public class UserController {
         model.addAttribute("heading", String.format("Photos added by %s (%s)", principalUserName, pictures.getTotalElements()));
         return "user-pictures";
     }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @DeleteMapping("/{id}/deletePicture")
+    public String deletePicture(@PathVariable Long id, @RequestParam("pictureId") Long pictureId){
+        pictureService.deletePicture(pictureId);
+        return "redirect:/users/profile/" + id + "/adedPictures";
+
+    }
+
 
 }
