@@ -184,7 +184,7 @@ public class RecipeController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("recipeModel", recipeModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeModel", bindingResult);
-            return "redirect:/recipes/edit/{id}";
+            return "redirect:/recipes/edit/" + id;
         }
 
         recipeService.updateRecipeById(recipeModel, id, userDetails);

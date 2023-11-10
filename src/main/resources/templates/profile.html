@@ -12,10 +12,6 @@
   </head>
 
   <body class="profile-body">
-    
-
-    
-    
 
     <div class="container-fluid">
         <div class="d-flex justify-content-center align-items-center mx-5">
@@ -25,28 +21,28 @@
     
                 <div class="row mb-4 mt-4 pl-5">
                     <div class="form-group col-6">
-                        <h3>First name</h3>
-                        <p>Peter</p>
+                        <h3>First name: </h3>
+                        <p th:text="${user.firstName}">Peter</p>
                     </div>
                     <div class="form-group col-6">
-                        <h3>Last name</h3>
-                        <p>Ivanov</p>
+                        <h3>Last name: </h3>
+                        <p th:text="${user.lastName}">Ivanov</p>
                     </div>
                 </div>
                 <div class="row mb-4 pl-5">
                     <div class="form-group col-6">
-                        <h3>Username</h3>
-                        <p>pesho94</p>
+                        <h3>Username: </h3>
+                        <p th:text="${user.username}">pesho94</p>
                     </div>
                     <div class="form-group col-6">
-                        <h3>Email</h3>
-                        <p>pesho@gmail.com</p>
+                        <h3>Email: </h3>
+                        <p th:text="${user.email}">pesho@gmail.com</p>
                     </div>
                 </div>
                 <div class="row my-3 pl-5">
                     <div class="col-md-4">
                         <div class="button-holder d-flex">
-                            <input type="submit" class="btn btn-info btn-md px-4" value="Edit Profile" />
+                            <a th:href="" class="btn btn-info btn-md px-4" value="Edit Profile" />
                         </div>
                     </div>
                 </div>

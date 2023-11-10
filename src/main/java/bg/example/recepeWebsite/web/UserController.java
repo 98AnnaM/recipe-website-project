@@ -1,9 +1,10 @@
 package bg.example.recepeWebsite.web;
 
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
+import bg.example.recepeWebsite.model.dto.EditRecipeDto;
+import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
-import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import bg.example.recepeWebsite.service.UserService;
@@ -12,10 +13,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -31,11 +37,35 @@ public class UserController {
         this.recipeService = recipeService;
         this.pictureService = pictureService;
     }
-    
+
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}")
     public String profile(@PathVariable Long id, Model model) {
+        model.addAttribute("user", this.userService.findById(id));
         return "profile";
+    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @GetMapping("/{id}/editProfile")
+    public String editProfile(@PathVariable Long id, Model model) {
+        model.addAttribute("userEditDto", new UserEditDto());
+        return "profile-edit";
+    }
+
+    @PutMapping("/{id}/editProfile")
+    public String update(@PathVariable("id") Long id,
+                         @Valid UserEditDto userEditDto,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userEditDto", userEditDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditDto", bindingResult);
+            return "redirect:/users/profile/" + id + "/editProfile";
+        }
+
+        userService.updateUserProfile(userEditDto);
+
+        return "redirect:/users/profile/" + id;
     }
 
     @PreAuthorize("#id == authentication.principal.id")

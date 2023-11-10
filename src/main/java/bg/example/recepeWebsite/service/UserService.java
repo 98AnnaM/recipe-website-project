@@ -1,11 +1,13 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.repository.RoleRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -76,7 +78,17 @@ public class UserService {
     }
 
 
+    public void updateUserProfile(UserEditDto userEditDto) {
+        UserEntity user = this.userRepository.findById(userEditDto.getId())
+                .orElseThrow(() -> new ObjectNotFoundException("User with id " + userEditDto.getId() + "was not found!"));
+
+        user.setFirstName(userEditDto.getFirstName())
+                .setLastName(userEditDto.getLastName())
+                .setUsername(userEditDto.getUsername())
+                .setEmail(userEditDto.getEmail());
+
+        this.userRepository.save(user);
 
 
-
+    }
 }
