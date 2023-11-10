@@ -1,8 +1,10 @@
 package bg.example.recepeWebsite.web;
 
+import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import bg.example.recepeWebsite.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -40,10 +42,13 @@ public class UserController {
     @GetMapping("/{id}/addedRecipes")
     public String addedRecipes(@PathVariable Long id,
                                Model model,
-                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 8) Pageable pageable) {
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
 
-        model.addAttribute("recipes", recipeService.findAllByUserId(id, pageable));
-        model.addAttribute("heading", String.format("Recipes added by %s", userService.findById(id).getUsername()));
+        Page<RecipeViewModel> recipes = recipeService.findAllByUserId(id, pageable);
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("heading",
+                String.format("Recipes added by %s (%s)", userService.findById(id).getUsername(), recipes.getTotalElements()));
+        model.addAttribute("baseUrl", String.format("/users/profile/%s/addedRecipes", id));
 
         return "all-recipes";
     }
@@ -56,6 +61,7 @@ public class UserController {
 
         model.addAttribute("pictureURLs", pictureService.findAllUrlsByUserId(id, pageable));
         model.addAttribute("heading", String.format("Photos added by %s", userService.findById(id).getUsername()));
+        model.addAttribute("baseUrl", String.format("/users/profile/%s/addedPictures", id));
 
         return "user-pictures";
     }
