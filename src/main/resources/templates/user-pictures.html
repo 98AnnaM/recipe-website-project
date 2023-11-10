@@ -53,7 +53,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <!-- Modify the form to trigger the modal -->
-                                <form th:action="@{/users/profile/{userId}/deletePicture(userId = *{})}"
+                                <form th:action="@{/users/profile/{userId}/deletePicture(userId=${#authentication.principal.id})}"
                                       th:method="delete"
                                       class="d-inline-block"
                                       onsubmit="showDeleteSpinner(event)">

@@ -1,7 +1,9 @@
 package bg.example.recepeWebsite.web;
 
+import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
+import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import bg.example.recepeWebsite.service.UserService;
@@ -29,13 +31,10 @@ public class UserController {
         this.recipeService = recipeService;
         this.pictureService = pictureService;
     }
-
+    
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}")
     public String profile(@PathVariable Long id, Model model) {
-
-        model.addAttribute("user", userService.findById(id));
-
         return "profile";
     }
 
@@ -69,10 +68,9 @@ public class UserController {
 
     @PreAuthorize("#id == authentication.principal.id")
     @DeleteMapping("/{id}/deletePicture")
-    public String deletePicture(@PathVariable Long id, @RequestParam("pictureId") Long pictureId){
+    public String deletePicture(@PathVariable("id") Long id, @RequestParam("pictureId") Long pictureId){
         pictureService.deletePicture(pictureId);
-        return "redirect:/users/profile/" + id + "/adedPictures";
-
+        return "redirect:/users/profile/" + id + "/addedPictures";
     }
 
 

@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class UserView {
 
+    private Long userId;
     private String username;
     private String firstName;
     private String lastName;
@@ -54,6 +55,15 @@ public class UserView {
 
     public UserView setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public UserView setUserId(Long userId) {
+        this.userId = userId;
         return this;
     }
 }

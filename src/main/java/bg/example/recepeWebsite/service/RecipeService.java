@@ -66,13 +66,13 @@ public class RecipeService {
     private RecipeViewModel map(RecipeEntity recipe){
         RecipeViewModel recipeViewModel = modelMapper.map(recipe, RecipeViewModel.class);
         recipeViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
-        recipeViewModel.setPictureUrl(
+        recipeViewModel.setPictureUrl( !recipe.getPictures().isEmpty() ?
                 recipe.getPictures()
                         .stream()
                         .sorted(Comparator.comparingLong(PictureEntity::getId))
                         .collect(Collectors.toList())
                         .get(0)
-                        .getUrl());
+                        .getUrl() : "/static/images/register.jpg");
         return recipeViewModel;
 
     }
