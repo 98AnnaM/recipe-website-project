@@ -59,7 +59,7 @@ public class UserController {
                                Model model,
                                @PageableDefault(page = 0, size = 1) Pageable pageable) {
 
-        model.addAttribute("pictureURLs", pictureService.findAllUrlsByUserId(id, pageable));
+        model.addAttribute("pictures", pictureService.findAllUrlsByUserId(id, pageable));
         model.addAttribute("heading", String.format("Photos added by %s", userService.findById(id).getUsername()));
         model.addAttribute("baseUrl", String.format("/users/profile/%s/addedPictures", id));
 
