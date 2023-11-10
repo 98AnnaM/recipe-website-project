@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping("/{id}/addedPictures")
     public String addedPictures(@PathVariable Long id,
                                Model model,
-                               @PageableDefault(page = 0, size = 8) Pageable pageable) {
+                               @PageableDefault(page = 0, size = 1) Pageable pageable) {
 
         model.addAttribute("pictureURLs", pictureService.findAllUrlsByUserId(id, pageable));
         model.addAttribute("heading", String.format("Photos added by %s", userService.findById(id).getUsername()));

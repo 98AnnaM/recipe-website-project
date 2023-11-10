@@ -213,10 +213,12 @@ public class RecipeService {
         }
     }
 @Transactional
-    public Page<RecipeViewModel> searchRecipe(SearchRecipeDto searchRecipeDto, Pageable pageable) {
+    public List<RecipeViewModel> searchRecipe(SearchRecipeDto searchRecipeDto) {
         return this.recipeRepository
-                .findAll(new RecipeSpecification(searchRecipeDto), pageable)
-                .map(this::map);
+                .findAll(new RecipeSpecification(searchRecipeDto))
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
     @Transactional
