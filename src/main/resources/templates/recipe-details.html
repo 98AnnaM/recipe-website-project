@@ -4,7 +4,7 @@
 
 <head th:replace="~{fragments/commons::head}"></head>
 
-<body style="background-color: #936c3d;">
+<body>
 
 <div id="overlay">
     <div id="spinner" class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
@@ -35,7 +35,7 @@
                         <button id="nextButton" class="btn btn-dark btn-sm next"><i
                                 class="fas fa-chevron-right"></i></button>
                         <img id="mainImage" class="d-block w-100" alt="Main Image">
-                        <button id="deleteImg" class="btn btn-danger btn-sm exclude-me"  data-toggle="modal" data-target="#deletePicModal">
+                        <button id="deleteImg" class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#deletePicModal">
                             <i class="fas fa-trash-alt"></i> Delete</button>
                         <div class="modal fade"
                              id="deletePicModal"
