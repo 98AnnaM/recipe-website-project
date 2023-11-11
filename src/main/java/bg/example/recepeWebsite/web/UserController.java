@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/users/profile")
@@ -49,10 +50,14 @@ public class UserController {
 
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}/editProfile")
-    public String editProfile(@PathVariable Long id, Model model) {
+    public String editUserInformation( @PathVariable("id") Long id,
+            Model model){
 
-        UserEditDto userEditDto = userService.getUserEditDetails(id);
-        model.addAttribute("userEditDto", userEditDto);
+        if (!model.containsAttribute("userEditDto")){
+            UserEditDto userEditDto = userService.getUserEditDetails(id);
+            model.addAttribute("userEditDto", userEditDto);
+        }
+
         return "profile-edit";
     }
 
@@ -61,7 +66,6 @@ public class UserController {
                          @Valid UserEditDto userEditDto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userEditDto", userEditDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditDto", bindingResult);
