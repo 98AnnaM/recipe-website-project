@@ -2,13 +2,21 @@ $(document).ready(function(){
     // Function to change the main image
     function changeMainImage(src, pictureId, canNotDelete) {
         $('#mainImage').attr('src', src);
-        $('#mainPictureId').val(pictureId); // Use .val() to set the value
-        var submitButton = $('#deleteImg');
-        if (canNotDelete) {
-            submitButton.prop('disabled', true); // Disable the submit button
-        } else {
-            submitButton.prop('disabled', false); // Enable the submit button
+
+        // Check if pictureId is not null or undefined before setting the value
+        if (pictureId !== null && pictureId !== undefined) {
+            $('#mainPictureId').val(pictureId); // Use .val() to set the value
         }
+
+        var submitButton = $('#deleteImg');
+
+        console.log('pictureId:', pictureId); // Add this line for debugging
+
+        // Set the display property of the button based on pictureId
+        submitButton.css('display', (pictureId !== null && pictureId !== undefined) ? 'block' : 'none');
+
+        // Enable or disable the submit button based on canNotDelete
+        submitButton.prop('disabled', canNotDelete);
     }
 
     function updateMainImageOnClick(element) {
