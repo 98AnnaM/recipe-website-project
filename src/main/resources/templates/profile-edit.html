@@ -9,12 +9,12 @@
       <nav th:replace="~{fragments/commons::navigation}"></nav>
   </header>
 
-  <div class="container-fluid justify-content-center align-items-center p-5">
+  <div class="container-fluid mt-5 justify-content-center align-items-center p-5">
 
       <form th:action="@{/users/profile/{id}/editProfile(id=${userEditDto.id})}"
             th:method="put"
             th:object="${userEditDto}"
-            class="col-sm-12 col-lg-5 mx-auto bg-custom-opaque border-custom p-5">
+            class="col-sm-12 col-lg-5 mx-auto mt-3 bg-custom-opaque border-custom p-5">
 
           <h2 class="text-center text-white my-4">Edit Profile</h2>
 

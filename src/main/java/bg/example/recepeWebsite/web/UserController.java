@@ -5,6 +5,7 @@ import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
+import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 import bg.example.recepeWebsite.service.UserService;
@@ -41,6 +42,7 @@ public class UserController {
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}")
     public String profile(@PathVariable Long id, Model model) {
+        UserView user = this.userService.findById(id);
         model.addAttribute("user", this.userService.findById(id));
         return "profile";
     }
@@ -48,7 +50,9 @@ public class UserController {
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}/editProfile")
     public String editProfile(@PathVariable Long id, Model model) {
-        model.addAttribute("userEditDto", new UserEditDto());
+
+        UserEditDto userEditDto = userService.getUserEditDetails(id);
+        model.addAttribute("userEditDto", userEditDto);
         return "profile-edit";
     }
 
@@ -57,6 +61,7 @@ public class UserController {
                          @Valid UserEditDto userEditDto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userEditDto", userEditDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditDto", bindingResult);

@@ -13,9 +13,13 @@
 
   <body class="profile-body">
 
-    <div class="container-fluid">
+  <header>
+      <nav th:replace="~{fragments/commons::navigation}"></nav>
+  </header>
+
+    <div class="container-fluid my-5">
         <div class="d-flex justify-content-center align-items-center mx-5">
-            <div class="col-sm- col-lg-5 mx-auto p-5 bg-custom-opaque border-custom">
+            <div class="col-sm- col-lg-5 mx-auto p-3 mb-3 mt-2 bg-custom-opaque border-custom">
     
                 <h2 class="text-center text-white my-4">Profile</h2>
     
@@ -42,17 +46,18 @@
                 <div class="row my-3 pl-5">
                     <div class="col-md-4">
                         <div class="button-holder d-flex">
-                            <a th:href="" class="btn btn-info btn-md px-4" value="Edit Profile" />
+                            <a th:href="@{/users/profile/{id}/editProfile(id=${user.id})}"
+                               class="btn btn-info btn-sm px-4">Edit Profile</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
 
-    <div>
-      <footer></footer>
-    </div>
+
+  <div>
+      <footer th:replace="~{fragments/commons::footer}"></footer>
+  </div>
   </body>
 </html>

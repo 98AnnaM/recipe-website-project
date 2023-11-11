@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class UserView {
 
-    private Long userId;
+    private Long id;
     private String username;
     private String firstName;
     private String lastName;
@@ -58,12 +58,12 @@ public class UserView {
         return this;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public UserView setUserId(Long userId) {
-        this.userId = userId;
+    public UserView setId(Long id) {
+        this.id = id;
         return this;
     }
 }

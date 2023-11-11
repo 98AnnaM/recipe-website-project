@@ -4,6 +4,25 @@ body {
     background-color: #936c3d;
 }
 
+.add-body{
+    background-image: url('/images/add-recipe');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+
+.profile-body{
+    background-image: url('/images/profile.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+
+
 .navbar .logo {
     max-height: 50px;
     padding-right: 100px;
@@ -157,23 +176,6 @@ ul.custom-list li {
     overflow: hidden;
 }
 
-.add-body{
-    background-image: url('/images/2.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: #464646;
-}
-
-.profile-body{
-    background-image: url('/img/profile.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: #464646;
-}
 
 .btn-custom {
     font-size: 1.5rem;

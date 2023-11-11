@@ -91,4 +91,10 @@ public class UserService {
 
 
     }
+
+    public UserEditDto getUserEditDetails(Long id) {
+        return this.userRepository.findById(id)
+                .map(userEntity -> modelMapper.map(userEntity, UserEditDto.class))
+                .orElse(null);
+    }
 }
