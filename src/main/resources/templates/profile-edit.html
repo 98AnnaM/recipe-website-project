@@ -57,8 +57,7 @@
                          max="20"
                          class="form-control"
                          placeholder="Username" />
-                  <p th:each="err : ${#fields.errors('username')}"
-                     th:text="${err}"  id="inputUsernameError"
+                  <p id="inputUsernameError"
                      class="invalid-feedback text-danger mb-0">Username length must be between 3 and 20 characters!</p>
               </div>
               <div class="form-group col-sm-12 col-lg-6">
@@ -69,8 +68,7 @@
                          type="email"
                          class="form-control"
                          placeholder="Email" />
-                  <p th:each="err : ${#fields.errors('email')}"
-                     th:text="${err}"  id="inputNameError"
+                  <p id="inputNameError"
                      class="invalid-feedback text-danger mb-0">Must be valid email address.</p>
               </div>
           </div>
