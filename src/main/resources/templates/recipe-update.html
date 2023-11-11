@@ -16,7 +16,7 @@
   <div class="row">
     <form th:action="@{/recipes/edit/{id}(id=*{id})}"
           th:method="put"
-          th:object="${recipe}"
+          th:object="${editRecipeDto}"
           class="col-sm-12 col-lg-6 mx-auto p-4">
 
       <h2 class="text-center text-white my-4">Update Recipe</h2>
@@ -108,7 +108,7 @@
                        class="form-check-input form-check-lg"
                        type="checkbox"
                        th:id="'check' + ${iterStat.index}"
-                       th:checked="${recipe.types.contains(t)}">
+                       th:checked="${editRecipeDto.types.contains(t)}">
                 <label class="form-check-label text-white" th:for="'check' + ${iterStat.index}" th:text="${#strings.capitalize(#strings.toLowerCase(t))}"></label>
               </div>
             </div>

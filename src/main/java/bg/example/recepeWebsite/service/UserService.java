@@ -97,4 +97,12 @@ public class UserService {
                 .map(userEntity -> modelMapper.map(userEntity, UserEditDto.class))
                 .orElse(null);
     }
+
+    public boolean usernameExists(String username){
+        return this.userRepository.existsByUsername(username);
+    }
+
+    public boolean emailExists(String email){
+        return this.userRepository.existsByEmail(email);
+    }
 }

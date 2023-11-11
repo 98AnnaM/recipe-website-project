@@ -13,11 +13,9 @@ public class UserEditDto {
 
     @NotEmpty(message = "Email cannot be empty.")
     @Email(message = "Must be valid email address.")
-    @UniqueEmail(message = "This email is already in use.")
     private String email;
 
     @NotEmpty(message = "Username cannot be empty.")
-    @UniqueUsername(message = "This username is already in use.")
     @Size(min = 3, max=20, message = "Username length must be between 3 and 20 characters!")
     private String username;
 

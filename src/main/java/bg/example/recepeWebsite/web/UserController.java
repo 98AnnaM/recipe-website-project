@@ -1,7 +1,5 @@
 package bg.example.recepeWebsite.web;
 
-import bg.example.recepeWebsite.model.dto.AddRecipeDto;
-import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
@@ -14,17 +12,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/users/profile")
@@ -66,6 +61,21 @@ public class UserController {
                          @Valid UserEditDto userEditDto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+
+        final UserEditDto currentUser = userService.getUserEditDetails(id);
+        if (!bindingResult.hasFieldErrors("username") &&
+                !userEditDto.getUsername().equalsIgnoreCase(currentUser.getUsername()) &&
+                userService.usernameExists(userEditDto.getUsername())) {
+            bindingResult.addError(new FieldError("userEditDto", "username", userEditDto.getUsername(), false, null, null, "This username is occupied!"));
+        }
+
+        if (!bindingResult.hasFieldErrors("email") &&
+                !userEditDto.getEmail().equals(currentUser.getEmail()) &&
+                userService.emailExists(userEditDto.getEmail())) {
+            bindingResult.addError(new FieldError("userEditDto", "email", userEditDto.getEmail(), false, null, null, "This email is occupied!"));
+        }
+
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userEditDto", userEditDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditDto", bindingResult);

@@ -169,26 +169,26 @@ public class RecipeController {
             @PathVariable("id") Long recipeId,
             Model model){
 
-        EditRecipeDto recipe = recipeService.getRecipeEditDetails(recipeId);
-
-        model.addAttribute("recipe", recipe);
+        if (!model.containsAttribute("editRecipeDto")){
+            EditRecipeDto editRecipeDto = recipeService.getRecipeEditDetails(recipeId);
+            model.addAttribute("editRecipeDto", editRecipeDto);
+        }
         return "recipe-update";
     }
 
     @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,
-                         @Valid EditRecipeDto recipeModel,
+                         @Valid EditRecipeDto editRecipeDto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
                          @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("recipeModel", recipeModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.recipeModel", bindingResult);
+            redirectAttributes.addFlashAttribute("editRecipeDto", editRecipeDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editRecipeDto", bindingResult);
             return "redirect:/recipes/edit/" + id;
         }
 
-        recipeService.updateRecipeById(recipeModel, id, userDetails);
-
+        recipeService.updateRecipeById(editRecipeDto, id, userDetails);
         return "redirect:/recipes/details/" + id;
     }
 
