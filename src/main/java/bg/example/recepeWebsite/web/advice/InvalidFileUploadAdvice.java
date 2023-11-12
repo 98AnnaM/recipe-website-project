@@ -13,13 +13,9 @@ public class InvalidFileUploadAdvice {
     @ExceptionHandler(InvalidFileException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleInvalidFileException(InvalidFileException ex, Model model) {
-        // Log the exception (you can use a logging framework like SLF4J)
+
         ex.printStackTrace();
-
-        // Add attributes to the model if needed
         model.addAttribute("errorMessage", ex.getMessage());
-
-        // Return the name of the error page
         return "error/invalidPictureUploadError";
     }
 }
