@@ -97,7 +97,7 @@ public class UserController {
         model.addAttribute("recipes", recipes);
         model.addAttribute("heading",
                 String.format("Recipes added by %s (%s)", userService.findById(id).getUsername(), recipes.getTotalElements()));
-        model.addAttribute("baseUrl", String.format("/users/profile/%s/addedRecipes", id));
+        model.addAttribute("url", String.format("/users/profile/%s/addedRecipes", id));
 
         return "all-recipes";
     }

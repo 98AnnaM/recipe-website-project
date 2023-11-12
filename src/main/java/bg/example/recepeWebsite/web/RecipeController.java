@@ -73,7 +73,7 @@ public class RecipeController {
         Page<RecipeViewModel> pagesWithAllRecipes = recipeService.findAllRecipeViewModels(pageable);
         model.addAttribute("recipes", pagesWithAllRecipes);
         model.addAttribute("heading", String.format("All recipes (%s)", pagesWithAllRecipes.getTotalElements()));
-        model.addAttribute("baseUrl", "/recipes/all");
+        model.addAttribute("url", "/recipes/all");
         return "all-recipes";
     }
 
@@ -83,7 +83,7 @@ public class RecipeController {
         Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGETARIAN, pageable);
         model.addAttribute("recipes", pagesWithVeganRecipes);
         model.addAttribute("heading", String.format("Vegetarian recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
-        model.addAttribute("baseUrl", "/recipes/vegetarian");
+        model.addAttribute("url", "/recipes/vegetarian");
         return "all-recipes";
     }
 
@@ -93,7 +93,7 @@ public class RecipeController {
         Page<RecipeViewModel> pagesWithMeatRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.WITH_MEAT, pageable);
         model.addAttribute("recipes", pagesWithMeatRecipes);
         model.addAttribute("heading", String.format("Recipes with meat (%s)", pagesWithMeatRecipes.getTotalElements()));
-        model.addAttribute("baseUrl", "/recipes/withMeat");
+        model.addAttribute("url", "/recipes/withMeat");
         return "all-recipes";
     }
 
@@ -103,7 +103,7 @@ public class RecipeController {
         Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGAN, pageable);
         model.addAttribute("recipes", pagesWithVeganRecipes);
         model.addAttribute("heading", String.format("Vegan recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
-        model.addAttribute("baseUrl", "/recipes/vegan");
+        model.addAttribute("url", "/recipes/vegan");
         return "all-recipes";
     }
 
@@ -236,8 +236,8 @@ public class RecipeController {
                     .map(entry -> entry.getKey() + "=" + entry.getValue())
                     .collect(Collectors.joining("&"));
 
-            String baseUrl = request.getRequestURL().toString() + (queryString.isEmpty() ? "" : "?" + queryString);
-            model.addAttribute("baseUrl", baseUrl);
+            String url = request.getRequestURL().toString() + (queryString.isEmpty() ? "" : "?" + queryString);
+            model.addAttribute("url", url);
         }
 
         return "recipe-search";
