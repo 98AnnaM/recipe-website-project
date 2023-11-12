@@ -10,9 +10,8 @@ $(document).ready(function(){
 
         var submitButton = $('#deleteImg');
 
-        console.log('pictureId:', pictureId); // Add this line for debugging
+        console.log('pictureId:', pictureId);
 
-        // Set the display property of the button based on pictureId
         submitButton.css('display', (pictureId !== null && pictureId !== undefined) ? 'block' : 'none');
 
         // Enable or disable the submit button based on canNotDelete
