@@ -11,6 +11,8 @@ import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.service.CloudinaryService;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import bg.example.recepeWebsite.service.TypeService;
@@ -30,6 +32,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/recipes")
@@ -203,9 +207,12 @@ public class RecipeController {
     }
 
     @GetMapping("/search")
-    public String searchQuery(@Valid SearchRecipeDto searchRecipeDto,
-                              BindingResult bindingResult,
-                              Model model) {
+    public String searchQuery( @RequestParam Map<String, String> queryParams,
+                               HttpServletRequest request,
+                               @Valid SearchRecipeDto searchRecipeDto,
+                               BindingResult bindingResult,
+                               Model model,
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("searchRecipeDto", searchRecipeDto);
@@ -221,8 +228,16 @@ public class RecipeController {
         }
 
         if (!searchRecipeDto.isEmpty()) {
-            model.addAttribute("recipes", recipeService.searchRecipe(searchRecipeDto));
+            model.addAttribute("recipes", recipeService.searchRecipe(searchRecipeDto, pageable));
             model.addAttribute("result", searchRecipeDto.toString());
+
+            String queryString = queryParams.entrySet().stream()
+                    .filter(entry -> !entry.getKey().equals("page") && !entry.getKey().equals("size"))
+                    .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .collect(Collectors.joining("&"));
+
+            String baseUrl = request.getRequestURL().toString() + (queryString.isEmpty() ? "" : "?" + queryString);
+            model.addAttribute("baseUrl", baseUrl);
         }
 
         return "recipe-search";
