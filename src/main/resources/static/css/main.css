@@ -227,6 +227,12 @@ nav .dropdown-item:hover {
     color: darkgrey;
 }
 
+#userPictureDelete{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 
 
 
