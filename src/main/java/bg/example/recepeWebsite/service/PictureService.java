@@ -1,6 +1,7 @@
 package bg.example.recepeWebsite.service;
 
 import bg.example.recepeWebsite.model.view.PictureViewModel;
+import bg.example.recepeWebsite.web.exception.InvalidFileException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
@@ -44,18 +45,20 @@ public class PictureService {
 
     public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId) throws IOException {
 
-        final CloudinaryImage upload = cloudinaryService
-                .uploadImage(file);
+        try {
+            final CloudinaryImage upload = cloudinaryService
+                    .uploadImage(file);
+            PictureEntity newPicture = new PictureEntity()
+                    .setAuthor(userRepository.findById(userId).get())
+                    .setUrl(upload.getUrl())
+                    .setPublicId(upload.getPublicId())
+                    .setTitle(file.getOriginalFilename())
+                    .setRecipe(recipeRepository.findById(recipeId).orElse(null));
 
-        PictureEntity newPicture = new PictureEntity()
-                .setAuthor(userRepository.findById(userId).get())
-                .setUrl(upload.getUrl())
-                .setPublicId(upload.getPublicId())
-                .setTitle(file.getOriginalFilename())
-                .setRecipe(recipeRepository.findById(recipeId).orElse(null));
-
-
-        return pictureRepository.save(newPicture);
+            return pictureRepository.save(newPicture);
+        } catch (RuntimeException e){
+            throw new InvalidFileException("File with name " + file.getOriginalFilename() + " can not be uploaded.");
+        }
     }
 
     @Transactional

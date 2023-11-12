@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/commons::head}"></head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/commons::navigation}"></nav>
+</div>
+
+<div class="container-fluid">
+    <h5 class="text-center text-white m-5">
+        <span th:text ="${errorMessage}"></span>
+        <span>Go <a href="javascript:void(0);" onclick="goBackOrHome()">back</a> and choose another file to upload.</span>
+    </h5>
+</div>
+
+<div>
+    <footer th:replace="~{fragments/commons::footer}"> </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if form data is present in sessionStorage
+        var formData = sessionStorage.getItem('formData');
+        if (formData) {
+            // Parse and set form values
+            var formValues = JSON.parse(formData);
+            for (var key in formValues) {
+                var input = document.querySelector('[name="' + key + '"]');
+                if (input) {
+                    input.value = formValues[key];
+                }
+            }
+        }
+    });
+
+    function clearSessionStorage() {
+        sessionStorage.removeItem('formData');
+    }
+
+    function goBackOrHome() {
+        // Clear sessionStorage before navigating back
+        clearSessionStorage();
+
+        // Navigate back or to home
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = '/';
+        }
+    }
+
+    document.getElementById('recipeForm').addEventListener('submit', function() {
+        // Clear sessionStorage after form submission
+        clearSessionStorage();
+    });
+</script>
+
+</body>
+</html>
