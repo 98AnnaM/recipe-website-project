@@ -57,7 +57,7 @@ public class PictureService {
                     .setRecipe(recipeRepository.findById(recipeId).orElse(null));
 
             return pictureRepository.save(newPicture);
-        } catch (IOException e){
+        } catch (RuntimeException | IOException e){
             throw new InvalidFileException("File with name " + file.getOriginalFilename() + " can not be uploaded.");
         }
     }
