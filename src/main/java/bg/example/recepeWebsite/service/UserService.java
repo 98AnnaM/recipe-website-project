@@ -74,13 +74,14 @@ public class UserService {
     public UserView findById(Long id) {
         return this.userRepository.findById(id)
                 .map(userEntity -> modelMapper.map(userEntity, UserView.class))
-                .orElse(null);
+                .orElseThrow(() -> new ObjectNotFoundException("User with id " + id + " not found!"));
+
     }
 
 
     public void updateUserProfile(UserEditDto userEditDto) {
         UserEntity user = this.userRepository.findById(userEditDto.getId())
-                .orElseThrow(() -> new ObjectNotFoundException("User with id " + userEditDto.getId() + "was not found!"));
+                .orElseThrow(() -> new ObjectNotFoundException("User with id " + userEditDto.getId() + " was not found!"));
 
         user.setFirstName(userEditDto.getFirstName())
                 .setLastName(userEditDto.getLastName())
@@ -95,7 +96,8 @@ public class UserService {
     public UserEditDto getUserEditDetails(Long id) {
         return this.userRepository.findById(id)
                 .map(userEntity -> modelMapper.map(userEntity, UserEditDto.class))
-                .orElse(null);
+                .orElseThrow(() -> new ObjectNotFoundException("User with ID " + id + " not found!"));
+
     }
 
     public boolean usernameExists(String username){

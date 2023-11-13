@@ -5,6 +5,7 @@ import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.repository.TypeRepository;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -22,7 +23,8 @@ public class TypeService {
 
 
     public TypeEntity findByTypeName(TypeNameEnum typeNameEnum) {
-        return this.typeRepository.findByName(typeNameEnum).orElse(null);
+        return this.typeRepository.findByName(typeNameEnum)
+                .orElseThrow(() -> new ObjectNotFoundException("Type with name " + typeNameEnum.name() + " not found!"));
     }
 
     public void initTypes() {

@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
@@ -24,8 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;;
-import java.io.IOException;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,7 +90,7 @@ public class RecipeService {
 
 
     @Transactional
-    public void addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) throws IOException {
+    public void addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) {
 
         RecipeEntity newRecipe = modelMapper.map(addRecipeDto, RecipeEntity.class);
 
@@ -115,24 +113,24 @@ public class RecipeService {
 
     @Transactional
     public RecipeDetailsViewModel findRecipeDetailsViewModelById(Long id, String principalName) {
-        return  this.recipeRepository
-                .findById(id)
-                .map(recipe -> {
-                    RecipeDetailsViewModel recipeDetailsViewModel = modelMapper
-                            .map(recipe, RecipeDetailsViewModel.class);
 
-                    recipeDetailsViewModel.setPictures(recipe.getPictures()
-                            .stream()
-                            .map(p -> pictureService.map(p, principalName))
-                            .collect(Collectors.toList()));
+        RecipeEntity recipeEntity = this.recipeRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + id + " not found!"));
 
-                    recipeDetailsViewModel.setProducts(Arrays.stream(recipe.getProducts().split("[\r\n]+")).collect(Collectors.toList()));
-                    recipeDetailsViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
-                    recipeDetailsViewModel.setCanDelete(isOwner(principalName, id));
-                    recipeDetailsViewModel.setVideoId(extractVideoId(recipe.getVideoUrl()));
-                    return recipeDetailsViewModel;
-                })
-                .orElse(null);
+        RecipeDetailsViewModel recipeDetailsViewModel = modelMapper
+                .map(recipeEntity, RecipeDetailsViewModel.class);
+
+        recipeDetailsViewModel.setPictures(recipeEntity.getPictures()
+                .stream()
+                .map(p -> pictureService.map(p, principalName))
+                .collect(Collectors.toList()));
+
+        recipeDetailsViewModel.setProducts(Arrays.stream(recipeEntity.getProducts().split("[\r\n]+")).collect(Collectors.toList()));
+        recipeDetailsViewModel.setAuthor(recipeEntity.getAuthor().getFirstName() + " " + recipeEntity.getAuthor().getLastName());
+        recipeDetailsViewModel.setCanDelete(isOwner(principalName, id));
+        recipeDetailsViewModel.setVideoId(extractVideoId(recipeEntity.getVideoUrl()));
+
+        return  recipeDetailsViewModel;
     }
 
     public boolean isOwner(String userName, Long recipeId) {
@@ -162,7 +160,7 @@ public class RecipeService {
     public EditRecipeDto getRecipeEditDetails(Long recipeId){
 
         RecipeEntity recipeEntity = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + recipeId + "not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + recipeId + " not found"));
 
         EditRecipeDto editRecipeDto = modelMapper.map(recipeEntity, EditRecipeDto.class);
         editRecipeDto.setTypes(recipeEntity.getTypes()
@@ -176,21 +174,24 @@ public class RecipeService {
 
     public void updateRecipeById(EditRecipeDto editRecipeDto, Long id, UserDetails userDetails) {
         RecipeEntity updateRecipe = this.recipeRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Recipe with id: " + id + "not found!"));
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with id: " + id + " not found!"));
 
-        updateRecipe.setAuthor(userRepository.findByUsername(userDetails.getUsername()).orElseThrow());
+        updateRecipe.setAuthor(userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new ObjectNotFoundException("User with username " + userDetails.getUsername() + " not found!")));
+
         updateRecipe.setTypes(editRecipeDto.getTypes()
                 .stream()
                 .map(typeService::findByTypeName)
                 .collect(Collectors.toList()));
+
         updateRecipe.setName(editRecipeDto.getName())
                     .setLevel(editRecipeDto.getLevel())
                     .setCategory(editRecipeDto.getCategory())
                     .setPortions(editRecipeDto.getPortions())
-                            .setTimeNeeded(editRecipeDto.getTimeNeeded())
-                            .setDescription(editRecipeDto.getDescription())
-                            .setVideoUrl(editRecipeDto.getVideoUrl())
-                            .setProducts(editRecipeDto.getProducts());
+                    .setTimeNeeded(editRecipeDto.getTimeNeeded())
+                    .setDescription(editRecipeDto.getDescription())
+                    .setVideoUrl(editRecipeDto.getVideoUrl())
+                    .setProducts(editRecipeDto.getProducts());
 
         recipeRepository.save(updateRecipe);
     }
@@ -209,12 +210,12 @@ public class RecipeService {
 
     @Transactional
     public void deleteRecipeById(Long recipeId) {
-        RecipeEntity recipe = recipeRepository.findById(recipeId).orElse(null);
+        RecipeEntity recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + recipeId + " not found!"));
 
-        if (recipe != null) {
-            recipe.getPictures().forEach(picture -> pictureService.deletePicture(picture.getId()));
-            recipeRepository.deleteById(recipeId);
-        }
+        recipe.getPictures().forEach(picture -> pictureService.deletePicture(picture.getId()));
+        recipeRepository.deleteById(recipeId);
+
     }
 @Transactional
     public Page<RecipeViewModel> searchRecipe(SearchRecipeDto searchRecipeDto, Pageable pageable) {

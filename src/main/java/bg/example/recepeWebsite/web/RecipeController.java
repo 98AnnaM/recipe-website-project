@@ -8,7 +8,6 @@ import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.model.user.CustomUserDetails;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
-import bg.example.recepeWebsite.service.CloudinaryService;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
 
@@ -29,7 +28,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -40,13 +38,11 @@ import java.util.stream.Collectors;
 public class RecipeController {
 
     private final RecipeService recipeService;
-    private final CloudinaryService cloudinaryService;
     private final PictureService pictureService;
     private final TypeService typeService;
 
-    public RecipeController(RecipeService recipeService, CloudinaryService cloudinaryService, PictureService pictureService, TypeService typeService) {
+    public RecipeController(RecipeService recipeService, PictureService pictureService, TypeService typeService) {
         this.recipeService = recipeService;
-        this.cloudinaryService = cloudinaryService;
         this.pictureService = pictureService;
         this.typeService = typeService;
     }
@@ -109,7 +105,7 @@ public class RecipeController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/add")
-    public String addRecipe(Model model) {
+    public String addRecipe() {
         return "add-recipe";
     }
 
@@ -117,7 +113,7 @@ public class RecipeController {
     public String addRecipeConfirm(@Valid AddRecipeDto addRecipeDto,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes,
-                                   @AuthenticationPrincipal CustomUserDetails userDetails) throws IOException {
+                                   @AuthenticationPrincipal CustomUserDetails userDetails){
 
         if (bindingResult.hasErrors()) {
 
@@ -150,7 +146,7 @@ public class RecipeController {
     @PostMapping("/details/{id}/picture/add")
     public String addPicture(UploadPictureDto uploadPictureDto,
                              @PathVariable Long id,
-                             @AuthenticationPrincipal CustomUserDetails principal) throws IOException {
+                             @AuthenticationPrincipal CustomUserDetails principal){
 
         pictureService.createAndSavePictureEntity(principal.getId(), uploadPictureDto.getPicture(), id);
         return "redirect:/recipes/details/" + id;

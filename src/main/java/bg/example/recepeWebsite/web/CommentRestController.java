@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -24,12 +23,11 @@ public class CommentRestController {
 
     private final CommentService commentService;
     private final ModelMapper modelMapper;
-    private final UserService userService;
 
-    public CommentRestController(CommentService commentService, ModelMapper modelMapper, UserService userService) {
+
+    public CommentRestController(CommentService commentService, ModelMapper modelMapper) {
         this.commentService = commentService;
         this.modelMapper = modelMapper;
-        this.userService = userService;
     }
 
     @GetMapping("/api/{recipeId}/comments")
@@ -45,12 +43,9 @@ public class CommentRestController {
     public ResponseEntity<CommentViewModel> newComment(
             @AuthenticationPrincipal UserDetails principal,
             @PathVariable Long recipeId,
-            @RequestBody @Valid AddCommentDto addCommentDto) throws AccessDeniedException {
+            @RequestBody @Valid AddCommentDto addCommentDto) {
 
-        if (principal == null) {
-           throw new AccessDeniedException("Only logged users can post comments.");
 
-        }
 
         CommentServiceModel commentServiceModel = modelMapper.map(addCommentDto, CommentServiceModel.class);
         commentServiceModel.setCreator(principal.getUsername());

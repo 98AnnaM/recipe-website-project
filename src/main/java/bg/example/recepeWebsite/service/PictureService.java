@@ -43,20 +43,21 @@ public class PictureService {
         return pictures.map(picture -> this.map(picture, principalName));
     }
 
-    public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId) throws IOException {
+    public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId){
 
         try {
             final CloudinaryImage upload = cloudinaryService
                     .uploadImage(file);
             PictureEntity newPicture = new PictureEntity()
-                    .setAuthor(userRepository.findById(userId).get())
+                    .setAuthor(userRepository.findById(userId)
+                            .orElseThrow(() -> new ObjectNotFoundException("User with id " + userId + " not found!")))
                     .setUrl(upload.getUrl())
                     .setPublicId(upload.getPublicId())
                     .setTitle(file.getOriginalFilename())
                     .setRecipe(recipeRepository.findById(recipeId).orElse(null));
 
             return pictureRepository.save(newPicture);
-        } catch (RuntimeException e){
+        } catch (IOException e){
             throw new InvalidFileException("File with name " + file.getOriginalFilename() + " can not be uploaded.");
         }
     }
@@ -66,7 +67,7 @@ public class PictureService {
         Optional<PictureEntity> picture = pictureRepository.findById(id);
 
         if (picture.isEmpty()){
-            throw new ObjectNotFoundException("Picture with id " + id + "not found!");
+            throw new ObjectNotFoundException("Picture with id " + id + " not found!");
         }
 
         String publicId = picture.get().getPublicId();

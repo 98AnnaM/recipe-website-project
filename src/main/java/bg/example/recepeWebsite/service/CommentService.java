@@ -76,7 +76,7 @@ public class CommentService {
 
     public CommentViewModel deleteComment(Long commentId, String principalName) {
         CommentEntity deleted = commentRepository.findById(commentId)
-                .orElseThrow(() -> new UnsupportedOperationException("Comment with id " + commentId + " not found!"));
+                .orElseThrow(() -> new ObjectNotFoundException("Comment with id " + commentId + " not found!"));
 
         commentRepository.deleteById(commentId);
         return mapAsComment(deleted, principalName);
