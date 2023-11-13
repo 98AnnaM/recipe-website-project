@@ -43,7 +43,7 @@ public class EmailService {
       socket.connect(new InetSocketAddress("localhost", 1025), 1000);
       socket.close();
     } catch (IOException e) {
-      logger.error("Could not connect to the MailHog server.");
+      logger.error("There is no connection to the MailHog server.");
       return;
     }
 
