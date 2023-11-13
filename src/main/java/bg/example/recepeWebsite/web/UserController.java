@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PreAuthorize("#id == authentication.principal.id")
-    @GetMapping("/{id}/editProfile")
+    @GetMapping("")
     public String editUserInformation( @PathVariable("id") Long id,
             Model model){
 

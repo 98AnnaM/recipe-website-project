@@ -13,11 +13,7 @@
 
 
 <div class="container-fluid">
-  <h5 class="text-center text-white mt-5">
-    UUUUPS!!!! You have no permission to perform this operation.
-
-    Why don't you <a th:href="@{/recipes/search}">search</a> for something else here?
-  </h5>
+  <h5 class="text-center text-white mt-5" th:text="${errorMessage}"></h5>
 </div>
 
 <div>

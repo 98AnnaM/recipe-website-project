@@ -162,7 +162,7 @@ public class RecipeController {
 
     }
 
-    @PreAuthorize("@recipeService.isOwner(#principal.name, #recipeId)")
+    @PreAuthorize("isAuthenticated() && @recipeService.isOwner(#principal.name, #recipeId)")
     @GetMapping("/edit/{id}")
     public String editRecipe(
             Principal principal,
