@@ -1,5 +1,7 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
+import bg.example.recepeWebsite.model.view.PictureHomePageViewModel;
 import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.web.exception.InvalidFileException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
@@ -17,7 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.*;
+
 
 @Service
 public class PictureService {
@@ -40,7 +43,7 @@ public class PictureService {
         Page<PictureEntity> pictures = this.pictureRepository
                 .findAllByAuthor_Username(principalName, pageable);
 
-        return pictures.map(picture -> this.map(picture, principalName));
+        return pictures.map(picture -> this.mapToPictureViewModel(picture, principalName));
     }
 
     public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId){
@@ -102,7 +105,7 @@ public class PictureService {
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
     }
 
-    public PictureViewModel map(PictureEntity picture, String principalName){
+    public PictureViewModel mapToPictureViewModel(PictureEntity picture, String principalName){
         PictureViewModel pictureViewModel = modelMapper.map(picture, PictureViewModel.class);
         pictureViewModel.setRecipeId(picture.getRecipe().getId())
                 .setAuthorUsername(picture.getAuthor().getUsername())
@@ -110,6 +113,40 @@ public class PictureService {
         return pictureViewModel;
     }
 
+    public PictureHomePageViewModel mapToPictureHomePageViewModel(PictureEntity picture){
+        PictureHomePageViewModel pictureHomePageViewModel = modelMapper.map(picture, PictureHomePageViewModel.class);
+        pictureHomePageViewModel.setRecipeId(picture.getRecipe().getId())
+                .setAuthorUsername(picture.getAuthor().getUsername());
+        return pictureHomePageViewModel;
+    }
+
+    public List<PictureHomePageViewModel> getThreeRandomPicturesByRecipeType(TypeNameEnum typeNameEnum){
+        List<PictureEntity> allPictures = pictureRepository.findAllPicturesByRecipeType(typeNameEnum);
+
+        List<PictureHomePageViewModel> resultPictures = new ArrayList<>();
+        Set<Long> selectedRecipeIds = new HashSet<>();
+
+        // Shuffle the list to get a random order
+        Collections.shuffle(allPictures);
+
+        for (PictureEntity picture : allPictures) {
+            // Check if we already have a picture from the same recipeId
+            if (!selectedRecipeIds.contains(picture.getRecipe().getId())) {
+                resultPictures.add(this.mapToPictureHomePageViewModel(picture));
+                selectedRecipeIds.add(picture.getRecipe().getId());
+            }
+
+            // Check if we have collected 3 pictures
+            if (resultPictures.size() == 3) {
+                break;
+            }
+        }
+
+        return resultPictures;
+    }
+
+    }
 
 
-}
+
+

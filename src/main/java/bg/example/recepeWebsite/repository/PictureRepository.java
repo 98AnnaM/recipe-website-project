@@ -1,6 +1,8 @@
 package bg.example.recepeWebsite.repository;
 
 import bg.example.recepeWebsite.model.entity.PictureEntity;
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
+import com.ibm.cuda.CudaDevice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +16,9 @@ import java.util.List;
 public interface PictureRepository extends JpaRepository<PictureEntity, Long> {
 
     Page<PictureEntity> findAllByAuthor_Username(String username, Pageable pageable);
+
+    @Query("SELECT p FROM PictureEntity p JOIN FETCH p.recipe.types t WHERE :typeName MEMBER OF p.recipe.types")
+    List<PictureEntity> findAllPicturesByRecipeType(TypeNameEnum typeNameEnum);
 
     void deleteAllById(Long id);
 

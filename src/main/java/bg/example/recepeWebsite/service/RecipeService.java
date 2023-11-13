@@ -122,7 +122,7 @@ public class RecipeService {
 
         recipeDetailsViewModel.setPictures(recipeEntity.getPictures()
                 .stream()
-                .map(p -> pictureService.map(p, principalName))
+                .map(p -> pictureService.mapToPictureViewModel(p, principalName))
                 .collect(Collectors.toList()));
 
         recipeDetailsViewModel.setProducts(Arrays.stream(recipeEntity.getProducts().split("[\r\n]+")).collect(Collectors.toList()));
