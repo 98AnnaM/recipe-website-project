@@ -231,26 +231,23 @@ nav .dropdown-item:hover {
     align-items: center;
     justify-content: center;
     position: relative;
-    max-width: 130px; /* Set the maximum width */
+    aspect-ratio: 1/1;
     max-height: 130px; /* Set the maximum height */
     border-radius: 50%; /* Set border-radius to create a circular shape */
     overflow: hidden; /* Hide overflow to ensure circular shape */
 
 }
 
-.round-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Maintain aspect ratio; may crop image */
-}
 
 .carousel-img{
-    height: 550px;
+    height: auto;
+    max-height: 550px;
     overflow: hidden;
 }
 
 
-.carousel-item img{
+.carousel-item img,
+.round-image img{
     width: 100%;
     height: 100%;
     object-fit: cover;
