@@ -136,9 +136,7 @@ body {
 }
 
 .main-image button.prev:hover,
-.main-image button.next:hover,
-.carousel-control-prev-icon,
-.carousel-control-next-icon{
+.main-image button.next:hover{
     background-color: black;
     color: #fff; /* Change the icon color on hover */
 }
@@ -256,6 +254,20 @@ nav .dropdown-item:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.image-overlay {
+    position: relative;
+}
+
+/* Style for the overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 
