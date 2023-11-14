@@ -23,19 +23,15 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-img carousel-item active">
+                    <div th:each="picture, status : ${pictures}" th:object="${picture}"
+                         th:classappend="${status.index == 0} ? 'active' : ''"
+                         class="carousel-img carousel-item">
                         <div class="carousel-img d-flex align-content-center justify-content-center">
-                            <img src="/images/vegetarian.jpg" class="align-middle" alt="...">
+                            <img th:src="${picture.url}" class="align-middle" alt="...">
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="carousel-img d-flex align-content-center justify-content-center">
-                            <img src="/images/meat.jpg" class="align-middle" alt="...">
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="carousel-img d-flex align-content-center justify-content-center">
-                            <img src="/images/register.jpg" class="align-middle" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 th:text="${message}"></h5>
+                            <p><a th:href="@{/recipes/details/{recipeId}(recipeId=${picture.recipeId})}">View the recipe</a></p>
                         </div>
                     </div>
                 </div>
