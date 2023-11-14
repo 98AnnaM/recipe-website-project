@@ -4,6 +4,18 @@ body {
     background-color: #936c3d;
 }
 
+.add-body{
+    background-image: url("/images/add-recipe.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.profile-body{
+    background-image: url("/images/profile.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .navbar .logo {
     max-height: 50px;
     padding-right: 100px;
@@ -24,18 +36,6 @@ body {
     padding: 20px;
     text-align: center;
 }
-
-.brand-section {
-    background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
-}
-
-td, th {
-    padding: 3px 8px;
-}
-
-/*.card.offer, .offer-details .list-group-item {
-     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
-}*/
 
 
 .card-img-top {
