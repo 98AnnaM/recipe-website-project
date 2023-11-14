@@ -3,6 +3,7 @@ package bg.example.recepeWebsite.service;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.model.view.PictureHomePageViewModel;
 import bg.example.recepeWebsite.model.view.PictureViewModel;
+import bg.example.recepeWebsite.repository.TypeRepository;
 import bg.example.recepeWebsite.web.exception.InvalidFileException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
@@ -30,13 +31,15 @@ public class PictureService {
     private final RecipeRepository recipeRepository;
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
+    private final TypeRepository typeRepository;
 
-    public PictureService(PictureRepository pictureRepository, UserRepository userRepository, RecipeRepository recipeRepository, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
+    public PictureService(PictureRepository pictureRepository, UserRepository userRepository, RecipeRepository recipeRepository, CloudinaryService cloudinaryService, ModelMapper modelMapper, TypeRepository typeRepository) {
         this.pictureRepository = pictureRepository;
         this.userRepository = userRepository;
         this.recipeRepository = recipeRepository;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
+        this.typeRepository = typeRepository;
     }
 
     public Page<PictureViewModel> findAllPictureViewModelsByUsername(String principalName, Pageable pageable) {
@@ -121,7 +124,9 @@ public class PictureService {
     }
 
     public List<PictureHomePageViewModel> getThreeRandomPicturesByRecipeType(TypeNameEnum typeNameEnum){
-        List<PictureEntity> allPictures = pictureRepository.findAllPicturesByRecipeType(typeNameEnum);
+        List<PictureEntity> allPictures = pictureRepository.findAllPicturesByRecipeType(
+                this.typeRepository.findByName(typeNameEnum)
+                        .orElseThrow(() -> new ObjectNotFoundException("TypeEntity with name " + typeNameEnum + " not found!")));
 
         List<PictureHomePageViewModel> resultPictures = new ArrayList<>();
         Set<Long> selectedRecipeIds = new HashSet<>();
