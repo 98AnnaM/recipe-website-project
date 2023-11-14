@@ -65,7 +65,7 @@ public class RecipeController {
 
     @GetMapping("/all")
     public String allRecipes(Model model,
-                             @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                             @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
         Page<RecipeViewModel> pagesWithAllRecipes = recipeService.findAllRecipeViewModels(pageable);
         model.addAttribute("recipes", pagesWithAllRecipes);
         model.addAttribute("heading", String.format("All recipes (%s)", pagesWithAllRecipes.getTotalElements()));
@@ -75,7 +75,7 @@ public class RecipeController {
 
     @GetMapping("/vegetarian")
     public String vegetarianRecipes(Model model,
-                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
         Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGETARIAN, pageable);
         model.addAttribute("recipes", pagesWithVeganRecipes);
         model.addAttribute("heading", String.format("Vegetarian recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
@@ -85,7 +85,7 @@ public class RecipeController {
 
     @GetMapping("/withMeat")
     public String withMeatRecipes(Model model,
-                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
         Page<RecipeViewModel> pagesWithMeatRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.WITH_MEAT, pageable);
         model.addAttribute("recipes", pagesWithMeatRecipes);
         model.addAttribute("heading", String.format("Recipes with meat (%s)", pagesWithMeatRecipes.getTotalElements()));
@@ -95,7 +95,7 @@ public class RecipeController {
 
     @GetMapping("/vegan")
     public String veganRecipes(Model model,
-                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
         Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGAN, pageable);
         model.addAttribute("recipes", pagesWithVeganRecipes);
         model.addAttribute("heading", String.format("Vegan recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
@@ -208,7 +208,7 @@ public class RecipeController {
                                @Valid SearchRecipeDto searchRecipeDto,
                                BindingResult bindingResult,
                                Model model,
-                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("searchRecipeDto", searchRecipeDto);
