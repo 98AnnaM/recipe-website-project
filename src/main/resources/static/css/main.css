@@ -267,6 +267,17 @@ nav .dropdown-item:hover {
     background: rgba(0, 0, 0, 0.5);
 }
 
+@media (min-width: 576px) {
+    .fs-sm {
+        font-size: 14px; /* Adjust the font size for small screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .fs-md {
+        font-size: 24px; /* Adjust the font size for medium screens */
+    }
+
 
 
 
