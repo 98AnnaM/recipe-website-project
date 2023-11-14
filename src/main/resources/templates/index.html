@@ -33,7 +33,7 @@
                         <div class="carousel-caption d-none d-md-block">
                             <h2 th:text="${message}" class="text-left"></h2>
                             <p th:text="'Picture added by: ' + ${picture.authorUsername}" class="font-italic text-left"></p>
-                            <p class="text-left"><a th:href="@{/recipes/details/{recipeId}(recipeId=${picture.recipeId})}">View the recipe</a></p>
+                            <p class="text-md-left"><a th:href="@{/recipes/details/{recipeId}(recipeId=${picture.recipeId})}">View the recipe</a></p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             <div class="row">
 
 
-                <div class="col-lg-12 col-sm-4">
+                <div class="col-4 col-lg-12">
                     <div class="row border-custom bg-custom">
                         <div class="col-sm-12 col-lg-6 p-0  d-flex justify-content-center">
                             <div class="round-image m-3">
@@ -76,7 +76,7 @@
 
 
 
-                <div class="col-lg-12 col-sm-4">
+                <div class="col-4 col-lg-12 col-sm-4">
                     <div class="row border-custom bg-custom">
                         <div class="col-sm-12 col-lg-6 p-0  d-flex justify-content-center">
                             <div class="round-image m-3">
@@ -85,14 +85,14 @@
                         </div>
                         <div class="col-sm-12 col-lg-6 d-flex justify-content-center align-items-center">
                             <p class="text-center fs-md fs-sm">
-                                <a th:href="@{/recipes/vegetarian}" style="text-decoration: none; color: white; font-style: italic;">Вегетариаски<br>рецепти</a></p>
+                                <a th:href="@{/recipes/vegetarian}" style="text-decoration: none; color: white; font-style: italic; word-break: break-all;">Вегетариаски<br>рецепти</a></p>
                         </div>
                     </div>
                 </div>
 
 
 
-                <div class="col-lg-12 col-sm-4">
+                <div class="col-4 col-lg-12 col-sm-4">
                     <div class="row border-custom bg-custom">
                         <div class="col-sm-12 col-lg-6 p-0  d-flex justify-content-center">
                             <div class="round-image m-3">
