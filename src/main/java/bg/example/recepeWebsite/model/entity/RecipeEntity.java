@@ -37,6 +37,9 @@ public class RecipeEntity extends BaseEntity {
     @Column(nullable = false)
     private Integer portions;
 
+    @ManyToMany(mappedBy = "favorites")
+    private List<UserEntity> favoriteUsers;
+
     public RecipeEntity() {
     }
 
@@ -145,6 +148,15 @@ public class RecipeEntity extends BaseEntity {
 
     public RecipeEntity setPortions(Integer portions) {
         this.portions = portions;
+        return this;
+    }
+
+    public List<UserEntity> getFavoriteUsers() {
+        return favoriteUsers;
+    }
+
+    public RecipeEntity setFavoriteUsers(List<UserEntity> favoriteUsers) {
+        this.favoriteUsers = favoriteUsers;
         return this;
     }
 }

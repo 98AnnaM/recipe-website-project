@@ -45,6 +45,7 @@ public class RecipeController {
         this.recipeService = recipeService;
         this.pictureService = pictureService;
         this.typeService = typeService;
+
     }
 
     @ModelAttribute
@@ -134,12 +135,6 @@ public class RecipeController {
         model.addAttribute("recipe", recipeService.findRecipeDetailsViewModelById(id, principal != null ? principal.getName() : ""));
         return "recipe-details";
 
-    }
-
-    @GetMapping("/mostCommented")
-    public String getMostCommentedRecipe(Model model) {
-        model.addAttribute("recipe", recipeService.findMostCommentedRecipeViewModel());
-        return "recipe-details";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -238,6 +233,5 @@ public class RecipeController {
 
         return "recipe-search";
     }
-
 
 }

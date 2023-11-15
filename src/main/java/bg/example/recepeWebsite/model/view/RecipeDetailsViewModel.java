@@ -21,6 +21,17 @@ public class RecipeDetailsViewModel {
     private Integer portions;
     private boolean canDelete;
 
+    boolean isFavorite;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public RecipeDetailsViewModel setIsFavorite(boolean favorite) {
+        isFavorite = favorite;
+        return this;
+    }
+
     public boolean isCanDelete() {
         return canDelete;
     }

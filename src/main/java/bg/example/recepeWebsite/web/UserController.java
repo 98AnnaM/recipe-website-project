@@ -93,11 +93,26 @@ public class UserController {
                                Model model,
                                @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
 
-        Page<RecipeViewModel> recipes = recipeService.findAllByUserId(id, pageable);
+        Page<RecipeViewModel> recipes = recipeService.findAllRecipesUploadedByUserId(id, pageable);
         model.addAttribute("recipes", recipes);
         model.addAttribute("heading",
                 String.format("Recipes added by %s (%s)", userService.findById(id).getUsername(), recipes.getTotalElements()));
         model.addAttribute("url", String.format("/users/profile/%s/addedRecipes", id));
+
+        return "all-recipes";
+    }
+
+    @PreAuthorize("#id == authentication.principal.id")
+    @GetMapping("/{id}/favoriteRecipes")
+    public String favoriteRecipes(@PathVariable Long id,
+                               Model model,
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
+
+        Page<RecipeViewModel> recipes = recipeService.findAllFavoriteRecipesForUserId(id, pageable);
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("heading",
+                String.format("Your favorite recipes (%s)", recipes.getTotalElements()));
+        model.addAttribute("url", String.format("/users/profile/%s/favoriteRecipes", id));
 
         return "all-recipes";
     }

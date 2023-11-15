@@ -1,5 +1,6 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
@@ -15,7 +16,6 @@ import bg.example.recepeWebsite.model.view.RecipeDetailsViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.RecipeSpecification;
-import bg.example.recepeWebsite.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,11 +38,11 @@ public class RecipeService {
     private final TypeService typeService;
     private final PictureService pictureService;
 
-    public RecipeService(RecipeRepository recipeRepository, ModelMapper modelMapper, UserRepository userRepository, TypeService categoryService, PictureService pictureService) {
+    public RecipeService(RecipeRepository recipeRepository, ModelMapper modelMapper, UserRepository userRepository, TypeService typeService, PictureService pictureService) {
         this.recipeRepository = recipeRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
-        this.typeService = categoryService;
+        this.typeService = typeService;
         this.pictureService = pictureService;
     }
 
@@ -50,18 +50,18 @@ public class RecipeService {
     public Page<RecipeViewModel> findAllRecipeViewModels(Pageable pageable) {
         return this.recipeRepository.
                 findAll(pageable)
-                .map(this::map);
+                .map(this::mapToRecipeViewModel);
     }
 
     @Transactional
     public Page<RecipeViewModel> findAllFilteredRecipesViewModels(CategoryNameEnum category, Pageable pageable) {
         return this.recipeRepository.
                 findAllByCategory(category, pageable)
-                .map(this::map);
+                .map(this::mapToRecipeViewModel);
 
     }
 
-    private RecipeViewModel map(RecipeEntity recipe){
+    public RecipeViewModel mapToRecipeViewModel(RecipeEntity recipe){
         RecipeViewModel recipeViewModel = modelMapper.map(recipe, RecipeViewModel.class);
         recipeViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
         recipeViewModel.setPictureUrl( !recipe.getPictures().isEmpty() ?
@@ -73,19 +73,6 @@ public class RecipeService {
                         .getUrl() : "/static/images/register.jpg");
         return recipeViewModel;
 
-    }
-
-    @Transactional
-    public RecipeDetailsViewModel findMostCommentedRecipeViewModel() {
-        if (recipeRepository.count() == 0){
-            return null;
-        }
-        RecipeEntity mostCommented = this.recipeRepository.findRecipeWithMostComments().get(0);
-        RecipeDetailsViewModel recipeDetailsViewModel = modelMapper
-                .map(mostCommented, RecipeDetailsViewModel.class);
-
-        recipeDetailsViewModel.setAuthor(mostCommented.getAuthor().getFirstName());
-        return recipeDetailsViewModel;
     }
 
 
@@ -128,6 +115,7 @@ public class RecipeService {
         recipeDetailsViewModel.setProducts(Arrays.stream(recipeEntity.getProducts().split("[\r\n]+")).collect(Collectors.toList()));
         recipeDetailsViewModel.setAuthor(recipeEntity.getAuthor().getFirstName() + " " + recipeEntity.getAuthor().getLastName());
         recipeDetailsViewModel.setCanDelete(isOwner(principalName, id));
+        recipeDetailsViewModel.setIsFavorite(isRecipeFavorite(principalName, recipeEntity.getId()));
         recipeDetailsViewModel.setVideoId(extractVideoId(recipeEntity.getVideoUrl()));
 
         return  recipeDetailsViewModel;
@@ -136,7 +124,7 @@ public class RecipeService {
     public boolean isOwner(String userName, Long recipeId) {
         boolean isOwner = recipeRepository.
                 findById(recipeId).
-                filter(o -> o.getAuthor().getUsername().equals(userName)).
+                filter(r -> r.getAuthor().getUsername().equals(userName)).
                 isPresent();
 
         if (isOwner){
@@ -155,6 +143,15 @@ public class RecipeService {
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
     }
 
+    public boolean isRecipeFavorite(String username, Long recipeId){
+        UserEntity user = this.userRepository.findByUsername(username).orElse(null);
+
+        if (user == null){
+         return false;
+        }
+
+        return user.getFavorites().stream().map(RecipeEntity::getId).anyMatch(id -> id.equals(recipeId));
+    }
 
     @Transactional
     public EditRecipeDto getRecipeEditDetails(Long recipeId){
@@ -221,13 +218,22 @@ public class RecipeService {
     public Page<RecipeViewModel> searchRecipe(SearchRecipeDto searchRecipeDto, Pageable pageable) {
         return this.recipeRepository
                 .findAll(new RecipeSpecification(searchRecipeDto), pageable)
-                .map(this::map);
+                .map(this::mapToRecipeViewModel);
     }
 
     @Transactional
-    public Page<RecipeViewModel> findAllByUserId(Long id, Pageable pageable) {
+    public Page<RecipeViewModel> findAllRecipesUploadedByUserId(Long id, Pageable pageable) {
         return this.recipeRepository.
                 findAllByAuthor_Id(id, pageable)
-                .map(this::map);
+                .map(this::mapToRecipeViewModel);
     }
+
+    @Transactional
+    public Page<RecipeViewModel> findAllFavoriteRecipesForUserId(Long userId, Pageable pageable) {
+        return this.recipeRepository.
+                findAllFavoriteRecipes(userId, pageable)
+                .map(this::mapToRecipeViewModel);
+    }
+
+
 }

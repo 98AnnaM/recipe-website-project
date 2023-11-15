@@ -2,13 +2,18 @@ package bg.example.recepeWebsite.service;
 
 import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
+import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
+import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.model.view.UserView;
+import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.RoleRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +22,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -29,14 +36,16 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final UserDetailsService userDetailsService;
     private final EmailService emailService;
+    private final RecipeRepository recipeRepository;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService, EmailService emailService) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService, EmailService emailService, RecipeRepository recipeRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.userDetailsService = userDetailsService;
         this.emailService = emailService;
+        this.recipeRepository = recipeRepository;
     }
 
     private void login(UserEntity userEntity){
@@ -107,4 +116,24 @@ public class UserService {
     public boolean emailExists(String email){
         return this.userRepository.existsByEmail(email);
     }
+
+@Transactional
+    public boolean addOrRemoveRecipeFromFavorites(String username, Long id) {
+        UserEntity user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new ObjectNotFoundException("User with username " + username + " was not found!"));
+
+        RecipeEntity recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Recipe with id " + id + " not found!"));
+
+        if (!user.getFavorites().contains(recipe)){
+            user.getFavorites().add(recipe);
+        } else {
+            user.getFavorites().remove(recipe);
+        }
+
+        userRepository.save(user);
+        return user.getFavorites().contains(recipe);
+    }
+
+
 }
