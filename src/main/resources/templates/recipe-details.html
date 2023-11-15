@@ -85,8 +85,8 @@
                         <th:block sec:authorize="isAuthenticated()">
 
                             <form id="favoritesForm"
-                                  th:action="@{'/api/recipes/' + ${recipe.id} + '/addOrRemoveFromFavorites'}"
-                                  method="post">
+                                  th:action="@{/api/recipes/{recipeId}/addOrRemoveFromFavorites(recipeId=${recipe.id})}"
+                                  method="POST">
                                 <button id="addOrRemoveButton"
                                         class="btn btn-success btn-sm mr-2"
                                         th:text="${recipe.isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}"

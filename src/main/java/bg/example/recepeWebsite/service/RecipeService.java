@@ -235,5 +235,13 @@ public class RecipeService {
                 .map(this::mapToRecipeViewModel);
     }
 
+    public Integer findAllByCategory(CategoryNameEnum categoryNameEnum) {
+        return this.recipeRepository.countAllByCategory(categoryNameEnum);
+    }
+
+    public Long findAll() {
+        return this.recipeRepository.count();
+    }
+
 
 }

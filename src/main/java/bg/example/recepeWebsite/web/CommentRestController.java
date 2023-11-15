@@ -9,6 +9,7 @@ import bg.example.recepeWebsite.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -40,6 +41,7 @@ public class CommentRestController {
 
 
     @PostMapping("/api/{recipeId}/comments")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CommentViewModel> newComment(
             @AuthenticationPrincipal UserDetails principal,
             @PathVariable Long recipeId,

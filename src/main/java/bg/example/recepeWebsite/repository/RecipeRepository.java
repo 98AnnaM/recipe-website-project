@@ -28,5 +28,7 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Long>,
 
     @Query("SELECT r FROM RecipeEntity r JOIN r.favoriteUsers u WHERE u.id = :userId")
     Page<RecipeEntity> findAllFavoriteRecipes(@Param("userId") Long userId, Pageable pageable);
+
+    Integer countAllByCategory(CategoryNameEnum category);
 }
 
