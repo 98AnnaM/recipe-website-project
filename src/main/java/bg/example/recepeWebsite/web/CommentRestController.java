@@ -41,13 +41,14 @@ public class CommentRestController {
 
 
     @PostMapping("/api/{recipeId}/comments")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CommentViewModel> newComment(
             @AuthenticationPrincipal UserDetails principal,
             @PathVariable Long recipeId,
             @RequestBody @Valid AddCommentDto addCommentDto) {
 
-
+        if (principal == null){
+            return ResponseEntity.status(403).build();
+        }
 
         CommentServiceModel commentServiceModel = modelMapper.map(addCommentDto, CommentServiceModel.class);
         commentServiceModel.setCreator(principal.getUsername());

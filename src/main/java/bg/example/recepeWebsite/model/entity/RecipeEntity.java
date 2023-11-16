@@ -12,9 +12,9 @@ public class RecipeEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "CLOB")
     private String products;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "CLOB")
     private String description;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

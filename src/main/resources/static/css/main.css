@@ -5,13 +5,13 @@ body {
 }
 
 .add-body{
-    background-image: url("/images/add-recipe.jpg");
+    background-image: url('/static/images/add-recipe.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .profile-body{
-    background-image: url("/images/profile.jpg");
+    background-image: url('/images/profile.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
 }

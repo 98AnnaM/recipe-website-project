@@ -12,7 +12,7 @@ public class ScheduleTasks {
         this.reportService = reportService;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 0 * * ?")
     private void generateDailyReport(){
         log.info("Start creating report");
         reportService.generateDailyReport();

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "CLOB")
     private String url;
     @ManyToOne(optional = false)
     private UserEntity author;

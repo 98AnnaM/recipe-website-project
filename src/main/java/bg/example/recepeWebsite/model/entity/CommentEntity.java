@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Table(name = "comments")
 public class CommentEntity extends BaseEntity {
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "CLOB")
     private String textContent;
     @Column(name = "created", nullable = false)
     private LocalDateTime created;

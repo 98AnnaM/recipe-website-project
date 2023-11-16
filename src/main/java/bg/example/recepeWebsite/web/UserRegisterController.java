@@ -50,7 +50,7 @@ public class UserRegisterController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDto"
                             , bindingResult);
 
-            return "redirect:register";
+            return "redirect:/users/register";
         }
 
         userService.registerAndLogin(userRegisterDto, localeResolver.resolveLocale(request));
