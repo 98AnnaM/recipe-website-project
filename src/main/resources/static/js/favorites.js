@@ -1,8 +1,3 @@
-const recipeId = document.getElementById('recipeId').value
-
-const csrfHeaderName = document.head.querySelector('[name="_csrf_header"]').content;
-const csrfHeaderValue = document.head.querySelector('[name="_csrf"]').content;
-
 const favoritesButton = document.getElementById('addOrRemoveButton');
 favoritesButton.addEventListener('click', handleFavoritesButtonClick);
 
@@ -29,8 +24,13 @@ async function handleFavoritesButtonClick(event) {
 
         const isFavorite = await response.json();
 
-        // Update button text and style based on the new status
-        favoritesButton.innerText = isFavorite ? 'Remove from Favorites' : 'Add to Favorites';
+        // Update button text and icon based on the new status
+        const buttonText = isFavorite ? 'Remove from Favorites' : 'Add to Favorites';
+        const iconClass = isFavorite ? 'fas fa-heart-circle-minus' : 'fas fa-heart-circle-plus';
+
+        // Update the icon class and text
+        document.getElementById('favoriteIcon').className = iconClass;
+        document.getElementById('favoriteText').innerText = buttonText;
 
     } catch (error) {
         console.error('Error:', error);
