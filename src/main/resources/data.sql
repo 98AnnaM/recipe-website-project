@@ -175,7 +175,7 @@ VALUES (5, "VEGAN", "Бобът се накисва във вода и прес�
         5 с. л. кетчуп
         1 морков
         1 глава лук
-        1/2 ч.л. сушен чесън", 90, "https://www.youtube.com/watch?v=EMQJpXxytB8", 1);
+        1/2 ч.л. сушен чесън", 90, "https://www.youtube.com/watch?v=EMQJpXxytB8", 2);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (5, 3);
@@ -215,7 +215,7 @@ VALUES (6, "WITH_MEAT", "В купа се слага кисело мляко, 10
         3 с.л. смлян бял пипер
         3 ч.ч. кисело мляко
         1 яйце
-        12 бр пилешки кълки", 105, "https://www.youtube.com/watch?v=8hRddq9mxoA", 1);
+        12 бр пилешки кълки", 105, "https://www.youtube.com/watch?v=8hRddq9mxoA", 2);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (6, 3);
@@ -240,7 +240,7 @@ VALUES (7, "VEGETARIAN", "Чушките се почистват от семет
         3 с.л. олио
         2-3 щипки сол
         50 гр. сирене
-        5 яйца", 15, "https://www.youtube.com/watch?v=iAvvdEUyVCA", 1);
+        5 яйца", 15, "https://www.youtube.com/watch?v=iAvvdEUyVCA", 2);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (7, 3);
@@ -267,7 +267,7 @@ VALUES (8, "WITH_MEAT", "Каймата се слага в купа. Карто�
         1 ч.л. сол
         смлян черен пипер
         1 ч.л. сушен магданоз
-        1 ч.л. джоджен", 30, "https://www.youtube.com/watch?v=07XBY62tFe8", 1);
+        1 ч.л. джоджен", 30, "https://www.youtube.com/watch?v=07XBY62tFe8", 2);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (8, 3);
@@ -288,7 +288,7 @@ VALUES (9, "VEGETARIAN", "В тенджера се налива 1 литър в�
         "Макарони със сирене", 1,
         "1/2 ч.ч. макарони
         1 с.л. масло - 30 грама
-        50 гр. сирене", 20, "https://www.youtube.com/watch?v=zUnzRx_t6Mk&t=2s", 1);
+        50 гр. сирене", 20, "https://www.youtube.com/watch?v=zUnzRx_t6Mk&t=2s", 3);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (9, 1);
@@ -321,7 +321,7 @@ VALUES (10, "VEGETARIAN", "Първо се прави сос като всичк
         2 с.л. кетчуп
         1/2 ч.л. пушен пипер
         1/2 ч.л. лимонов сок
-        1/4 ч.л. кимион", 30, "https://www.youtube.com/watch?v=WRUa-RIEZZw", 1);
+        1/4 ч.л. кимион", 30, "https://www.youtube.com/watch?v=WRUa-RIEZZw", 3);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (10, 1);
@@ -343,7 +343,7 @@ VALUES (11, "VEGETARIAN", "Маслото се разтопява и с него
         "6 филийки
         200 гр сирене
         1 яйце
-        50 гр. масло", 20, "https://www.youtube.com/watch?v=ZeLzthEM7Ww", 1);
+        50 гр. масло", 20, "https://www.youtube.com/watch?v=ZeLzthEM7Ww", 3);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (11, 1);
@@ -375,7 +375,7 @@ VALUES (12, "VEGETARIAN", "Киселото мляко се поръсва съ�
         1 ч.л. сол
         150 г кашкавал
         400 г брашно
-        олио за пържене", 45, "https://www.youtube.com/watch?v=-t44EUm7OO0", 1);
+        олио за пържене", 45, "https://www.youtube.com/watch?v=-t44EUm7OO0", 3);
 
 
 INSERT INTO recipes_types(recipe_entity_id, types_id) values (12, 1);

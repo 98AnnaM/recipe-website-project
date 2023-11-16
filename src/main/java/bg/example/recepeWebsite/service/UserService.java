@@ -136,4 +136,9 @@ public class UserService {
     }
 
 
+    public List<String> getAdminsEmails(){
+       return this.userRepository.findByRole(RoleNameEnum.ADMIN).stream().map(UserEntity::getEmail).collect(Collectors.toList());
+    }
+
+
 }

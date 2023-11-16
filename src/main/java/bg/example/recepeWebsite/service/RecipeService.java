@@ -235,11 +235,11 @@ public class RecipeService {
                 .map(this::mapToRecipeViewModel);
     }
 
-    public Integer findAllByCategory(CategoryNameEnum categoryNameEnum) {
+    public int findAllByCategory(CategoryNameEnum categoryNameEnum) {
         return this.recipeRepository.countAllByCategory(categoryNameEnum);
     }
 
-    public Long findAll() {
+    public long findAll() {
         return this.recipeRepository.count();
     }
 

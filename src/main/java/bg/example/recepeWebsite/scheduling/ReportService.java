@@ -3,11 +3,13 @@ package bg.example.recepeWebsite.scheduling;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.service.EmailService;
 import bg.example.recepeWebsite.service.RecipeService;
+import bg.example.recepeWebsite.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.List;
 
 @Service
 public class ReportService {
@@ -19,10 +21,12 @@ public class ReportService {
     private final RecipeService recipeService;
 
     private final EmailService emailService;
+    private final UserService userService;
 
-    public ReportService(RecipeService recipeService, EmailService emailService) {
+    public ReportService(RecipeService recipeService, EmailService emailService, UserService userService) {
         this.recipeService = recipeService;
         this.emailService = emailService;
+        this.userService = userService;
     }
 
     public void generateDailyReport(){
@@ -44,7 +48,12 @@ public class ReportService {
                 recipeService.findAll()
         );
 
-        log.info("Report is generated");
-        emailService.sendSimpleMessage("ani@abv.bg",REPORT_TITLE, result);
+        List<String> adminsEmails = this.userService.getAdminsEmails();
+        for (String email : adminsEmails) {
+            log.info(String.format("Report is sent to %s", email));
+            emailService.sendSimpleMessage(email,REPORT_TITLE, result);
+        }
+
+
     }
 }
