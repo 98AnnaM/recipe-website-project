@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -32,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+
 class UserControllerTest {
 
     @Autowired
@@ -199,21 +202,13 @@ class UserControllerTest {
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService")
     @Test
+    @Transactional
     void testDeletePictureByOwner() throws Exception {
 
-        var pictureEntity = new PictureEntity().
-            setAuthor(testUser).
-            setRecipe(testUserRecipe).
-            setPublicId("testPublicId").
-            setUrl("testUrl").
-            setTitle("testTitle");
-//
-        pictureEntity = testDataUtils.getPictureRepository().save(pictureEntity);
         long countBefore = testDataUtils.getPictureRepository().count();
 
-
         mockMvc.perform(delete("/users/profile/{id}/deletePicture", testUser.getId()).
-                        param("pictureId", String.valueOf(pictureEntity.getId())).
+                        param("pictureId", String.valueOf(testUserRecipe.getPictures().get(0).getId())).
                         with(csrf())
                 ).
                 andExpect(status().is3xxRedirection()).
@@ -228,21 +223,13 @@ class UserControllerTest {
 
 
     @Test
+    @Transactional
     void testDeletePictureByAnonymous_Forbidden() throws Exception {
 
-        var pictureEntity = new PictureEntity().
-                setAuthor(testUser).
-                setRecipe(testUserRecipe).
-                setPublicId("testPublicId").
-                setUrl("testUrl").
-                setTitle("testTitle");
-//
-        pictureEntity = testDataUtils.getPictureRepository().save(pictureEntity);
         long countBefore = testDataUtils.getPictureRepository().count();
 
-
         mockMvc.perform(delete("/users/profile/{id}/deletePicture", testUser.getId()).
-                        param("pictureId", String.valueOf(pictureEntity.getId())).
+                        param("pictureId", String.valueOf(testUserRecipe.getPictures().get(0).getId())).
                         with(csrf())
                 ).
                 andExpect(status().is3xxRedirection())

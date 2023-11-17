@@ -7,7 +7,9 @@ import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.repository.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -77,7 +79,7 @@ public class TestDataUtils {
 
   public RecipeEntity createTestRecipe(UserEntity author,
                                        List<TypeEntity> types) {
-    var recipeEntity = new RecipeEntity().
+    var testRecipe = new RecipeEntity().
             setName("Testing recipe")
             .setProducts("Testing products")
             .setDescription("Testing description")
@@ -87,11 +89,13 @@ public class TestDataUtils {
             .setTypes(types)
             .setTimeNeeded(30)
             .setPortions(4)
-            .setVideoUrl("http//videoUrl");
+            .setVideoUrl("http//videoUrl")
+            .setPictures(new ArrayList<>());
 
-    return recipeRepository.save(recipeEntity);
-//    newRecipe.setPictures(List.of(createTestPicture(author, newRecipe)));
-//    return recipeRepository.save(newRecipe);
+
+    testRecipe = recipeRepository.save(testRecipe);
+    testRecipe.getPictures().add(createTestPicture(author, testRecipe));
+    return recipeRepository.save(testRecipe);
   }
 
   public List<TypeEntity> createTestTypes() {
@@ -101,22 +105,24 @@ public class TestDataUtils {
     var typeEntitySecond = new TypeEntity().
             setName(TypeNameEnum.SALAD);
 
-    typeRepository.save(typeEntityFirst);
-    typeRepository.save(typeEntitySecond);
+    List<TypeEntity> types = new ArrayList<>();
 
-    return List.of(typeEntityFirst, typeEntitySecond);
+    types.add(typeRepository.save(typeEntityFirst));
+    types.add(typeRepository.save(typeEntitySecond));
+
+    return types;
   }
 
-//  public PictureEntity createTestPicture(UserEntity author, RecipeEntity recipe) {
-//    var pictureEntity = new PictureEntity().
-//            setAuthor(author).
-//            setRecipe(recipe).
-//            setPublicId("testPublicId").
-//            setUrl("testUrl").
-//            setTitle("testTitle");
-//
-//    return pictureRepository.save(pictureEntity);
-//  }
+  public PictureEntity createTestPicture(UserEntity author, RecipeEntity recipe) {
+    var pictureEntity = new PictureEntity().
+            setAuthor(author).
+            setRecipe(recipe).
+            setPublicId("testPublicId").
+            setUrl("testUrl").
+            setTitle("testTitle");
+
+    return pictureRepository.save(pictureEntity);
+  }
 
   public void cleanUpDatabase() {
     pictureRepository.deleteAll();
