@@ -18,17 +18,11 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Long>,
 
     Page<RecipeEntity> findAllByCategory(CategoryNameEnum categoryName, Pageable pageable);
 
-    @Query("SELECT r FROM RecipeEntity r " +
-            "JOIN r.comments c " +
-            "WHERE size(r.comments) = (SELECT max(size(r2.comments)) FROM RecipeEntity r2)" +
-            "ORDER BY r.id ASC")
-    List<RecipeEntity> findRecipeWithMostComments();
-
     Page<RecipeEntity> findAllByAuthor_Id(Long authorId, Pageable pageable);
 
     @Query("SELECT r FROM RecipeEntity r JOIN r.favoriteUsers u WHERE u.id = :userId")
     Page<RecipeEntity> findAllFavoriteRecipes(@Param("userId") Long userId, Pageable pageable);
 
-    int countAllByCategory(CategoryNameEnum category);
+    int countRecipeEntitiesByCategory(CategoryNameEnum category);
 }
 

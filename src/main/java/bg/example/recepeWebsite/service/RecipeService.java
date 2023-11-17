@@ -236,7 +236,7 @@ public class RecipeService {
     }
 
     public int findCountByCategory(CategoryNameEnum categoryNameEnum) {
-        return this.recipeRepository.countAllByCategory(categoryNameEnum);
+        return this.recipeRepository.countRecipeEntitiesByCategory(categoryNameEnum);
     }
 
     public long findCountAll() {
