@@ -19,10 +19,12 @@ public class TestDataUtils {
   private final TypeRepository typeRepository;
   private final PictureRepository pictureRepository;
 
+
   public TestDataUtils(UserRepository userRepository,
                        RoleRepository roleRepository,
                        RecipeRepository recipeRepository,
-                       TypeRepository typeRepository, PictureRepository pictureRepository) {
+                       TypeRepository typeRepository,
+                       PictureRepository pictureRepository) {
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
     this.recipeRepository = recipeRepository;
@@ -127,4 +129,9 @@ public class TestDataUtils {
   public RecipeRepository getRecipeRepository() {
     return recipeRepository;
   }
+
+  public UserRepository getUserRepository(){ return userRepository;}
+
+
+  public PictureRepository getPictureRepository(){ return pictureRepository;}
 }

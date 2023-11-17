@@ -125,7 +125,6 @@ class RecipeControllerTest {
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @Test
-    @DirtiesContext
     void testAddRecipeByLoggedUser_Success() throws Exception {
 
         when(mockCloudinaryService.uploadImage(any(MultipartFile.class)))
