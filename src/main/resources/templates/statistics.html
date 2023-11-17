@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/commons::head}"></head>
+
+<body class="profile-body">
+
+<header>
+  <nav th:replace="~{fragments/commons::navigation}"></nav>
+</header>
+
+<div class="container-fluid">
+  <div class="d-flex justify-content-center align-items-center mx-5">
+    <div class="col-sm- col-lg-5 mx-auto p-5 bg-custom-opaque border-custom  mt-3 mb-5">
+
+      <h2 class="text-center text-white">Statistics</h2>
+      <p class="text-center text-white mb-4" th:inline="text">
+        [[${#temporals.format(statistics.localDateTime, 'EEE, MMM dd, yyyy HH:mm')}]]
+      </p>
+      <h5 th:text="|All recipes: ${statistics.getAllRecipes()}|"></h5>
+      <h5 th:text="|Vegetarian recipes: ${statistics.getVegetarianRecipes()}|"> </h5>
+      <h5 th:text="|Vegan recipes: ${statistics.getVeganRecipes()}|"> </h5>
+      <h5 th:text="|Recipes with meat: ${statistics.getMeatRecipes()}|"> </h5>
+
+      <button class="btn btn-info mt-4" onclick="goBackOrHome()">Back</button>
+
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <footer th:replace="~{fragments/commons::footer}"></footer>
+</div>
+
+<script th:src="@{/js/backButton.js}"></script>
+</body>
+</html>

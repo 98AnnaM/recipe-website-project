@@ -1,5 +1,6 @@
 package bg.example.recepeWebsite.config;
 
+import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.service.CustomUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -43,6 +44,7 @@ public class SecurityConfig {
                 .antMatchers("/api/**", "/maintenance/**").permitAll()
                 .antMatchers("/users/register", "/users/login").anonymous()
                 .antMatchers("/users/profile", "/recipes/add", "/users/profile/**").authenticated()
+                .antMatchers("/statistics").hasRole(RoleNameEnum.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()

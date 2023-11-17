@@ -42,10 +42,10 @@ public class ReportService {
                     Recipes vegetarian: %d
                     Recipes all: %d
                 """, todayMidnight,
-                recipeService.findAllByCategory(CategoryNameEnum.VEGAN),
-                recipeService.findAllByCategory(CategoryNameEnum.WITH_MEAT),
-                recipeService.findAllByCategory(CategoryNameEnum.VEGETARIAN),
-                recipeService.findAll()
+                recipeService.findCountByCategory(CategoryNameEnum.VEGAN),
+                recipeService.findCountByCategory(CategoryNameEnum.WITH_MEAT),
+                recipeService.findCountByCategory(CategoryNameEnum.VEGETARIAN),
+                recipeService.findCountAll()
         );
 
         List<String> adminsEmails = this.userService.getAdminsEmails();
