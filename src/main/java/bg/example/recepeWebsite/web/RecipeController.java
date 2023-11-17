@@ -125,8 +125,8 @@ public class RecipeController {
             return "redirect:add";
         }
 
-        recipeService.addRecipe(addRecipeDto, userDetails);
-        return "redirect:all";
+        Long recipeId = recipeService.addRecipe(addRecipeDto, userDetails);
+        return "redirect:/recipes/details/" + recipeId;
     }
 
     @GetMapping("/details/{id}")

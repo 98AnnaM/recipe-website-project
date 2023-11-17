@@ -8,11 +8,7 @@ import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
-import bg.example.recepeWebsite.repository.RecipeRepository;
-import bg.example.recepeWebsite.repository.RoleRepository;
-import bg.example.recepeWebsite.repository.TypeRepository;
-import bg.example.recepeWebsite.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import bg.example.recepeWebsite.repository.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,18 +17,20 @@ import java.util.List;
 public class TestDataUtils {
 
   private UserRepository userRepository;
-  private RoleRepository roleRepository;
-  private RecipeRepository recipeRepository;
-  private TypeRepository typeRepository;
+  private final RoleRepository roleRepository;
+  private final RecipeRepository recipeRepository;
+  private final TypeRepository typeRepository;
+  private final PictureRepository pictureRepository;
 
   public TestDataUtils(UserRepository userRepository,
                        RoleRepository roleRepository,
                        RecipeRepository recipeRepository,
-                       TypeRepository typeRepository) {
+                       TypeRepository typeRepository, PictureRepository pictureRepository) {
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
     this.recipeRepository = recipeRepository;
     this.typeRepository = typeRepository;
+    this.pictureRepository = pictureRepository;
   }
 
   private void initRoles() {
@@ -94,14 +92,21 @@ public class TestDataUtils {
     return recipeRepository.save(recipeEntity);
   }
 
-  public TypeEntity createTestType() {
-    var typeEntity = new TypeEntity().
-        setName(TypeNameEnum.BREAKFAST);
+  public List<TypeEntity> createTestTypes() {
+    var typeEntityFirst = new TypeEntity().
+            setName(TypeNameEnum.BREAKFAST);
 
-    return typeRepository.save(typeEntity);
+    var typeEntitySecond = new TypeEntity().
+            setName(TypeNameEnum.SALAD);
+
+    typeRepository.save(typeEntityFirst);
+    typeRepository.save(typeEntitySecond);
+
+    return List.of(typeEntityFirst, typeEntitySecond);
   }
 
   public void cleanUpDatabase() {
+    pictureRepository.deleteAll();
     recipeRepository.deleteAll();
     userRepository.deleteAll();
     roleRepository.deleteAll();

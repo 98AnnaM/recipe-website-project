@@ -77,7 +77,7 @@ public class RecipeService {
 
 
     @Transactional
-    public void addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) {
+    public Long addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) {
 
         RecipeEntity newRecipe = modelMapper.map(addRecipeDto, RecipeEntity.class);
 
@@ -95,7 +95,7 @@ public class RecipeService {
             newRecipe.getPictures().add(picture);
         }
 
-        recipeRepository.save(newRecipe);
+        return recipeRepository.save(newRecipe).getId();
     }
 
     @Transactional
