@@ -112,7 +112,7 @@ public class PictureService {
         PictureViewModel pictureViewModel = modelMapper.map(picture, PictureViewModel.class);
         pictureViewModel.setRecipeId(picture.getRecipe().getId())
                 .setAuthorUsername(picture.getAuthor().getUsername())
-                .setCanNotDelete(!picture.getAuthor().getUsername().equals(principalName));
+                .setCanNotDelete(!isOwner(principalName, picture.getId()));
         return pictureViewModel;
     }
 
