@@ -16,17 +16,4 @@ public class RoleService {
         this.roleRepository = repository;
     }
 
-    public void initRoles() {
-        if (roleRepository.count() != 0){
-            return;
-        }
-
-        Arrays.stream(RoleNameEnum.values())
-                .forEach(roleNameEnum -> {
-                    RoleEntity role = new RoleEntity();
-                    role.setRole(roleNameEnum);
-                    roleRepository.save(role);
-                });
-
-    }
 }
