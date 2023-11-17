@@ -1,9 +1,6 @@
 package bg.example.recepeWebsite.util;
 
-import bg.example.recepeWebsite.model.entity.RecipeEntity;
-import bg.example.recepeWebsite.model.entity.RoleEntity;
-import bg.example.recepeWebsite.model.entity.TypeEntity;
-import bg.example.recepeWebsite.model.entity.UserEntity;
+import bg.example.recepeWebsite.model.entity.*;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
@@ -87,9 +84,12 @@ public class TestDataUtils {
             .setCategory(CategoryNameEnum.VEGAN)
             .setTypes(types)
             .setTimeNeeded(30)
-            .setPortions(4);
+            .setPortions(4)
+            .setVideoUrl("http//videoUrl");
 
     return recipeRepository.save(recipeEntity);
+//    newRecipe.setPictures(List.of(createTestPicture(author, newRecipe)));
+//    return recipeRepository.save(newRecipe);
   }
 
   public List<TypeEntity> createTestTypes() {
@@ -104,6 +104,17 @@ public class TestDataUtils {
 
     return List.of(typeEntityFirst, typeEntitySecond);
   }
+
+//  public PictureEntity createTestPicture(UserEntity author, RecipeEntity recipe) {
+//    var pictureEntity = new PictureEntity().
+//            setAuthor(author).
+//            setRecipe(recipe).
+//            setPublicId("testPublicId").
+//            setUrl("testUrl").
+//            setTitle("testTitle");
+//
+//    return pictureRepository.save(pictureEntity);
+//  }
 
   public void cleanUpDatabase() {
     pictureRepository.deleteAll();

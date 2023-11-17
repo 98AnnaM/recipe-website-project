@@ -122,7 +122,7 @@ public class RecipeController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.addRecipeDto"
                             , bindingResult);
 
-            return "redirect:add";
+            return "redirect:/recipes/add";
         }
 
         Long recipeId = recipeService.addRecipe(addRecipeDto, userDetails);
