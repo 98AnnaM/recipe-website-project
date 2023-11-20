@@ -308,6 +308,11 @@ nav .dropdown-item:hover {
     }
 }
 
+#commentCtnr div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
 
 
 
