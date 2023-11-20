@@ -98,14 +98,14 @@ function deleteComment(commentId){
 
 
 function asComment(comment) {
-    let commentHtml = `<div id="commentCntr-${comment.commentId}">`
+    let commentHtml = `<div id="commentCntr-${comment.commentId}" style="border-bottom: dimgrey 2px solid">`
 
     commentHtml += `<h4 style="text-decoration: underline;">${comment.user}</h4>`
     commentHtml += `<p class="font-italic">${comment.message}</p>`
     commentHtml += `<span>${formatDate(comment.created)}</span>`
 
     if (comment.canDelete){
-        commentHtml += `<button class="btn btn-outline-danger btn-sm ml-5" onclick="deleteComment(${comment.commentId})">Delete</button>`
+        commentHtml += `<button class="btn btn-outline-danger btn-sm ml-5 mb-1" onclick="deleteComment(${comment.commentId})">Delete</button>`
     }
 
     commentHtml += `</div>`
