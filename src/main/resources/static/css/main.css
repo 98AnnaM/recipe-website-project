@@ -281,6 +281,23 @@ nav .dropdown-item:hover {
 
 
 
+/* Media query for smaller screens */
+@media (max-width: 767px) {
+
+    .carousel-caption {
+        position: absolute;
+        bottom: 15px;
+    }
+
+    .carousel-caption h2,
+    .carousel-caption p {
+        font-size: 14px;
+        text-align: left;
+        margin: 0;
+    }
+}
+
+
 
 
 
