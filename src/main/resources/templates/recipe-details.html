@@ -168,30 +168,56 @@
 
             <!-- Content in 2 columns -->
             <div class="row">
-                <div class="col-sm-3 text-center mx-1 mb-1 bg-custom border-custom">
-                    <p><i class="fa-regular fa-clock fa-3x mt-3"></i></p>
-                    <p class="mb-0">Приготвяне:</p>
-                    <p th:text="|*{timeNeeded} мин.|">40мин.</p>
-                    <p><i class="fa-solid fa-bowl-rice fa-3x"></i></p>
-                    <p th:text="|Порции: *{portions}|">Порции: 5</p>
-                    <div th:switch="${recipe.category.name()}">
-                        <div th:case="'WITH_MEAT'">
-                            <p><i class="fa-solid fa-drumstick-bite fa-2x"></i></p>
-                            <p>С месо</p>
-                        </div><div th:case="'VEGAN'">
-                        <p><i class="fa-solid fa-seedling fa-2x"></i></p>
-                        <p>Веган</p>
-                    </div>
-                        <div th:case="'VEGETARIAN'">
-                            <p><i class="fa-solid fa-egg fa-2x"></i></p>
-                            <p>Вегетарианска</p>
+                <div class="col-12 col-lg-3 text-center mx-1 mb-1 bg-custom border-custom">
+
+
+                    <div class="row d-flex flex-row justify-content-center align-content-center">
+                        <div class="col-3 col-lg-12">
+                            <p><i class="fa-regular fa-clock fa-3x mt-3"></i></p>
+                            <p class="mb-0">Време:</p>
+                            <p th:text="|*{timeNeeded} мин.|">40мин.</p>
                         </div>
+
+
+                        <div class="col-3 col-lg-12">
+                            <p><i class="fa-solid fa-bowl-rice fa-3x mt-lg-0 mt-3"></i></p>
+                            <p th:text="|Порции: *{portions}|">Порции: 5</p>
+                        </div>
+
+                        <div class="col-3 col-lg-12">
+                            <div th:switch="${recipe.category.name()}">
+                                <div th:case="'WITH_MEAT'">
+                                    <p><i class="fa-solid fa-drumstick-bite fa-3x mt-lg-0 mt-3"></i></p>
+                                    <p>С месо</p>
+                                </div><div th:case="'VEGAN'">
+                                <p><i class="fa-solid fa-seedling fa-3x mt-lg-0 mt-3"></i></p>
+                                <p>Веган</p>
+                            </div>
+                                <div th:case="'VEGETARIAN'">
+                                    <p><i class="fa-solid fa-egg fa-3x mt-lg-0 mt-3"></i></p>
+                                    <p>Вегета<span class="hide-on-large-screen">-</span><br class="hide-on-large-screen">рианска
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-3 col-lg-12">
+                            <p><i class="fa-solid fa-stairs fa-3x mt-lg-0 mt-3"></i></p>
+                            <p th:text="*{#strings.capitalize(#strings.toLowerCase(level))}">Лесна</p>
+                        </div>
+
                     </div>
-                    <p><i class="fa-solid fa-stairs fa-2x"></i></p>
-                    <p th:text="*{#strings.capitalize(#strings.toLowerCase(level))}">Лесна</p>
+
+
+
+
+
+
                 </div>
 
-                <div class="col-sm-8 mx-1 mb-1 pl-3 bg-custom border-custom">
+                <div class="col-12 col-sm-8 mx-1 mb-1 pl-3 bg-custom border-custom">
                     <h2 class="mb-3">Продукти</h2>
                     <ul th:each="p : *{products}" class="custom-list">
                         <li th:text="${p}"></li>

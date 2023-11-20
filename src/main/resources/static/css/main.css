@@ -104,13 +104,13 @@ body {
 
 .main-image {
     position: relative;
-    height: 400px;
+    height: 430px;
     overflow: hidden;
 }
 
 @media (max-width: 767px) {
     .main-image {
-        height: 200px;
+        height: 220px;
     }
 
     .embed-responsive {
@@ -306,6 +306,13 @@ nav .dropdown-item:hover {
 
     .hide-on-small-screen {
         display: none; /* Hide the <br> element on small screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .hide-on-large-screen,
+    .hide-on-large-screen + br {
+        display: none;
     }
 }
 
