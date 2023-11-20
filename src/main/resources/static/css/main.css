@@ -115,6 +115,7 @@ body {
 
     .embed-responsive {
         height: 200px;
+        margin: 20px;
     }
 
     .small-images img {
