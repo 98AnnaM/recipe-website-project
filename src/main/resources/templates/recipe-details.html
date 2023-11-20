@@ -168,7 +168,7 @@
 
             <!-- Content in 2 columns -->
             <div class="row pr-3 pl-0">
-                <div class="col-12 col-lg-3 text-center mb-1 bg-custom border-custom">
+                <div class="col-12 col-lg-3 text-center bg-custom border-custom">
 
 
                     <div class="row d-flex flex-row justify-content-center align-content-center">
@@ -218,7 +218,7 @@
                 </div>
 
                 <div class="col-12 col-lg-9 pl-lg-3 p-0">
-                    <div class="bg-custom border-custom pl-3 h-100">
+                    <div class="bg-custom border-custom pl-3 pb-3 h-100">
                         <h2 class="mb-3">Продукти</h2>
                         <ul th:each="p : *{products}" class="custom-list">
                             <li th:text="${p}"></li>
@@ -233,7 +233,7 @@
     <!-- EO: Row 1 -->
 
     <!-- Row 2 -->
-    <div class="row mx-lg-4 mx-1 bg-custom-reversed">
+    <div class="row mx-lg-4 mx-1 bg-custom-reversed d-flex justify-content-center align-items-center">
         <!-- Column 3 -->
         <div class="col-sm-12 col-lg-7 px-4">
             <h2>Начин на приготвяне</h2>
@@ -241,7 +241,7 @@
         </div>
         <!-- Column 4 -->
         <div class="col-sm-12 col-lg-5 px-4">
-            <div class="embed-responsive embed-responsive-1by1 border-custom">
+            <div class="embed-responsive embed-responsive-1by1 border-custom m-0">
                 <iframe id="frame" th:src="'https://www.youtube.com/embed/' + *{videoId}">
                 </iframe>
             </div>
