@@ -168,23 +168,21 @@
 
             <!-- Content in 2 columns -->
             <div class="row pr-3 pl-0">
-                <div class="col-12 col-lg-3 text-center bg-custom border-custom">
 
-
+                <div class="col-12 col-lg-3 text-center bg-custom border-custom px-3">
                     <div class="row d-flex flex-row justify-content-center align-content-center">
-                        <div class="col-3 col-lg-12">
+                        <div class="col-3 col-lg-12 text-center px-0">
                             <p><i class="fa-regular fa-clock fa-3x mt-3"></i></p>
                             <p class="mb-0">Време:</p>
                             <p th:text="|*{timeNeeded} мин.|">40мин.</p>
                         </div>
 
-
-                        <div class="col-3 col-lg-12">
+                        <div class="col-3 col-lg-12 text-center px-0">
                             <p><i class="fa-solid fa-bowl-rice fa-3x mt-lg-0 mt-3"></i></p>
                             <p th:text="|Порции: *{portions}|">Порции: 5</p>
                         </div>
 
-                        <div class="col-3 col-lg-12">
+                        <div class="col-3 col-lg-12 text-center px-0">
                             <div th:switch="${recipe.category.name()}">
                                 <div th:case="'WITH_MEAT'">
                                     <p><i class="fa-solid fa-drumstick-bite fa-3x mt-lg-0 mt-3"></i></p>
@@ -202,19 +200,12 @@
                         </div>
 
 
-
-                        <div class="col-3 col-lg-12">
+                        <div class="col-3 col-lg-12 text-center px-0">
                             <p><i class="fa-solid fa-stairs fa-3x mt-lg-0 mt-3"></i></p>
                             <p th:text="*{#strings.capitalize(#strings.toLowerCase(level))}">Лесна</p>
                         </div>
 
                     </div>
-
-
-
-
-
-
                 </div>
 
                 <div class="col-12 col-lg-9 pl-lg-3 p-0">
@@ -226,6 +217,7 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
         <!-- EO: Meal info -->
