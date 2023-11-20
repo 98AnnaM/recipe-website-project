@@ -11,16 +11,18 @@
 
 <div class="container-fluid">
   <div class="d-flex justify-content-center align-items-center mx-5">
-    <div class="col-sm- col-lg-5 mx-auto p-5 bg-custom-opaque border-custom  mt-3 mb-5">
+    <div    th:object="${statistics}"
+            class="col-sm- col-lg-5 mx-auto p-5 bg-custom-opaque border-custom  mt-3 mb-5">
 
       <h2 class="text-center text-white">Statistics</h2>
       <p class="text-center text-white mb-4" th:inline="text">
         [[${#temporals.format(statistics.localDateTime, 'EEE, MMM dd, yyyy HH:mm')}]]
       </p>
-      <h5 th:text="|All recipes: ${statistics.getAllRecipes()}|"></h5>
-      <h5 th:text="|Vegetarian recipes: ${statistics.getVegetarianRecipes()}|"> </h5>
-      <h5 th:text="|Vegan recipes: ${statistics.getVeganRecipes()}|"> </h5>
-      <h5 th:text="|Recipes with meat: ${statistics.getMeatRecipes()}|"> </h5>
+      <h5 th:text="|All recipes: *{allRecipes}|"></h5>
+      <h5 th:text="|Vegetarian recipes: *{vegetarianRecipes}|"> </h5>
+      <h5 th:text="|Vegan recipes: *{veganRecipes}|"> </h5>
+      <h5 th:text="|Recipes with meat: *{meatRecipes}|"> </h5>
+      <h5 th:text="|Registered users: *{usersCount}|"> </h5>
 
       <button class="btn btn-info mt-4" onclick="goBackOrHome()">Back</button>
 

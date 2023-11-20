@@ -235,7 +235,7 @@ public class RecipeService {
                 .map(this::mapToRecipeViewModel);
     }
 
-    public int findCountByCategory(CategoryNameEnum categoryNameEnum) {
+    public long findCountByCategory(CategoryNameEnum categoryNameEnum) {
         return this.recipeRepository.countRecipeEntitiesByCategory(categoryNameEnum);
     }
 

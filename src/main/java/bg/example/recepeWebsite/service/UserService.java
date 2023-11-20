@@ -140,5 +140,9 @@ public class UserService {
        return this.userRepository.findByRole(RoleNameEnum.ADMIN).stream().map(UserEntity::getEmail).collect(Collectors.toList());
     }
 
+    public long getCountRegisteredUsers(){
+        return this.userRepository.count();
+    }
+
 
 }
