@@ -267,18 +267,17 @@ nav .dropdown-item:hover {
     background: rgba(0, 0, 0, 0.5);
 }
 
-@media (min-width: 576px) {
+/* Default styles for larger screens */
+.fs-sm {
+    font-size: 24px; /* Default font size for larger screens */
+}
+
+/* Media query for small screens */
+@media (max-width: 767px) {
     .fs-sm {
         font-size: 14px; /* Adjust the font size for small screens */
     }
 }
-
-@media (min-width: 768px) {
-    .fs-md {
-        font-size: 24px; /* Adjust the font size for medium screens */
-    }
-}
-
 
 
 /* Media query for smaller screens */
@@ -294,6 +293,10 @@ nav .dropdown-item:hover {
         font-size: 14px;
         text-align: left;
         margin: 0;
+    }
+
+    .hide-on-small-screen {
+        display: none; /* Hide the <br> element on small screens */
     }
 }
 
