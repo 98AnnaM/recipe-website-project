@@ -233,16 +233,18 @@
     <!-- EO: Row 1 -->
 
     <!-- Row 2 -->
-    <div class="row mx-lg-4 mx-1 pr-lg-4 bg-custom-reversed">
+    <div class="row mx-lg-4 mx-1 bg-custom-reversed">
         <!-- Column 3 -->
         <div class="col-sm-12 col-lg-7 px-4">
             <h2>Начин на приготвяне</h2>
             <p th:text="*{description}"></p>
         </div>
         <!-- Column 4 -->
-        <div class="embed-responsive embed-responsive-1by1 col-sm-12 col-lg-5 border-custom">
-            <iframe id="frame" th:src="'https://www.youtube.com/embed/' + *{videoId}">
-            </iframe>
+        <div class="col-sm-12 col-lg-5 px-4">
+            <div class="embed-responsive embed-responsive-1by1 border-custom">
+                <iframe id="frame" th:src="'https://www.youtube.com/embed/' + *{videoId}">
+                </iframe>
+            </div>
         </div>
     </div>
     <!-- EO: Row 2 -->
