@@ -217,11 +217,14 @@
 
                 </div>
 
-                <div class="col-12 col-lg-9 mb-1 pl-3 pb-3 bg-custom border-custom">
-                    <h2 class="mb-3">Продукти</h2>
-                    <ul th:each="p : *{products}" class="custom-list">
-                        <li th:text="${p}"></li>
-                    </ul>
+                <div class="col-12 col-lg-9 pl-lg-3 p-0">
+                    <div class="bg-custom border-custom pl-3 h-100">
+                        <h2 class="mb-3">Продукти</h2>
+                        <ul th:each="p : *{products}" class="custom-list">
+                            <li th:text="${p}"></li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>
