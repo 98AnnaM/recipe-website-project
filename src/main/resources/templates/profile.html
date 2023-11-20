@@ -9,33 +9,33 @@
       <nav th:replace="~{fragments/commons::navigation}"></nav>
   </header>
 
-    <div class="container-fluid my-5">
+    <div class="container-fluid my-3">
         <div class="d-flex justify-content-center align-items-center mx-5">
             <div class="col-sm- col-lg-5 mx-auto p-3 mb-3 mt-2 bg-custom-opaque border-custom">
     
                 <h2 class="text-center text-white my-4">Profile</h2>
     
-                <div class="row mb-4 mt-4 pl-5">
-                    <div class="form-group col-6">
-                        <h3>First name: </h3>
+                <div class="row mb-4 mt-5 pl-5">
+                    <div class="form-group col-lg-6 col-sm-12">
+                        <h4>First name: </h4>
                         <p th:text="${user.firstName}">Peter</p>
                     </div>
-                    <div class="form-group col-6">
-                        <h3>Last name: </h3>
+                    <div class="form-group  col-lg-6 col-sm-12">
+                        <h4>Last name: </h4>
                         <p th:text="${user.lastName}">Ivanov</p>
                     </div>
                 </div>
                 <div class="row mb-4 pl-5">
-                    <div class="form-group col-6">
-                        <h3>Username: </h3>
+                    <div class="form-group  col-lg-6 col-sm-12">
+                        <h4>Username: </h4>
                         <p th:text="${user.username}">pesho94</p>
                     </div>
-                    <div class="form-group col-6">
-                        <h3>Email: </h3>
+                    <div class="form-group  col-lg-6 col-sm-12">
+                        <h4>Email: </h4>
                         <p th:text="${user.email}">pesho@gmail.com</p>
                     </div>
                 </div>
-                <div class="row my-3 pl-5">
+                <div class="row my-3 pl-5 mb-5">
                     <div class="col-md-4">
                         <div class="button-holder d-flex">
                             <a th:href="@{/users/profile/{id}/editProfile(id=${user.id})}"
