@@ -23,12 +23,12 @@
 
 
     <!-- Row 1 -->
-    <div class="row mx-lg-4 mx-1 mt-2 bg-custom">
+    <div class="row mx-lg-4 p-4 mx-1 mt-2 bg-custom">
 
         <!-- Images -->
-        <div class="col-sm-12 col-lg-6 p-4">
-            <div class="row">
-                <div class="col-12">
+        <div class="col-sm-12 col-lg-6 pt-2 px-0">
+            <div class="row mx-0">
+                <div class="col-12 px-0">
                     <div class="main-image position-relative">
                         <button id="prevButton" class="btn btn-dark btn-sm prev"><i
                                 class="fas fa-chevron-left"></i></button>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 px-0">
                     <!-- List of Small Images -->
                     <div class="small-images mt-3 d-flex overflow-auto">
                         <div th:each="p, index : *{pictures}">
@@ -162,13 +162,13 @@
         <!-- EO: Images -->
 
         <!-- Meal info -->
-        <div class="col-sm-12 col-lg-6">
-            <h2 th:text="*{name}" class="text-left mt-3">Recipe title</h2>
+        <div class="col-sm-12 col-lg-6 p-0 pl-lg-5 pl-2">
+            <h2 th:text="*{name}" class="text-left">Recipe title</h2>
             <p th:text="|Добавено от : *{author}|" class="text-left"></p>
 
             <!-- Content in 2 columns -->
-            <div class="row">
-                <div class="col-12 col-lg-3 text-center mx-1 mb-1 bg-custom border-custom">
+            <div class="row pr-3 pl-0">
+                <div class="col-12 col-lg-3 text-center mb-1 bg-custom border-custom">
 
 
                     <div class="row d-flex flex-row justify-content-center align-content-center">
@@ -217,7 +217,7 @@
 
                 </div>
 
-                <div class="col-12 col-lg-8 mx-1 mb-1 pl-3 bg-custom border-custom">
+                <div class="col-12 col-lg-9 mb-1 pl-3 pb-3 bg-custom border-custom">
                     <h2 class="mb-3">Продукти</h2>
                     <ul th:each="p : *{products}" class="custom-list">
                         <li th:text="${p}"></li>
@@ -232,7 +232,7 @@
     <!-- Row 2 -->
     <div class="row mx-lg-4 mx-1 pr-lg-4 bg-custom-reversed">
         <!-- Column 3 -->
-        <div class="col-sm-12 col-lg-7 p-4">
+        <div class="col-sm-12 col-lg-7 px-4">
             <h2>Начин на приготвяне</h2>
             <p th:text="*{description}"></p>
         </div>
