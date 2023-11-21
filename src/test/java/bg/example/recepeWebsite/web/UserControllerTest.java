@@ -1,12 +1,8 @@
 package bg.example.recepeWebsite.web;
 
-import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
-import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
-import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
-import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.service.CloudinaryService;
 import bg.example.recepeWebsite.util.TestDataUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,7 +21,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-
 class UserControllerTest {
 
     @Autowired
@@ -61,8 +54,6 @@ class UserControllerTest {
         testDataUtils.cleanUpDatabase();
     }
 
-
-
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService")
     @Test
@@ -73,7 +64,6 @@ class UserControllerTest {
                 andExpect(status().isOk()).
                 andExpect(view().name("profile"));
     }
-
 
     @Test
     void testViewProfileByAnonymousUser_Forbidden() throws Exception {
@@ -95,7 +85,6 @@ class UserControllerTest {
                 andExpect(view().name("all-recipes"));
     }
 
-
     @Test
     void testViewAddedRecipesByByAnonymousUser_Forbidden() throws Exception {
         mockMvc.perform(get("/users/profile/{id}/addedRecipes", testUser.getId()).
@@ -104,7 +93,6 @@ class UserControllerTest {
                 andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/users/login"));
     }
-
 
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService")
@@ -117,7 +105,6 @@ class UserControllerTest {
                 andExpect(view().name("all-recipes"));
     }
 
-
     @Test
     void testViewFavoriteRecipesByByAnonymousUser_Forbidden() throws Exception {
         mockMvc.perform(get("/users/profile/{id}/favoriteRecipes", testUser.getId()).
@@ -126,7 +113,6 @@ class UserControllerTest {
                 andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/users/login"));
     }
-
 
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService")
@@ -139,7 +125,6 @@ class UserControllerTest {
                 andExpect(view().name("user-pictures"));
     }
 
-
     @Test
     void testViewAddedPictureByAnonymousUser_Forbidden() throws Exception {
         mockMvc.perform(get("/users/profile/{id}/addedPictures", testUser.getId()).
@@ -148,7 +133,6 @@ class UserControllerTest {
                 andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/users/login"));
     }
-
 
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService")
@@ -198,7 +182,6 @@ class UserControllerTest {
         Assertions.assertEquals("newUsername", updatedUser.getUsername());
     }
 
-
     @WithUserDetails(value = "user",
             userDetailsServiceBeanName = "testUserDataService")
     @Test
@@ -216,11 +199,7 @@ class UserControllerTest {
 
         long countAfter = testDataUtils.getPictureRepository().count();
         Assertions.assertEquals(countBefore - 1, countAfter);
-
-
     }
-
-
 
     @Test
     @Transactional
@@ -237,7 +216,5 @@ class UserControllerTest {
 
         long countAfter = testDataUtils.getPictureRepository().count();
         Assertions.assertEquals(countBefore, countAfter);
-
-
     }
 }

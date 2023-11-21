@@ -29,13 +29,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import static org.mockito.ArgumentMatchers.any;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -312,7 +311,6 @@ class RecipeControllerTest {
         Assertions.assertEquals(30, updatedRecipe.getTimeNeeded());
         Assertions.assertEquals(4, updatedRecipe.getPortions());
         Assertions.assertEquals(2, updatedRecipe.getTypes().size());
-
     }
 
     @Test
@@ -359,11 +357,4 @@ class RecipeControllerTest {
                 andExpect(status().isOk()).
                 andExpect(view().name("recipe-details"));
     }
-
-
-
-
-
-
-
 }

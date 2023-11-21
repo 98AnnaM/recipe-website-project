@@ -1,12 +1,5 @@
 package bg.example.recepeWebsite.web;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import bg.example.recepeWebsite.model.dto.AddCommentDto;
 import bg.example.recepeWebsite.model.entity.CommentEntity;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
@@ -15,8 +8,8 @@ import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
-import bg.example.recepeWebsite.repository.RoleRepository;
 import bg.example.recepeWebsite.repository.RecipeRepository;
+import bg.example.recepeWebsite.repository.RoleRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.text.MatchesPattern;
@@ -33,9 +26,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,7 +42,6 @@ class CommentRestControllerTest {
     private static final String COMMENT_1 = "This is comment one!";
     private static final String COMMENT_2 = "This is comment two!";
     private static final String COMMENT_3 = "This is comment three!";
-
 
     @Autowired
     private MockMvc mockMvc;
@@ -65,7 +62,7 @@ class CommentRestControllerTest {
     private ObjectMapper objectMapper;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
 
         RoleEntity userRole = new RoleEntity();
         userRole.setRole(RoleNameEnum.USER);
@@ -97,7 +94,7 @@ class CommentRestControllerTest {
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         recipeRepository.deleteAll();
         userRepository.deleteAll();
     }
@@ -117,21 +114,21 @@ class CommentRestControllerTest {
                 .andExpect(jsonPath("$.[2].user", is("Admin Adminov")));
     }
 
-    private RecipeEntity initRecipe(){
+    private RecipeEntity initRecipe() {
         RecipeEntity testRecipe = new RecipeEntity();
         testRecipe.setName("Testing recipe")
-                  .setProducts("Testing products")
-                  .setDescription("Testing description")
-                  .setLevel(LevelEnum.EASY)
-                  .setAuthor(userRepository.findByUsername("anna").get())
-                  .setCategory(CategoryNameEnum.VEGAN)
-                  .setTimeNeeded(30)
-                  .setPortions(4);
+                .setProducts("Testing products")
+                .setDescription("Testing description")
+                .setLevel(LevelEnum.EASY)
+                .setAuthor(userRepository.findByUsername("anna").get())
+                .setCategory(CategoryNameEnum.VEGAN)
+                .setTimeNeeded(30)
+                .setPortions(4);
 
         return testRecipe = recipeRepository.save(testRecipe);
     }
 
-    private RecipeEntity initComments(RecipeEntity testRecipe){
+    private RecipeEntity initComments(RecipeEntity testRecipe) {
         CommentEntity comment1 = new CommentEntity();
         comment1.setAuthor(testUser);
         comment1.setCreated(LocalDateTime.now());
@@ -241,7 +238,4 @@ class CommentRestControllerTest {
                 .andExpect(jsonPath("$.message", is(COMMENT_1)))
                 .andExpect(jsonPath("$.user", is("Anna Mileva")));
     }
-
-
-
 }

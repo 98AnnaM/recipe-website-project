@@ -64,11 +64,11 @@ class UserRegisterControllerTest {
     void testRegistrationWithSuccess() throws Exception {
         mockMvc.perform(post("/users/register").
                         param("username", TEST_USER_USERNAME).
-                        param("firstName",TEST_USER_FIRSTNAME).
-                        param("lastName",TEST_USER_LASTNAME).
+                        param("firstName", TEST_USER_FIRSTNAME).
+                        param("lastName", TEST_USER_LASTNAME).
                         param("email", TEST_USER_EMAIL).
-                        param("password",TEST_USER_PASSWORD).
-                        param("confirmPassword",TEST_USER_PASSWORD).
+                        param("password", TEST_USER_PASSWORD).
+                        param("confirmPassword", TEST_USER_PASSWORD).
                         cookie(new Cookie("lang", Locale.ENGLISH.getLanguage())).
                         with(csrf()).
                         contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -96,18 +96,17 @@ class UserRegisterControllerTest {
     @Test
     void testRegistrationFail() throws Exception {
         mockMvc.perform(post("/users/register").
-                                param("username", TEST_USER_USERNAME).
-                                param("firstName", " ").
-                                param("lastName",TEST_USER_LASTNAME).
-                                param("email", TEST_USER_EMAIL).
-                                param("password",TEST_USER_PASSWORD).
-                                param("confirmPassword",TEST_USER_PASSWORD).
-                                cookie(new Cookie("lang", Locale.ENGLISH.getLanguage())).
-                                with(csrf())
+                        param("username", TEST_USER_USERNAME).
+                        param("firstName", " ").
+                        param("lastName", TEST_USER_LASTNAME).
+                        param("email", TEST_USER_EMAIL).
+                        param("password", TEST_USER_PASSWORD).
+                        param("confirmPassword", TEST_USER_PASSWORD).
+                        cookie(new Cookie("lang", Locale.ENGLISH.getLanguage())).
+                        with(csrf())
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/users/register"));
         verify(mockEmailService, never()).sendRegistrationEmail(TEST_USER_EMAIL, " " + TEST_USER_LASTNAME, Locale.GERMAN);
     }
-
 }

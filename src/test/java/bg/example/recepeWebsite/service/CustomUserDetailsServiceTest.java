@@ -13,16 +13,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomUserDetailsServiceTest {
@@ -72,12 +67,12 @@ class CustomUserDetailsServiceTest {
                 thenReturn(Optional.of(testUser));
 
         // Act
-        CustomUserDetails userDetails =(CustomUserDetails) serviceToTest.loadUserByUsername(testUser.getUsername());
+        CustomUserDetails userDetails = (CustomUserDetails) serviceToTest.loadUserByUsername(testUser.getUsername());
 
         // Assert
 
         Assertions.assertEquals(userDetails.getUsername(), testUser.getUsername());
-        Assertions.assertEquals(userDetails.getFullName(),testUser.getFirstName() + " " + testUser.getLastName());
+        Assertions.assertEquals(userDetails.getFullName(), testUser.getFirstName() + " " + testUser.getLastName());
         Assertions.assertEquals(userDetails.getId(), testUser.getId());
         Assertions.assertEquals(userDetails.getPassword(), testUser.getPassword());
 
@@ -89,5 +84,4 @@ class CustomUserDetailsServiceTest {
 
         Assertions.assertEquals(expectedRoles, actualRoles);
     }
-
 }
