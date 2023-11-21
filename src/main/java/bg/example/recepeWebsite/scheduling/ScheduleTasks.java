@@ -13,7 +13,7 @@ public class ScheduleTasks {
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
-    private void generateDailyReport(){
+    private void generateDailyReport() {
         log.info("Start creating report");
         reportService.generateDailyReport();
         log.info("End report - report was sent");

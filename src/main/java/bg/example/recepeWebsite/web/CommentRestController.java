@@ -5,11 +5,9 @@ import bg.example.recepeWebsite.model.dto.CommentServiceModel;
 import bg.example.recepeWebsite.model.validation.ApiError;
 import bg.example.recepeWebsite.model.view.CommentViewModel;
 import bg.example.recepeWebsite.service.CommentService;
-import bg.example.recepeWebsite.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,7 +23,6 @@ public class CommentRestController {
     private final CommentService commentService;
     private final ModelMapper modelMapper;
 
-
     public CommentRestController(CommentService commentService, ModelMapper modelMapper) {
         this.commentService = commentService;
         this.modelMapper = modelMapper;
@@ -36,9 +33,7 @@ public class CommentRestController {
             @PathVariable Long recipeId,
             @AuthenticationPrincipal UserDetails principal) {
         return ResponseEntity.ok(commentService.getComments(recipeId, principal != null ? principal.getUsername() : null));
-
     }
-
 
     @PostMapping("/api/{recipeId}/comments")
     public ResponseEntity<CommentViewModel> newComment(
@@ -46,7 +41,7 @@ public class CommentRestController {
             @PathVariable Long recipeId,
             @RequestBody @Valid AddCommentDto addCommentDto) {
 
-        if (principal == null){
+        if (principal == null) {
             return ResponseEntity.status(403).build();
         }
 
@@ -73,7 +68,6 @@ public class CommentRestController {
         return ResponseEntity.badRequest().body(apiError);
     }
 
-
     @DeleteMapping("/api/{recipeId}/comments/{commentId}")
     public ResponseEntity<CommentViewModel> deleteComment(
             @PathVariable("commentId") Long commentId, @PathVariable("recipeId") Long recipeId,
@@ -83,8 +77,6 @@ public class CommentRestController {
             CommentViewModel deleted = commentService.deleteComment(commentId, principal.getUsername());
             return ResponseEntity.ok(deleted);
         }
-
         return ResponseEntity.status(403).build();
     }
-
 }

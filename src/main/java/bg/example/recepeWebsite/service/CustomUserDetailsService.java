@@ -1,18 +1,16 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.RoleEntity;
+import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.user.CustomUserDetails;
 import bg.example.recepeWebsite.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 //NOTE: This is not annotated as @Service, because we will return it as a @Bean.
 public class CustomUserDetailsService implements UserDetailsService {
@@ -24,7 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -39,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 });
     }
 
-    private UserDetails map(UserEntity userEntity){
+    private UserDetails map(UserEntity userEntity) {
         logger.info("Mapping user details for user with email: {}", userEntity.getEmail()); // Add this line for logging
 
         return new CustomUserDetails(
@@ -54,7 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                         .toList());
     }
 
-    private GrantedAuthority map(RoleEntity userRole){
+    private GrantedAuthority map(RoleEntity userRole) {
         logger.info("Mapping user role: {}", userRole.getRole()); // Add this line for logging
 
         return new SimpleGrantedAuthority("ROLE_" + userRole.getRole().name());

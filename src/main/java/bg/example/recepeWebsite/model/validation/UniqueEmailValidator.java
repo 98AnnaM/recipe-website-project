@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.model.validation;
 
-
 import bg.example.recepeWebsite.repository.UserRepository;
 
 import javax.validation.ConstraintValidator;

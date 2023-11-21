@@ -1,8 +1,5 @@
 package bg.example.recepeWebsite.model.view;
 
-import bg.example.recepeWebsite.model.entity.RecipeEntity;
-import bg.example.recepeWebsite.model.entity.UserEntity;
-
 public class PictureViewModel {
     private Long id;
     private String url;

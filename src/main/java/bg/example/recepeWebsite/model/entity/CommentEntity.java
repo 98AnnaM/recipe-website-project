@@ -1,7 +1,9 @@
 package bg.example.recepeWebsite.model.entity;
 
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,8 +22,6 @@ public class CommentEntity extends BaseEntity {
     public CommentEntity() {
     }
 
-
-
     public String getTextContent() {
         return textContent;
     }
@@ -29,7 +29,6 @@ public class CommentEntity extends BaseEntity {
     public void setTextContent(String textContent) {
         this.textContent = textContent;
     }
-
 
     public LocalDateTime getCreated() {
         return created;
@@ -39,7 +38,6 @@ public class CommentEntity extends BaseEntity {
         this.created = created;
     }
 
-
     public UserEntity getAuthor() {
         return author;
     }
@@ -47,7 +45,6 @@ public class CommentEntity extends BaseEntity {
     public void setAuthor(UserEntity author) {
         this.author = author;
     }
-
 
     public RecipeEntity getRecipe() {
         return recipe;

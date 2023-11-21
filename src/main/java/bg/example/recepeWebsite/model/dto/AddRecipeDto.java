@@ -2,21 +2,18 @@ package bg.example.recepeWebsite.model.dto;
 
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
+import bg.example.recepeWebsite.model.validation.AtLeastOneFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-
-import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
-import bg.example.recepeWebsite.model.validation.AtLeastOneFile;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddRecipeDto {
-
 
     @AtLeastOneFile
     private List<MultipartFile> pictureFiles;

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Controller
 public class StatisticsController {
 
-        private final RecipeService recipeService;
-        private final UserService userService;
+    private final RecipeService recipeService;
+    private final UserService userService;
 
     public StatisticsController(RecipeService recipeService, UserService userService) {
         this.recipeService = recipeService;
@@ -35,6 +35,4 @@ public class StatisticsController {
         model.addAttribute("statistics", statisticsViewDto);
         return "statistics";
     }
-
-
 }

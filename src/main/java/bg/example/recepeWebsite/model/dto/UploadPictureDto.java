@@ -7,7 +7,6 @@ public class UploadPictureDto {
     private Long recipeId;
     private MultipartFile picture;
 
-
     public MultipartFile getPicture() {
         return picture;
     }

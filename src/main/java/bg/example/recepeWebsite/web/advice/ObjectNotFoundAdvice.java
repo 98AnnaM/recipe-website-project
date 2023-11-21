@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.web.advice;
 
-import bg.example.recepeWebsite.web.exception.InvalidFileException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ public class ObjectNotFoundAdvice {
         model.addAttribute("errorMessage", ex.getMessage());
         return "error/objectNotFoundError";
     }
-
 }
 
 

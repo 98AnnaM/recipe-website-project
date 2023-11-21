@@ -23,7 +23,6 @@ public class MaintenanceInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
-
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

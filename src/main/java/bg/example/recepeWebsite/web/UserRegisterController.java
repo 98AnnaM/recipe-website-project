@@ -2,9 +2,6 @@ package bg.example.recepeWebsite.web;
 
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.service.UserService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/users")
 public class UserRegisterController {
 
     private final UserService userService;
     private final LocaleResolver localeResolver;
-
 
     public UserRegisterController(UserService userService, LocaleResolver localeResolver) {
         this.userService = userService;
@@ -31,7 +30,6 @@ public class UserRegisterController {
     public UserRegisterDto initUserModel() {
         return new UserRegisterDto();
     }
-
 
     @GetMapping("/register")
     public String register() {

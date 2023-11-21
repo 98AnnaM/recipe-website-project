@@ -7,11 +7,11 @@ import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
 
-   private final Long id;
+    private final Long id;
     private final String username;
     private final String fullName;
     private final String password;
-    private Collection<GrantedAuthority> authorities;
+    private final Collection<GrantedAuthority> authorities;
 
     public CustomUserDetails(Long id, String username, String fullName, String password, Collection<GrantedAuthority> authorities) {
         this.id = id;

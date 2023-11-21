@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.model.dto;
 
-
 public class UserLoginDto {
 
     private String username;

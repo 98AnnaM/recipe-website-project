@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.model.dto;
 
-import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
@@ -83,15 +82,15 @@ public class SearchRecipeDto {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-       if (name != null && !name.isEmpty()){
-           sb.append(String.format("Name: " + name + " "));
-       }
+        if (name != null && !name.isEmpty()) {
+            sb.append(String.format("Name: " + name + " "));
+        }
 
-        if (level != null){
+        if (level != null) {
             sb.append(String.format("Level: " + level + " "));
         }
 
-        if (types != null && !types.isEmpty()){
+        if (types != null && !types.isEmpty()) {
             List<String> typeNames = types.stream()
                     .map(TypeNameEnum::name)
                     .collect(Collectors.toList());
@@ -100,19 +99,17 @@ public class SearchRecipeDto {
             sb.append(String.format("Types: " + result + " "));
         }
 
-        if (category != null){
+        if (category != null) {
             sb.append(String.format("Category: " + category + " "));
         }
 
-        if (minTimeNeeded != null){
+        if (minTimeNeeded != null) {
             sb.append(String.format("Min time needed: " + minTimeNeeded + "min "));
         }
 
-        if (maxTimeNeeded != null){
+        if (maxTimeNeeded != null) {
             sb.append(String.format("Max time needed: " + maxTimeNeeded + "min "));
         }
-
-
         return sb.toString();
     }
 }

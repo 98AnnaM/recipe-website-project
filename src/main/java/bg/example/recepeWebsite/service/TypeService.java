@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.service;
 
-
 import bg.example.recepeWebsite.model.entity.TypeEntity;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import bg.example.recepeWebsite.repository.TypeRepository;
@@ -18,7 +17,6 @@ public class TypeService {
     public TypeService(TypeRepository typeRepository) {
         this.typeRepository = typeRepository;
     }
-
 
     public TypeEntity findByTypeName(TypeNameEnum typeNameEnum) {
         return this.typeRepository.findByName(typeNameEnum)

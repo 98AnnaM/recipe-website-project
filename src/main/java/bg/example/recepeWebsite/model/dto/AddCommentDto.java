@@ -5,7 +5,6 @@ import javax.validation.constraints.Size;
 
 public class AddCommentDto {
 
-
     @NotBlank
     @Size(min = 10)
     private String message;

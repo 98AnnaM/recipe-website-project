@@ -1,14 +1,15 @@
 package bg.example.recepeWebsite.model.dto;
 
 import bg.example.recepeWebsite.model.validation.FieldMatch;
-import bg.example.recepeWebsite.model.validation.AtLeastOneFile;
 import bg.example.recepeWebsite.model.validation.UniqueEmail;
 import bg.example.recepeWebsite.model.validation.UniqueUsername;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @FieldMatch(first = "password", second = "confirmPassword", message = "Passwords do not match.")
 public class UserRegisterDto {
-
 
     @NotEmpty(message = "Email cannot be empty.")
     @Email(message = "Must be valid email address.")
@@ -17,9 +18,8 @@ public class UserRegisterDto {
 
     @NotEmpty(message = "Username cannot be empty.")
     @UniqueUsername(message = "This username is already in use.")
-    @Size(min = 3, max=20, message = "Username length must be between 3 and 20 characters!")
+    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
     private String username;
-
 
     @NotEmpty(message = "Password cannot be empty.")
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
@@ -28,11 +28,11 @@ public class UserRegisterDto {
     private String confirmPassword;
 
     @NotEmpty(message = "First name cannot be empty.")
-    @Size(min = 3, max=20, message = "First name length must be between 3 and 20 characters!")
+    @Size(min = 3, max = 20, message = "First name length must be between 3 and 20 characters!")
     private String firstName;
 
     @NotEmpty(message = "Last name cannot be empty.")
-    @Size(min = 3, max=20, message = "Last name length must be between 3 and 20 characters!")
+    @Size(min = 3, max = 20, message = "Last name length must be between 3 and 20 characters!")
     private String lastName;
 
     public String getFirstName() {

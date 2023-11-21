@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.CommentServiceModel;
 import bg.example.recepeWebsite.model.entity.CommentEntity;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
@@ -10,6 +9,7 @@ import bg.example.recepeWebsite.model.view.CommentViewModel;
 import bg.example.recepeWebsite.repository.CommentRepository;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,7 +38,6 @@ public class CommentService {
         if (recipeOptional.isEmpty()) {
             throw new ObjectNotFoundException("Recipe with id " + recipeId + " was not found!");
         }
-
         return recipeOptional.get()
                 .getComments().stream()
                 .map(comment -> mapAsComment(comment, principalName))
@@ -88,7 +87,7 @@ public class CommentService {
                 filter(c -> c.getAuthor().getUsername().equals(userName)).
                 isPresent();
 
-        if (isOwner){
+        if (isOwner) {
             return true;
         }
 

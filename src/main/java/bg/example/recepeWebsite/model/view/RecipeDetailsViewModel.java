@@ -1,6 +1,6 @@
 package bg.example.recepeWebsite.model.view;
 
-import bg.example.recepeWebsite.model.entity.*;
+import bg.example.recepeWebsite.model.entity.CommentEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 

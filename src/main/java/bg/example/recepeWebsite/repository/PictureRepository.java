@@ -2,7 +2,6 @@ package bg.example.recepeWebsite.repository;
 
 import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.TypeEntity;
-import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

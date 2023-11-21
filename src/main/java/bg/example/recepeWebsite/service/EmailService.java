@@ -21,79 +21,76 @@ import java.util.Locale;
 @Service
 public class EmailService {
 
-  private final TemplateEngine templateEngine;
-  private final MessageSource messageSource;
-  private final JavaMailSender javaMailSender;
-  private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
+    private final TemplateEngine templateEngine;
+    private final MessageSource messageSource;
+    private final JavaMailSender javaMailSender;
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
-  @Value("${mail.username}") String senderMail;
+    @Value("${mail.username}")
+    String senderMail;
 
-  public EmailService(TemplateEngine templateEngine,
-                      MessageSource messageSource,
-                      JavaMailSender javaMailSender) {
-    this.templateEngine = templateEngine;
-    this.messageSource = messageSource;
-    this.javaMailSender = javaMailSender;
-  }
-
-  public void sendRegistrationEmail(
-    String userEmail,
-    String userName,
-    Locale preferredLocale
-  ) {
-
-    try {
-      Socket socket = new Socket();
-      socket.connect(new InetSocketAddress("localhost", 1025), 1000);
-      socket.close();
-    } catch (IOException e) {
-      logger.error("There is no connection to the MailHog server.");
-      return;
+    public EmailService(TemplateEngine templateEngine,
+                        MessageSource messageSource,
+                        JavaMailSender javaMailSender) {
+        this.templateEngine = templateEngine;
+        this.messageSource = messageSource;
+        this.javaMailSender = javaMailSender;
     }
 
-    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    public void sendRegistrationEmail(
+            String userEmail,
+            String userName,
+            Locale preferredLocale) {
 
-    try {
-      MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-      mimeMessageHelper.setFrom("bestCook@bestCook.com");
-      mimeMessageHelper.setTo(userEmail);
-      mimeMessageHelper.setSubject(getEmailSubject(preferredLocale));
-      mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress("localhost", 1025), 1000);
+            socket.close();
+        } catch (IOException e) {
+            logger.error("There is no connection to the MailHog server.");
+            return;
+        }
 
-      javaMailSender.send(mimeMessageHelper.getMimeMessage());
-    } catch (MessagingException e) {
-      throw new RuntimeException(e);
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+            mimeMessageHelper.setFrom("bestCook@bestCook.com");
+            mimeMessageHelper.setTo(userEmail);
+            mimeMessageHelper.setSubject(getEmailSubject(preferredLocale));
+            mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
-  }
 
-  private String getEmailSubject(Locale locale) {
-    return messageSource.getMessage(
-        "registration_subject",
-        new Object[0],
-        locale);
-  }
+    private String getEmailSubject(Locale locale) {
+        return messageSource.getMessage(
+                "registration_subject",
+                new Object[0],
+                locale);
+    }
 
-  private String generateMessageContent(Locale locale,
-                                        String userName) {
-    Context ctx = new Context();
-    ctx.setLocale(locale);
-    ctx.setVariable("userName", userName);
-    return templateEngine.process("email/registration", ctx);
-  }
+    private String generateMessageContent(Locale locale,
+                                          String userName) {
+        Context ctx = new Context();
+        ctx.setLocale(locale);
+        ctx.setVariable("userName", userName);
+        return templateEngine.process("email/registration", ctx);
+    }
 
-  public void sendSimpleMessage(
-          String to, String subject, String text) {
+    public void sendSimpleMessage(
+            String to, String subject, String text) {
 
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setFrom(senderMail);
-    message.setTo(to);
-    message.setSubject(subject);
-    message.setText(text);
-    javaMailSender.send(message);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(senderMail);
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        javaMailSender.send(message);
 
-    logger.info("Message was sent");
-
-  }
-
-
+        logger.info("Message was sent");
+    }
 }

@@ -1,17 +1,17 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
-import bg.example.recepeWebsite.model.view.PictureHomePageViewModel;
-import bg.example.recepeWebsite.model.view.PictureViewModel;
-import bg.example.recepeWebsite.repository.TypeRepository;
-import bg.example.recepeWebsite.web.exception.InvalidFileException;
-import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.entity.PictureEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
+import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
+import bg.example.recepeWebsite.model.view.PictureHomePageViewModel;
+import bg.example.recepeWebsite.model.view.PictureViewModel;
 import bg.example.recepeWebsite.repository.PictureRepository;
 import bg.example.recepeWebsite.repository.RecipeRepository;
+import bg.example.recepeWebsite.repository.TypeRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
+import bg.example.recepeWebsite.web.exception.InvalidFileException;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
-
 
 @Service
 public class PictureService {
@@ -49,7 +48,7 @@ public class PictureService {
         return pictures.map(picture -> this.mapToPictureViewModel(picture, principalName));
     }
 
-    public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId){
+    public PictureEntity createAndSavePictureEntity(Long userId, MultipartFile file, Long recipeId) {
 
         try {
             final CloudinaryImage upload = cloudinaryService
@@ -63,16 +62,16 @@ public class PictureService {
                     .setRecipe(recipeRepository.findById(recipeId).orElse(null));
 
             return pictureRepository.save(newPicture);
-        } catch (RuntimeException | IOException e){
+        } catch (RuntimeException | IOException e) {
             throw new InvalidFileException("File with name " + file.getOriginalFilename() + " can not be uploaded.");
         }
     }
 
     @Transactional
-    public void deletePicture(Long id){
+    public void deletePicture(Long id) {
         Optional<PictureEntity> picture = pictureRepository.findById(id);
 
-        if (picture.isEmpty()){
+        if (picture.isEmpty()) {
             throw new ObjectNotFoundException("Picture with id " + id + " not found!");
         }
 
@@ -82,7 +81,6 @@ public class PictureService {
         }
 
         pictureRepository.deleteById(id);
-
     }
 
 
@@ -92,7 +90,7 @@ public class PictureService {
                 filter(picture -> picture.getAuthor().getUsername().equals(userName)).
                 isPresent();
 
-        if (isOwner){
+        if (isOwner) {
             return true;
         }
 
@@ -108,7 +106,7 @@ public class PictureService {
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
     }
 
-    public PictureViewModel mapToPictureViewModel(PictureEntity picture, String principalName){
+    public PictureViewModel mapToPictureViewModel(PictureEntity picture, String principalName) {
         PictureViewModel pictureViewModel = modelMapper.map(picture, PictureViewModel.class);
         pictureViewModel.setRecipeId(picture.getRecipe().getId())
                 .setAuthorUsername(picture.getAuthor().getUsername())
@@ -116,14 +114,14 @@ public class PictureService {
         return pictureViewModel;
     }
 
-    public PictureHomePageViewModel mapToPictureHomePageViewModel(PictureEntity picture){
+    public PictureHomePageViewModel mapToPictureHomePageViewModel(PictureEntity picture) {
         PictureHomePageViewModel pictureHomePageViewModel = modelMapper.map(picture, PictureHomePageViewModel.class);
         pictureHomePageViewModel.setRecipeId(picture.getRecipe().getId())
                 .setAuthorUsername(picture.getAuthor().getUsername());
         return pictureHomePageViewModel;
     }
 
-    public List<PictureHomePageViewModel> getThreeRandomPicturesByRecipeType(TypeNameEnum typeNameEnum){
+    public List<PictureHomePageViewModel> getThreeRandomPicturesByRecipeType(TypeNameEnum typeNameEnum) {
         List<PictureEntity> allPictures = pictureRepository.findAllPicturesByRecipeType(
                 this.typeRepository.findByName(typeNameEnum)
                         .orElseThrow(() -> new ObjectNotFoundException("TypeEntity with name " + typeNameEnum + " not found!")));
@@ -146,11 +144,9 @@ public class PictureService {
                 break;
             }
         }
-
         return resultPictures;
     }
-
-    }
+}
 
 
 

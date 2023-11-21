@@ -45,14 +45,13 @@ public class UserController {
 
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}/editProfile")
-    public String editUserInformation( @PathVariable("id") Long id,
-            Model model){
+    public String editUserInformation(@PathVariable("id") Long id,
+                                      Model model) {
 
-        if (!model.containsAttribute("userEditDto")){
+        if (!model.containsAttribute("userEditDto")) {
             UserEditDto userEditDto = userService.getUserEditDetails(id);
             model.addAttribute("userEditDto", userEditDto);
         }
-
         return "profile-edit";
     }
 
@@ -75,7 +74,6 @@ public class UserController {
             bindingResult.addError(new FieldError("userEditDto", "email", userEditDto.getEmail(), false, null, null, "This email is occupied!"));
         }
 
-
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userEditDto", userEditDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userEditDto", bindingResult);
@@ -83,7 +81,6 @@ public class UserController {
         }
 
         userService.updateUserProfile(userEditDto);
-
         return "redirect:/users/profile/" + id;
     }
 
@@ -105,8 +102,8 @@ public class UserController {
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}/favoriteRecipes")
     public String favoriteRecipes(@PathVariable Long id,
-                               Model model,
-                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
+                                  Model model,
+                                  @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
 
         Page<RecipeViewModel> recipes = recipeService.findAllFavoriteRecipesForUserId(id, pageable);
         model.addAttribute("recipes", recipes);
@@ -120,11 +117,11 @@ public class UserController {
     @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}/addedPictures")
     public String addedPictures(@PathVariable Long id,
-                               Model model,
-                               @PageableDefault(page = 0, size = 12) Pageable pageable) {
+                                Model model,
+                                @PageableDefault(page = 0, size = 12) Pageable pageable) {
 
         String principalUserName = userService.findById(id).getUsername();
-        Page<PictureViewModel> pictures =  pictureService.findAllPictureViewModelsByUsername(principalUserName ,pageable);
+        Page<PictureViewModel> pictures = pictureService.findAllPictureViewModelsByUsername(principalUserName, pageable);
         model.addAttribute("pictures", pictures);
         model.addAttribute("heading", String.format("Photos added by %s (%s)", principalUserName, pictures.getTotalElements()));
         return "user-pictures";
@@ -132,10 +129,8 @@ public class UserController {
 
     @PreAuthorize("#id == authentication.principal.id")
     @DeleteMapping("/{id}/deletePicture")
-    public String deletePicture(@PathVariable("id") Long id, @RequestParam("pictureId") Long pictureId){
+    public String deletePicture(@PathVariable("id") Long id, @RequestParam("pictureId") Long pictureId) {
         pictureService.deletePicture(pictureId);
         return "redirect:/users/profile/" + id + "/addedPictures";
     }
-
-
 }

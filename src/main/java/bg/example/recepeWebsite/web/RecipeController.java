@@ -10,10 +10,6 @@ import bg.example.recepeWebsite.model.user.CustomUserDetails;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.service.PictureService;
 import bg.example.recepeWebsite.service.RecipeService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import bg.example.recepeWebsite.service.TypeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +24,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +43,6 @@ public class RecipeController {
         this.recipeService = recipeService;
         this.pictureService = pictureService;
         this.typeService = typeService;
-
     }
 
     @ModelAttribute
@@ -63,7 +60,6 @@ public class RecipeController {
         return typeService.getAllTypes();
     }
 
-
     @GetMapping("/all")
     public String allRecipes(Model model,
                              @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
@@ -77,7 +73,7 @@ public class RecipeController {
     @GetMapping("/vegetarian")
     public String vegetarianRecipes(Model model,
                                     @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
-        Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGETARIAN, pageable);
+        Page<RecipeViewModel> pagesWithVeganRecipes = recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGETARIAN, pageable);
         model.addAttribute("recipes", pagesWithVeganRecipes);
         model.addAttribute("heading", String.format("Vegetarian recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
         model.addAttribute("url", "/recipes/vegetarian");
@@ -86,8 +82,8 @@ public class RecipeController {
 
     @GetMapping("/withMeat")
     public String withMeatRecipes(Model model,
-                                    @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
-        Page<RecipeViewModel> pagesWithMeatRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.WITH_MEAT, pageable);
+                                  @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
+        Page<RecipeViewModel> pagesWithMeatRecipes = recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.WITH_MEAT, pageable);
         model.addAttribute("recipes", pagesWithMeatRecipes);
         model.addAttribute("heading", String.format("Recipes with meat (%s)", pagesWithMeatRecipes.getTotalElements()));
         model.addAttribute("url", "/recipes/withMeat");
@@ -97,7 +93,7 @@ public class RecipeController {
     @GetMapping("/vegan")
     public String veganRecipes(Model model,
                                @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
-        Page<RecipeViewModel> pagesWithVeganRecipes =  recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGAN, pageable);
+        Page<RecipeViewModel> pagesWithVeganRecipes = recipeService.findAllFilteredRecipesViewModels(CategoryNameEnum.VEGAN, pageable);
         model.addAttribute("recipes", pagesWithVeganRecipes);
         model.addAttribute("heading", String.format("Vegan recipes (%s)", pagesWithVeganRecipes.getTotalElements()));
         model.addAttribute("url", "/recipes/vegan");
@@ -114,7 +110,7 @@ public class RecipeController {
     public String addRecipeConfirm(@Valid AddRecipeDto addRecipeDto,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes,
-                                   @AuthenticationPrincipal CustomUserDetails userDetails){
+                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         if (bindingResult.hasErrors()) {
 
@@ -124,7 +120,6 @@ public class RecipeController {
 
             return "redirect:/recipes/add";
         }
-
         Long recipeId = recipeService.addRecipe(addRecipeDto, userDetails);
         return "redirect:/recipes/details/" + recipeId;
     }
@@ -134,14 +129,13 @@ public class RecipeController {
 
         model.addAttribute("recipe", recipeService.findRecipeDetailsViewModelById(id, principal != null ? principal.getName() : ""));
         return "recipe-details";
-
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/details/{id}/picture/add")
     public String addPicture(UploadPictureDto uploadPictureDto,
                              @PathVariable Long id,
-                             @AuthenticationPrincipal CustomUserDetails principal){
+                             @AuthenticationPrincipal CustomUserDetails principal) {
 
         pictureService.createAndSavePictureEntity(principal.getId(), uploadPictureDto.getPicture(), id);
         return "redirect:/recipes/details/" + id;
@@ -151,10 +145,9 @@ public class RecipeController {
     @DeleteMapping("/details/{recipeId}/picture/delete")
     public String deletePicture(@PathVariable("recipeId") Long recipeId,
                                 @RequestParam("pictureId") Long pictureId,
-                                Principal principal){
+                                Principal principal) {
         pictureService.deletePicture(pictureId);
         return "redirect:/recipes/details/" + recipeId;
-
     }
 
     @PreAuthorize("isAuthenticated() && @recipeService.isOwner(#principal.name, #recipeId)")
@@ -162,9 +155,9 @@ public class RecipeController {
     public String editRecipe(
             Principal principal,
             @PathVariable("id") Long recipeId,
-            Model model){
+            Model model) {
 
-        if (!model.containsAttribute("editRecipeDto")){
+        if (!model.containsAttribute("editRecipeDto")) {
             EditRecipeDto editRecipeDto = recipeService.getRecipeEditDetails(recipeId);
             model.addAttribute("editRecipeDto", editRecipeDto);
         }
@@ -191,19 +184,18 @@ public class RecipeController {
     @DeleteMapping("/delete/{id}")
     public String deleteRecipe(
             Principal principal,
-            @PathVariable("id") Long recipeId){
+            @PathVariable("id") Long recipeId) {
         recipeService.deleteRecipeById(recipeId);
-
         return "redirect:/recipes/all";
     }
 
     @GetMapping("/search")
-    public String searchQuery( @RequestParam Map<String, String> queryParams,
-                               HttpServletRequest request,
-                               @Valid SearchRecipeDto searchRecipeDto,
-                               BindingResult bindingResult,
-                               Model model,
-                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
+    public String searchQuery(@RequestParam Map<String, String> queryParams,
+                              HttpServletRequest request,
+                              @Valid SearchRecipeDto searchRecipeDto,
+                              BindingResult bindingResult,
+                              Model model,
+                              @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("searchRecipeDto", searchRecipeDto);
@@ -230,8 +222,6 @@ public class RecipeController {
             String url = request.getRequestURL().toString() + (queryString.isEmpty() ? "" : "?" + queryString);
             model.addAttribute("url", url);
         }
-
         return "recipe-search";
     }
-
 }

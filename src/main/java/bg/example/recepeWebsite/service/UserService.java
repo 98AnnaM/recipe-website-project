@@ -5,15 +5,12 @@ import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
-import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.RoleRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +45,7 @@ public class UserService {
         this.recipeRepository = recipeRepository;
     }
 
-    private void login(UserEntity userEntity){
+    private void login(UserEntity userEntity) {
         UserDetails userDetails = userDetailsService
                 .loadUserByUsername(userEntity.getUsername());
 
@@ -84,9 +81,7 @@ public class UserService {
         return this.userRepository.findById(id)
                 .map(userEntity -> modelMapper.map(userEntity, UserView.class))
                 .orElseThrow(() -> new ObjectNotFoundException("User with id " + id + " not found!"));
-
     }
-
 
     public void updateUserProfile(UserEditDto userEditDto) {
         UserEntity user = this.userRepository.findById(userEditDto.getId())
@@ -98,26 +93,23 @@ public class UserService {
                 .setEmail(userEditDto.getEmail());
 
         this.userRepository.save(user);
-
-
     }
 
     public UserEditDto getUserEditDetails(Long id) {
         return this.userRepository.findById(id)
                 .map(userEntity -> modelMapper.map(userEntity, UserEditDto.class))
                 .orElseThrow(() -> new ObjectNotFoundException("User with ID " + id + " not found!"));
-
     }
 
-    public boolean usernameExists(String username){
+    public boolean usernameExists(String username) {
         return this.userRepository.existsByUsername(username);
     }
 
-    public boolean emailExists(String email){
+    public boolean emailExists(String email) {
         return this.userRepository.existsByEmail(email);
     }
 
-@Transactional
+    @Transactional
     public boolean addOrRemoveRecipeFromFavorites(String username, Long id) {
         UserEntity user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException("User with username " + username + " was not found!"));
@@ -125,24 +117,20 @@ public class UserService {
         RecipeEntity recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Recipe with id " + id + " not found!"));
 
-        if (!user.getFavorites().contains(recipe)){
+        if (!user.getFavorites().contains(recipe)) {
             user.getFavorites().add(recipe);
         } else {
             user.getFavorites().remove(recipe);
         }
-
         userRepository.save(user);
         return user.getFavorites().contains(recipe);
     }
 
-
-    public List<String> getAdminsEmails(){
-       return this.userRepository.findByRole(RoleNameEnum.ADMIN).stream().map(UserEntity::getEmail).collect(Collectors.toList());
+    public List<String> getAdminsEmails() {
+        return this.userRepository.findByRole(RoleNameEnum.ADMIN).stream().map(UserEntity::getEmail).collect(Collectors.toList());
     }
 
-    public long getCountRegisteredUsers(){
+    public long getCountRegisteredUsers() {
         return this.userRepository.count();
     }
-
-
 }

@@ -1,8 +1,5 @@
 package bg.example.recepeWebsite.model.dto;
 
-import bg.example.recepeWebsite.model.validation.UniqueEmail;
-import bg.example.recepeWebsite.model.validation.UniqueUsername;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -16,15 +13,15 @@ public class UserEditDto {
     private String email;
 
     @NotEmpty(message = "Username cannot be empty.")
-    @Size(min = 3, max=20, message = "Username length must be between 3 and 20 characters!")
+    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
     private String username;
 
     @NotEmpty(message = "First name cannot be empty.")
-    @Size(min = 2, max=20, message = "First name length must be between 2 and 20 characters!")
+    @Size(min = 2, max = 20, message = "First name length must be between 2 and 20 characters!")
     private String firstName;
 
     @NotEmpty(message = "Last name cannot be empty.")
-    @Size(min = 2, max=20, message = "Last name length must be between 2 and 20 characters!")
+    @Size(min = 2, max = 20, message = "Last name length must be between 2 and 20 characters!")
     private String lastName;
 
     public String getEmail() {

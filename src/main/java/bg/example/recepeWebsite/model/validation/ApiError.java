@@ -26,7 +26,7 @@ public class ApiError {
         this.fieldWithErrors = fieldWithErrors;
     }
 
-    public void addFieldWithError(String error){
+    public void addFieldWithError(String error) {
         fieldWithErrors.add(error);
     }
 }

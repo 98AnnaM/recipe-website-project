@@ -1,7 +1,5 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.repository.UserRepository;
-import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import bg.example.recepeWebsite.model.dto.AddRecipeDto;
 import bg.example.recepeWebsite.model.dto.EditRecipeDto;
 import bg.example.recepeWebsite.model.dto.SearchRecipeDto;
@@ -16,6 +14,8 @@ import bg.example.recepeWebsite.model.view.RecipeDetailsViewModel;
 import bg.example.recepeWebsite.model.view.RecipeViewModel;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.RecipeSpecification;
+import bg.example.recepeWebsite.repository.UserRepository;
+import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +24,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -58,13 +60,12 @@ public class RecipeService {
         return this.recipeRepository.
                 findAllByCategory(category, pageable)
                 .map(this::mapToRecipeViewModel);
-
     }
 
-    public RecipeViewModel mapToRecipeViewModel(RecipeEntity recipe){
+    public RecipeViewModel mapToRecipeViewModel(RecipeEntity recipe) {
         RecipeViewModel recipeViewModel = modelMapper.map(recipe, RecipeViewModel.class);
         recipeViewModel.setAuthor(recipe.getAuthor().getFirstName() + " " + recipe.getAuthor().getLastName());
-        recipeViewModel.setPictureUrl( !recipe.getPictures().isEmpty() ?
+        recipeViewModel.setPictureUrl(!recipe.getPictures().isEmpty() ?
                 recipe.getPictures()
                         .stream()
                         .sorted(Comparator.comparingLong(PictureEntity::getId))
@@ -72,9 +73,7 @@ public class RecipeService {
                         .get(0)
                         .getUrl() : "/static/images/register.jpg");
         return recipeViewModel;
-
     }
-
 
     @Transactional
     public Long addRecipe(AddRecipeDto addRecipeDto, CustomUserDetails userDetails) {
@@ -87,14 +86,12 @@ public class RecipeService {
                 .map(typeService::findByTypeName)
                 .collect(Collectors.toList()));
 
-
         newRecipe.setPictures(new ArrayList<>());
         newRecipe = this.recipeRepository.save(newRecipe);
         for (MultipartFile file : addRecipeDto.getPictureFiles()) {
             PictureEntity picture = pictureService.createAndSavePictureEntity(userDetails.getId(), file, newRecipe.getId());
             newRecipe.getPictures().add(picture);
         }
-
         return recipeRepository.save(newRecipe).getId();
     }
 
@@ -118,7 +115,7 @@ public class RecipeService {
         recipeDetailsViewModel.setIsFavorite(isRecipeFavorite(principalName, recipeEntity.getId()));
         recipeDetailsViewModel.setVideoId(extractVideoId(recipeEntity.getVideoUrl()));
 
-        return  recipeDetailsViewModel;
+        return recipeDetailsViewModel;
     }
 
     public boolean isOwner(String userName, Long recipeId) {
@@ -127,7 +124,7 @@ public class RecipeService {
                 filter(r -> r.getAuthor().getUsername().equals(userName)).
                 isPresent();
 
-        if (isOwner){
+        if (isOwner) {
             return true;
         }
 
@@ -143,18 +140,18 @@ public class RecipeService {
                 anyMatch(r -> r.getRole() == RoleNameEnum.ADMIN);
     }
 
-    public boolean isRecipeFavorite(String username, Long recipeId){
+    public boolean isRecipeFavorite(String username, Long recipeId) {
         UserEntity user = this.userRepository.findByUsername(username).orElse(null);
 
-        if (user == null){
-         return false;
+        if (user == null) {
+            return false;
         }
 
         return user.getFavorites().stream().map(RecipeEntity::getId).anyMatch(id -> id.equals(recipeId));
     }
 
     @Transactional
-    public EditRecipeDto getRecipeEditDetails(Long recipeId){
+    public EditRecipeDto getRecipeEditDetails(Long recipeId) {
 
         RecipeEntity recipeEntity = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + recipeId + " not found"));
@@ -182,13 +179,13 @@ public class RecipeService {
                 .collect(Collectors.toList()));
 
         updateRecipe.setName(editRecipeDto.getName())
-                    .setLevel(editRecipeDto.getLevel())
-                    .setCategory(editRecipeDto.getCategory())
-                    .setPortions(editRecipeDto.getPortions())
-                    .setTimeNeeded(editRecipeDto.getTimeNeeded())
-                    .setDescription(editRecipeDto.getDescription())
-                    .setVideoUrl(editRecipeDto.getVideoUrl())
-                    .setProducts(editRecipeDto.getProducts());
+                .setLevel(editRecipeDto.getLevel())
+                .setCategory(editRecipeDto.getCategory())
+                .setPortions(editRecipeDto.getPortions())
+                .setTimeNeeded(editRecipeDto.getTimeNeeded())
+                .setDescription(editRecipeDto.getDescription())
+                .setVideoUrl(editRecipeDto.getVideoUrl())
+                .setProducts(editRecipeDto.getProducts());
 
         recipeRepository.save(updateRecipe);
     }
@@ -212,9 +209,9 @@ public class RecipeService {
 
         recipe.getPictures().forEach(picture -> pictureService.deletePicture(picture.getId()));
         recipeRepository.deleteById(recipeId);
-
     }
-@Transactional
+
+    @Transactional
     public Page<RecipeViewModel> searchRecipe(SearchRecipeDto searchRecipeDto, Pageable pageable) {
         return this.recipeRepository
                 .findAll(new RecipeSpecification(searchRecipeDto), pageable)
@@ -242,6 +239,4 @@ public class RecipeService {
     public long findCountAll() {
         return this.recipeRepository.count();
     }
-
-
 }

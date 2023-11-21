@@ -1,6 +1,9 @@
 package bg.example.recepeWebsite.model.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "pictures")
@@ -16,7 +19,6 @@ public class PictureEntity extends BaseEntity {
     private String title;
     @ManyToOne()
     private RecipeEntity recipe;
-
 
     public RecipeEntity getRecipe() {
         return recipe;
@@ -34,11 +36,9 @@ public class PictureEntity extends BaseEntity {
         return publicId;
     }
 
-
     public String getUrl() {
         return url;
     }
-
 
     public UserEntity getAuthor() {
         return author;
@@ -63,8 +63,6 @@ public class PictureEntity extends BaseEntity {
         this.author = author;
         return this;
     }
-
-
 
     public PictureEntity setPublicId(String publicId) {
         this.publicId = publicId;

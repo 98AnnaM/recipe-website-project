@@ -1,6 +1,5 @@
 package bg.example.recepeWebsite.model.view;
 
-import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 
@@ -14,7 +13,6 @@ public class RecipeViewModel {
     private String pictureUrl;
     private int timeNeeded;
     private int portions;
-
 
     public Long getId() {
         return id;

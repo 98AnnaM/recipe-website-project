@@ -1,7 +1,7 @@
 package bg.example.recepeWebsite.model.entity;
 
-
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,7 +16,6 @@ public class RoleEntity extends BaseEntity {
 
     public RoleEntity() {
     }
-
 
     public RoleNameEnum getRole() {
         return role;

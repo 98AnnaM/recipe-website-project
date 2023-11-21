@@ -26,7 +26,6 @@ public class FavoritesRestController {
             boolean isFavorite = userService.addOrRemoveRecipeFromFavorites(principal.getUsername(), id);
             return ResponseEntity.ok(isFavorite);
         }
-
         return ResponseEntity.status(403).build();
     }
 }

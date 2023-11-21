@@ -6,7 +6,6 @@ import bg.example.recepeWebsite.service.PictureService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -20,7 +19,6 @@ public class HomeController {
         this.pictureService = pictureService;
     }
 
-
     @GetMapping("/")
     public String index(Model model) {
 
@@ -30,17 +28,17 @@ public class HomeController {
         LocalTime now = LocalTime.now();
         if (now.getHour() < 11) {
             pictures = this.pictureService
-                           .getThreeRandomPicturesByRecipeType(TypeNameEnum.BREAKFAST);
+                    .getThreeRandomPicturesByRecipeType(TypeNameEnum.BREAKFAST);
             message = "Time to prepare your breakfast! This are our today's suggestions for you!";
-        } else if (now.getHour() <= 14){
+        } else if (now.getHour() <= 14) {
             pictures = this.pictureService
                     .getThreeRandomPicturesByRecipeType(TypeNameEnum.MAIN_MEAL);
             message = "Time to prepare some lunch! This are our today's suggestions for you!";
-        } else if (now.getHour() == 15 || now.getHour() == 16){
+        } else if (now.getHour() == 15 || now.getHour() == 16) {
             pictures = this.pictureService
                     .getThreeRandomPicturesByRecipeType(TypeNameEnum.DESERT);
             message = "Time for an afternoon coffee! Here are some deserts that can join your cup of coffee!";
-        }  else {
+        } else {
             pictures = this.pictureService
                     .getThreeRandomPicturesByRecipeType(TypeNameEnum.MAIN_MEAL);
             message = "Time to prepare some dinner! This are our today's suggestions for you!";
@@ -51,6 +49,4 @@ public class HomeController {
 
         return "index";
     }
-
-
 }

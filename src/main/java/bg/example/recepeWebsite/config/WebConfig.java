@@ -12,7 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
     private final LocaleChangeInterceptor localeChangeInterceptor;
     private final MaintenanceInterceptor maintenanceInterceptor;
 
-
     public WebConfig(LocaleChangeInterceptor localeChangeInterceptor, MaintenanceInterceptor maintenanceInterceptor) {
         this.localeChangeInterceptor = localeChangeInterceptor;
         this.maintenanceInterceptor = maintenanceInterceptor;
@@ -22,6 +21,5 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor);
         registry.addInterceptor(maintenanceInterceptor);
-       
     }
 }
