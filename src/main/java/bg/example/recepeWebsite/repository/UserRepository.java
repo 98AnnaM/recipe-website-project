@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("SELECT u FROM UserEntity u JOIN u.roles r WHERE r.role = :role")
     List<UserEntity> findByRole(@Param("role") RoleNameEnum role);
+
+    Optional<UserEntity> findByEmail(String email);
 }

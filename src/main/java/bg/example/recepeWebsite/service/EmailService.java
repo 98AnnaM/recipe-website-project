@@ -35,6 +35,7 @@ public class EmailService {
         this.templateEngine = templateEngine;
         this.messageSource = messageSource;
         this.javaMailSender = javaMailSender;
+
     }
 
     public void sendRegistrationEmail(
@@ -92,5 +93,18 @@ public class EmailService {
         javaMailSender.send(message);
 
         logger.info("Message was sent");
+    }
+
+    public String sendResetPasswordEmail(String email, String resetLink) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("bestcook@example.com");
+        message.setTo(email);
+        message.setSubject("Reset password");
+        message.setText("Dear user,\n\n" +
+                "Please click on this link to Reset your Password :" + resetLink + " .\n\n"
+                + "Regards \n" + "BestCook Team");
+        javaMailSender.send(message);
+
+        return "success";
     }
 }

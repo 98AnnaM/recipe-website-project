@@ -1,16 +1,14 @@
 package bg.example.recepeWebsite.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
 public class CommentEntity extends BaseEntity {
 
-    @Column(nullable = false, columnDefinition = "CLOB")
+    @Column(nullable = false)
+    @Lob
     private String textContent;
     @Column(name = "created", nullable = false)
     private LocalDateTime created;

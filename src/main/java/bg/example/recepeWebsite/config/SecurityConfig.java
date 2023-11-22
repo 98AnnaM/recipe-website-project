@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/about").permitAll()
                 .antMatchers("/recipes/**").permitAll()
-                .antMatchers("/api/**", "/maintenance/**").permitAll()
+                .antMatchers("/api/**", "/maintenance/**", "/password/**").permitAll()
                 .antMatchers("/users/register", "/users/login").anonymous()
                 .antMatchers("/users/profile", "/recipes/add", "/users/profile/**").authenticated()
                 .antMatchers("/statistics").hasRole(RoleNameEnum.ADMIN.name())

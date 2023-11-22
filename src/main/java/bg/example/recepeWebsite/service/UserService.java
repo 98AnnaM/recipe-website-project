@@ -133,4 +133,9 @@ public class UserService {
     public long getCountRegisteredUsers() {
         return this.userRepository.count();
     }
+
+    public UserEntity findByEmail(String email) {
+        return this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new ObjectNotFoundException("User with email " + email + "not found!"));
+    }
 }

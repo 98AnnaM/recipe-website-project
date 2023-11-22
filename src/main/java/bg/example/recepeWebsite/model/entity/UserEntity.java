@@ -19,7 +19,6 @@ public class UserEntity extends BaseEntity {
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<RoleEntity> roles;
-
     @OneToMany(mappedBy = "author")
     private List<RecipeEntity> addedRecipes;
 

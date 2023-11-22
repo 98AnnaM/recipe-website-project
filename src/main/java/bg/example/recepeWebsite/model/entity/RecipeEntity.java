@@ -12,9 +12,11 @@ public class RecipeEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false, columnDefinition = "CLOB")
+    @Column(nullable = false)
+    @Lob
     private String products;
-    @Column(nullable = false, columnDefinition = "CLOB")
+    @Column(nullable = false)
+    @Lob
     private String description;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -36,7 +38,6 @@ public class RecipeEntity extends BaseEntity {
     private Integer timeNeeded;
     @Column(nullable = false)
     private Integer portions;
-
     @ManyToMany(mappedBy = "favorites")
     private List<UserEntity> favoriteUsers;
 

@@ -1,15 +1,13 @@
 package bg.example.recepeWebsite.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
 
-    @Column(nullable = false, columnDefinition = "CLOB")
+    @Column(nullable = false)
+    @Lob
     private String url;
     @ManyToOne(optional = false)
     private UserEntity author;
