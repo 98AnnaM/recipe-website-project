@@ -1,11 +1,13 @@
 package bg.example.recepeWebsite.web;
 
+import bg.example.recepeWebsite.model.dto.forgotten_password.ResetPasswordData;
 import bg.example.recepeWebsite.model.dto.forgotten_password.ResetPasswordEmailDTO;
 import bg.example.recepeWebsite.service.EmailService;
 import bg.example.recepeWebsite.service.SecureTokenService;
 import bg.example.recepeWebsite.service.UserService;
-import org.springframework.context.MessageSource;
+import bg.example.recepeWebsite.web.exception.InvalidTokenException;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @Controller
@@ -60,10 +61,47 @@ public class PasswordResetController {
 
         String resetLink = this.secureTokenService.createSecureTokenResetLink(emailDTO.getEmail());
         this.emailService.sendResetPasswordEmail(emailDTO.getEmail(), resetLink);
-        model.addAttribute("success", "Email with reset password link was sent to " + emailDTO.getEmail());
+        model.addAttribute("message", "Email with reset password link was sent to " + emailDTO.getEmail());
 
-        return "reset-password-success";
+        return "reset-password-message";
     }
+
+    @GetMapping("/change")
+    public String changePassword(@RequestParam(required = false) String token,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model) {
+        if (token == null) {
+            model.addAttribute("message", "Token is empty. Please make sure to copy the entire URL");
+            return "reset-password-message";
+        }
+
+        if (!model.containsAttribute("data")) {
+            ResetPasswordData passwordData = new ResetPasswordData();
+            passwordData.setToken(token);
+            model.addAttribute("data", passwordData);
+        }
+
+        return "change-password";
+    }
+
+    @PostMapping("/change")
+    public String changePassword(@Valid ResetPasswordData data,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("data", data);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.data",
+                    bindingResult);
+            return String.format("redirect:/password/change?token=%s", data.getToken());
+        }
+
+        userService.updatePassword(data.getPassword(), data.getToken());
+
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Your password was successfully changed. You can now login into your account.");
+        return "redirect:/users/login";
+    }
+
 
 
 

@@ -4,6 +4,7 @@ import bg.example.recepeWebsite.model.entity.SecureTokenEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.repository.SecureTokenRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -34,7 +35,11 @@ public class SecureTokenService {
         UserEntity user = this.userService.findByEmail(email);
         SecureTokenEntity tokenEntity = createSecureToken(user);
 
-        String endpointUrl = "http://localhost:8080/password/change";
-        return endpointUrl + "/" + tokenEntity.getToken();
+        String baseURL = "http://localhost:8080";
+
+        String url = UriComponentsBuilder.fromHttpUrl(baseURL)
+                .path("/password/change").queryParam("token", tokenEntity.getToken()).toUriString();
+
+        return url;
     }
 }

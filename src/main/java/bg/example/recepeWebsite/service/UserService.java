@@ -3,12 +3,15 @@ package bg.example.recepeWebsite.service;
 import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
+import bg.example.recepeWebsite.model.entity.SecureTokenEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
 import bg.example.recepeWebsite.model.entity.enums.RoleNameEnum;
 import bg.example.recepeWebsite.model.view.UserView;
 import bg.example.recepeWebsite.repository.RecipeRepository;
 import bg.example.recepeWebsite.repository.RoleRepository;
+import bg.example.recepeWebsite.repository.SecureTokenRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
+import bg.example.recepeWebsite.web.exception.InvalidTokenException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,12 +19,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +39,9 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final EmailService emailService;
     private final RecipeRepository recipeRepository;
+    private final SecureTokenRepository secureTokenRepository;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService, EmailService emailService, RecipeRepository recipeRepository) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService, EmailService emailService, RecipeRepository recipeRepository, SecureTokenRepository secureTokenRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -43,6 +49,7 @@ public class UserService {
         this.userDetailsService = userDetailsService;
         this.emailService = emailService;
         this.recipeRepository = recipeRepository;
+        this.secureTokenRepository = secureTokenRepository;
     }
 
     private void login(UserEntity userEntity) {
@@ -137,5 +144,20 @@ public class UserService {
     public UserEntity findByEmail(String email) {
         return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new ObjectNotFoundException("User with email " + email + "not found!"));
+    }
+
+    public void updatePassword(String password, String token) {
+        Optional<SecureTokenEntity> tokenOpt = secureTokenRepository.findByToken(token);
+
+        if (tokenOpt.isEmpty() || tokenOpt.get().isExpired() || tokenOpt.get().getUser() == null) {
+            throw new InvalidTokenException("Token is invalid.");
+        }
+
+        SecureTokenEntity secureToken = tokenOpt.get();
+        UserEntity user = secureToken.getUser();
+
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        secureTokenRepository.delete(secureToken);
     }
 }
