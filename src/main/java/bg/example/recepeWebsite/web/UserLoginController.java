@@ -29,7 +29,7 @@ public class UserLoginController {
             RedirectAttributes redirectAttributes
     ) {
         redirectAttributes.addFlashAttribute("username", username);
-        redirectAttributes.addFlashAttribute("bad_credentials", true);
+        redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password.");
 
         return "redirect:/users/login";
     }
