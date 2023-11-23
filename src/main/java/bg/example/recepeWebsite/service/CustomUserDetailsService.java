@@ -48,7 +48,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                         .getRoles()
                         .stream()
                         .map(this::map)
-                        .toList());
+                        .toList(),
+                userEntity.isAccountVerified());
     }
 
     private GrantedAuthority map(RoleEntity userRole) {
