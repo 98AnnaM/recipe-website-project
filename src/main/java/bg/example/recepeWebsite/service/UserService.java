@@ -1,5 +1,6 @@
 package bg.example.recepeWebsite.service;
 
+import bg.example.recepeWebsite.model.email.AccountVerificationEmailContext;
 import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
@@ -14,12 +15,7 @@ import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.web.exception.InvalidTokenException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,38 +32,23 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final UserDetailsService userDetailsService;
     private final EmailService emailService;
     private final RecipeRepository recipeRepository;
     private final SecureTokenRepository secureTokenRepository;
+    private final SecureTokenService secureTokenService;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService, EmailService emailService, RecipeRepository recipeRepository, SecureTokenRepository secureTokenRepository) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, EmailService emailService, RecipeRepository recipeRepository, SecureTokenRepository secureTokenRepository, SecureTokenService secureTokenService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
-        this.userDetailsService = userDetailsService;
         this.emailService = emailService;
         this.recipeRepository = recipeRepository;
         this.secureTokenRepository = secureTokenRepository;
+        this.secureTokenService = secureTokenService;
     }
 
-    private void login(UserEntity userEntity) {
-        UserDetails userDetails = userDetailsService
-                .loadUserByUsername(userEntity.getUsername());
-
-        Authentication auth = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                userDetails.getPassword(),
-                userDetails.getAuthorities());
-
-        SecurityContextHolder
-                .getContext()
-                .setAuthentication(auth);
-
-    }
-
-    public void registerAndLogin(UserRegisterDto userRegisterDto, Locale preferedLocale) {
+    public void register(UserRegisterDto userRegisterDto, Locale preferedLocale) {
         UserEntity newUser = modelMapper.map(userRegisterDto, UserEntity.class);
         newUser.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
 
@@ -76,12 +57,17 @@ public class UserService {
                 .filter(r -> r.getRole() == (RoleNameEnum.USER))
                 .collect(Collectors.toList()));
 
-        userRepository.save(newUser);
-        this.userRepository.save(newUser);
-        login(newUser);
-        emailService.sendRegistrationEmail(newUser.getEmail(),
-                newUser.getFirstName() + " " + newUser.getLastName(),
-                preferedLocale);
+        newUser.setAccountVerified(false);
+        newUser = this.userRepository.save(newUser);
+
+        AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
+        SecureTokenEntity token = this.secureTokenService.createSecureToken(newUser);
+
+        emailContext.setToken(token.getToken());
+        emailContext.setLocale(preferedLocale);
+        emailContext.initContext(newUser);
+
+        emailService.sendEmail(emailContext);
     }
 
     public UserView findById(Long id) {
@@ -146,7 +132,7 @@ public class UserService {
                 .orElseThrow(() -> new ObjectNotFoundException("User with email " + email + "not found!"));
     }
 
-    public void updatePassword(String password, String token) {
+    public void verifyAccount(String token) {
         Optional<SecureTokenEntity> tokenOpt = secureTokenRepository.findByToken(token);
 
         if (tokenOpt.isEmpty() || tokenOpt.get().isExpired() || tokenOpt.get().getUser() == null) {
@@ -156,7 +142,7 @@ public class UserService {
         SecureTokenEntity secureToken = tokenOpt.get();
         UserEntity user = secureToken.getUser();
 
-        user.setPassword(passwordEncoder.encode(password));
+        user.setAccountVerified(true);
         userRepository.save(user);
         secureTokenRepository.delete(secureToken);
     }

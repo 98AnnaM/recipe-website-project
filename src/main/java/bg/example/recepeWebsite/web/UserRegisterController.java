@@ -3,11 +3,9 @@ package bg.example.recepeWebsite.web;
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
 import bg.example.recepeWebsite.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,7 +49,31 @@ public class UserRegisterController {
             return "redirect:/users/register";
         }
 
-        userService.registerAndLogin(userRegisterDto, localeResolver.resolveLocale(request));
-        return "redirect:/";
+        userService.register(userRegisterDto, localeResolver.resolveLocale(request));
+        return "need-for-verification";
     }
+
+    @GetMapping("/register/verify")
+    public String verifyAccount(@RequestParam(required = false) String token, Model model,
+                                RedirectAttributes redirectAttributes) {
+
+        if (token == null) {
+            model.addAttribute("message", "Token is empty. Please make sure to copy the entire URL");
+            return "message";
+        }
+
+         userService.verifyAccount(token);
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Your account was successfully verified. You can now login.");
+        return "redirect:/users/login";
+    }
+
+//    @GetMapping("/sendNewVerificationMail")
+//    public String sendNewVerificationEmail(@RequestParam("userRegisterDto") UserRegisterDto userRegisterDto,
+//                                           HttpServletRequest request){
+//        userService.sendVerificationEmail(userRegisterDto.getEmail(),
+//                userRegisterDto.getFirstName() + " " + userRegisterDto.getLastName(),
+//                           localeResolver.resolveLocale(request));
+//        return "need-for-verification";
+//    }
 }

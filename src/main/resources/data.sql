@@ -13,10 +13,10 @@ INSERT INTO roles(id, role) VALUES (1, "USER"),
                                    (3, "ADMIN");
 
 
-INSERT INTO users(id, email, first_name, last_name, password, username) VALUES
-                                                                            (1, "pesho@gmail.com", "Peter", "Petrov", "f0e98959a250b665387e5aa6fa3a3e809105d3e58fde44b43595226285a22e0ce2984efe2fe1b16a", "pesho94"),
-                                                                            (2, "user@example.com", "User", "Userov", "f0e98959a250b665387e5aa6fa3a3e809105d3e58fde44b43595226285a22e0ce2984efe2fe1b16a", "user"),
-                                                                            (3, "admin@example.com", "Admin", "Adminov", "f0e98959a250b665387e5aa6fa3a3e809105d3e58fde44b43595226285a22e0ce2984efe2fe1b16a", "admin");
+INSERT INTO users(id, email, first_name, last_name, password, username, account_verified) VALUES
+                                                                            (1, "pesho@gmail.com", "Peter", "Petrov", "f0e98959a250b665387e5aa6fa3a3e809105d3e58fde44b43595226285a22e0ce2984efe2fe1b16a", "pesho94", true),
+                                                                            (2, "user@example.com", "User", "Userov", "f0e98959a250b665387e5aa6fa3a3e809105d3e58fde44b43595226285a22e0ce2984efe2fe1b16a", "user", true),
+                                                                            (3, "admin@example.com", "Admin", "Adminov", "f0e98959a250b665387e5aa6fa3a3e809105d3e58fde44b43595226285a22e0ce2984efe2fe1b16a", "admin", true);
 
 
 INSERT INTO users_roles(user_entity_id, roles_id) VALUES

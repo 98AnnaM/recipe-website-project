@@ -16,6 +16,6 @@ public class InvalidTokenAdvice {
 
         ex.printStackTrace();
         model.addAttribute("message", ex.getMessage());
-        return "reset-password-message";
+        return "message";
     }
 }

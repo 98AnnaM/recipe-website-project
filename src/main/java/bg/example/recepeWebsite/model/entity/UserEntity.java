@@ -21,6 +21,8 @@ public class UserEntity extends BaseEntity {
     private List<RoleEntity> roles;
     @OneToMany(mappedBy = "author")
     private List<RecipeEntity> addedRecipes;
+    @Column
+    private boolean accountVerified;
 
     @ManyToMany()
     @JoinTable(
@@ -110,6 +112,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setRoles(List<RoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public boolean isAccountVerified() {
+        return accountVerified;
+    }
+
+    public UserEntity setAccountVerified(boolean accountVerified) {
+        this.accountVerified = accountVerified;
         return this;
     }
 }
