@@ -28,8 +28,15 @@ public class UserLoginController {
             @ModelAttribute("username") String username,
             RedirectAttributes redirectAttributes
     ) {
+
+        if (userService.notVerifiedProfile(username)){
+            redirectAttributes.addFlashAttribute("not_verified", true);
+            redirectAttributes.addFlashAttribute("username", username);
+            return "redirect:/users/login";
+        }
+
         redirectAttributes.addFlashAttribute("username", username);
-        redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password.");
+        redirectAttributes.addFlashAttribute("bad_credentials", true);
 
         return "redirect:/users/login";
     }

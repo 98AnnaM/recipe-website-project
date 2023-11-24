@@ -8,8 +8,10 @@
 
 <h1 th:text="#{reset_password_subject}">Password reset</h1>
 <th:block th:text="#{registration_dear_user(${fullName})}">Dear Anna Mileva,</th:block>
-<p th:text="#{reset_action}">
-  Please click on the link below to reset your password:
+<p>
+  <span th:text="#{reset_username}">Your username is: </span>
+  <strong th:text="${username}"></strong>
+  <span th:text="#{reset_action}">. Please click on the link below to reset your password:</span>
 </p>
 <br>
 <a th:href="${verificationURL}" th:text="#{password_change}">Link Text</a>

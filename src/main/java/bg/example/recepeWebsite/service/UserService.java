@@ -146,4 +146,9 @@ public class UserService {
         userRepository.save(user);
         secureTokenRepository.delete(secureToken);
     }
+
+    public boolean notVerifiedProfile(String username) {
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
+        return user != null && !user.isAccountVerified();
+    }
 }

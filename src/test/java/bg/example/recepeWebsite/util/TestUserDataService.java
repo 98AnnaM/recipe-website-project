@@ -17,6 +17,6 @@ public class TestUserDataService implements UserDetailsService {
                 username,
                 "User Userov",
                 "12345",
-                Collections.emptyList(), enabled);
+                Collections.emptyList(), true);
     }
 }

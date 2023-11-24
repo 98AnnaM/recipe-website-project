@@ -29,6 +29,7 @@ public class ForgotPasswordEmailContext extends AbstractEmailContext {
 
         setFrom(BEST_COOK_EMAIL);
         setTo(user.getEmail());
+        put("username", user.getUsername());
         put("fullName", user.getFirstName() + " " + user.getLastName());
         put("verificationURL", buildVerificationUrl());
         setSubject(RESET_SUBJECT);
