@@ -50,7 +50,8 @@ public class UserRegisterController {
         }
 
         userService.register(userRegisterDto, localeResolver.resolveLocale(request));
-        return "need-for-verification";
+        redirectAttributes.addAttribute("username", userRegisterDto.getUsername());
+        return "redirect:/users/register/sendNewVerificationMail";
     }
 
     @GetMapping("/register/verify")
@@ -68,13 +69,14 @@ public class UserRegisterController {
         return "redirect:/users/login";
     }
 
-    @GetMapping ("/register/sendNewVerificationMail")
+    @GetMapping("/register/sendNewVerificationMail")
     public String sendNewVerificationEmail(@RequestParam("username") String username,
-                                           HttpServletRequest request){
+                                           HttpServletRequest request,
+                                           Model model) {
 
         userService.sendVerificationMail(userService.findByUsername(username), localeResolver.resolveLocale(request));
+        model.addAttribute("username", username);
+
         return "need-for-verification";
     }
-
-
 }
