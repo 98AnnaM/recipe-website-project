@@ -58,8 +58,10 @@ public class UserService {
                 .collect(Collectors.toList()));
 
         newUser.setAccountVerified(false);
-        newUser = this.userRepository.save(newUser);
+        sendVerificationMail(this.userRepository.save(newUser), preferedLocale);
+    }
 
+    public void sendVerificationMail(UserEntity newUser, Locale preferedLocale){
         AccountVerificationEmailContext emailContext = new AccountVerificationEmailContext();
         SecureTokenEntity token = this.secureTokenService.createSecureToken(newUser);
 
@@ -150,5 +152,10 @@ public class UserService {
     public boolean notVerifiedProfile(String username) {
         UserEntity user = userRepository.findByUsername(username).orElse(null);
         return user != null && !user.isAccountVerified();
+    }
+
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ObjectNotFoundException("User with username " + username + "not found!"));
     }
 }

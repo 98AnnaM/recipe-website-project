@@ -20,17 +20,10 @@
 
 
 
-<!--                    <div class="row">-->
-<!--                        <div class="col col-md-4 my-3">-->
-<!--                            <div class="button-holder d-flex">-->
-<!--                                <form th:action="@{/users/sendNewVerificationMail}"-->
-<!--                                      method="post">-->
-<!--                                    <input type="hidden" th:name="userRegisterDto" th:value="${userRegisterDto}"/>-->
-<!--                                    <button type="submit" class="btn btn-info btn-md">Send New Mail</button>-->
-<!--                                </form>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="row">
+                        <a th:href="@{/users/register/sendNewVerificationMail(username=${userRegisterDto.username})}"
+                           class="mb-0">Click here and a new mail with verification link will be sent to you.</a>
+                    </div>
                 </div>
             </form>
 
