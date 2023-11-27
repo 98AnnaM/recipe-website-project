@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 public class PictureEntity extends BaseEntity {
 
     @Column(nullable = false)
-    @Lob
     private String url;
     @ManyToOne(optional = false)
     private UserEntity author;
