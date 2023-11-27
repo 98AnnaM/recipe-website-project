@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jakarta.mail.MessagingException;
+import javax.mail.MessagingException;
 import java.util.Locale;
 import java.util.Optional;
 

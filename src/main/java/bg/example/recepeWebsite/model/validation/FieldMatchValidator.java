@@ -3,8 +3,8 @@ package bg.example.recepeWebsite.model.validation;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object> {
 

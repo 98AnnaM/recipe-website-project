@@ -1,7 +1,7 @@
 package bg.example.recepeWebsite.model.dto.forgotten_password;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 public class ResetPasswordEmailDTO {
     @NotEmpty(message = "User email should be provided.")

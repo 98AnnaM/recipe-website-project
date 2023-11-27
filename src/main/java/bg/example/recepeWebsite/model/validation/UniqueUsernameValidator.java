@@ -2,8 +2,8 @@ package bg.example.recepeWebsite.model.validation;
 
 import bg.example.recepeWebsite.repository.UserRepository;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
