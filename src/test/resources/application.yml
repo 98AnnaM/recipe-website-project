@@ -17,3 +17,8 @@ mail:
   port: 1025
   username: "bestcook@bestcook.com"
   password: ""
+
+
+site:
+  base:
+    url: http://localhost:8080

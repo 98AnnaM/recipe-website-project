@@ -1,21 +1,24 @@
 package bg.example.recepeWebsite.model.email;
 
 import bg.example.recepeWebsite.model.entity.UserEntity;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Locale;
 
 public class AccountVerificationEmailContext extends AbstractEmailContext {
     private static final String BEST_COOK_EMAIL = "no-reply@bestCook.com";
     private static final String VERIFICATION_SUBJECT = "registration_subject";
     private static final String TEMPLATE_LOCATION = "email/validation";
-    private static final String BASE_URL = "http://localhost:8080";
+
+    private String baseUrl;
 
     private String token;
 
     public AccountVerificationEmailContext setToken(String token) {
         this.token = token;
+        return this;
+    }
+
+    public AccountVerificationEmailContext setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
         return this;
     }
 
@@ -34,8 +37,8 @@ public class AccountVerificationEmailContext extends AbstractEmailContext {
         setTemplateLocation(TEMPLATE_LOCATION);
     }
 
-    public String buildVerificationUrl() {
-        return UriComponentsBuilder.fromHttpUrl(BASE_URL)
+    private String buildVerificationUrl() {
+        return UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .path("/users/register/verify").queryParam("token", token).toUriString();
     }
 }

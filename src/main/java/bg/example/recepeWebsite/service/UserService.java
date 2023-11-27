@@ -1,8 +1,8 @@
 package bg.example.recepeWebsite.service;
 
-import bg.example.recepeWebsite.model.email.AccountVerificationEmailContext;
 import bg.example.recepeWebsite.model.dto.UserEditDto;
 import bg.example.recepeWebsite.model.dto.UserRegisterDto;
+import bg.example.recepeWebsite.model.email.AccountVerificationEmailContext;
 import bg.example.recepeWebsite.model.entity.RecipeEntity;
 import bg.example.recepeWebsite.model.entity.SecureTokenEntity;
 import bg.example.recepeWebsite.model.entity.UserEntity;
@@ -15,7 +15,7 @@ import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.web.exception.InvalidTokenException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +36,8 @@ public class UserService {
     private final RecipeRepository recipeRepository;
     private final SecureTokenRepository secureTokenRepository;
     private final SecureTokenService secureTokenService;
+    @Value("${site.base.url}")
+    private String baseURL;
 
     public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, EmailService emailService, RecipeRepository recipeRepository, SecureTokenRepository secureTokenRepository, SecureTokenService secureTokenService) {
         this.userRepository = userRepository;
@@ -67,6 +69,7 @@ public class UserService {
 
         emailContext.setToken(token.getToken());
         emailContext.setLocale(preferedLocale);
+        emailContext.setBaseUrl(baseURL);
         emailContext.initContext(newUser);
 
         emailService.sendEmail(emailContext);

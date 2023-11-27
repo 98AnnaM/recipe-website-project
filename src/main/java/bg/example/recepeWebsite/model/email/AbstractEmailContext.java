@@ -1,11 +1,10 @@
 package bg.example.recepeWebsite.model.email;
 
+import org.thymeleaf.context.Context;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import bg.example.recepeWebsite.model.entity.UserEntity;
-import org.thymeleaf.context.Context;
 
 /**
  * All email related information will be passed through this instance.

@@ -2,21 +2,24 @@ package bg.example.recepeWebsite.model.email;
 
 
 import bg.example.recepeWebsite.model.entity.UserEntity;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Locale;
 
 public class ForgotPasswordEmailContext extends AbstractEmailContext {
     private static final String BEST_COOK_EMAIL = "no-reply@bestCook.com";
     private static final String RESET_SUBJECT = "reset_password_subject";
     private static final String TEMPLATE_LOCATION = "email/reset";
-    private static final String BASE_URL = "http://localhost:8080";
+
+    private String baseUrl;
 
     private String token;
 
     public ForgotPasswordEmailContext setToken(String token) {
         this.token = token;
+        return this;
+    }
+
+    public ForgotPasswordEmailContext setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
         return this;
     }
 
@@ -36,8 +39,8 @@ public class ForgotPasswordEmailContext extends AbstractEmailContext {
         setTemplateLocation(TEMPLATE_LOCATION);
     }
 
-    public String buildVerificationUrl() {
-        return UriComponentsBuilder.fromHttpUrl(BASE_URL)
+    private String buildVerificationUrl() {
+        return UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .path("/password/change").queryParam("token", token).toUriString();
     }
 }

@@ -7,11 +7,9 @@ import bg.example.recepeWebsite.web.exception.InvalidTokenException;
 import bg.example.recepeWebsite.repository.SecureTokenRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -23,6 +21,8 @@ public class ForgottenPasswordService {
     private final EmailService emailService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Value("${site.base.url}")
+    private String baseURL;
 
     public ForgottenPasswordService(UserService userService, SecureTokenService secureTokenService, SecureTokenRepository secureTokenRepository, EmailService emailService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userService = userService;
@@ -40,6 +40,7 @@ public class ForgottenPasswordService {
         ForgotPasswordEmailContext emailContext = new ForgotPasswordEmailContext();
         emailContext.setLocale(locale);
         emailContext.setToken(secureToken.getToken());
+        emailContext.setBaseUrl(baseURL);
         emailContext.initContext(user);
         emailService.sendEmail(emailContext);
     }
