@@ -72,7 +72,13 @@ public class UserRegisterController {
     @GetMapping("/register/sendNewVerificationMail")
     public String sendNewVerificationEmail(@RequestParam("username") String username,
                                            HttpServletRequest request,
-                                           Model model) {
+                                           Model model, RedirectAttributes redirectAttributes) {
+
+        if (userService.findByUsername(username).isAccountVerified()){
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "This account is verified. You can login.");
+            return "redirect:/users/login";
+        }
 
         userService.sendVerificationMail(userService.findByUsername(username), localeResolver.resolveLocale(request));
         model.addAttribute("username", username);
