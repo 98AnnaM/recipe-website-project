@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 public class SecureTokenService {
 
     private static final BytesKeyGenerator DEFAULT_TOKEN_GENERATOR = KeyGenerators.secureRandom(15);
-    private static final Charset US_ASCII = StandardCharsets.US_ASCII;
 
     private final SecureTokenRepository secureTokenRepository;
 
@@ -26,7 +25,7 @@ public class SecureTokenService {
     }
 
     public SecureTokenEntity createSecureToken(UserEntity user) {
-        String tokenValue = new String(Base64.encodeBase64URLSafe(DEFAULT_TOKEN_GENERATOR.generateKey()), US_ASCII);
+        String tokenValue = new String(Base64.encodeBase64URLSafeString(DEFAULT_TOKEN_GENERATOR.generateKey()));
         SecureTokenEntity secureTokenEntity = new SecureTokenEntity();
         secureTokenEntity.setToken(tokenValue);
         secureTokenEntity.setExpireAt(LocalDateTime.now().plusMinutes(30));

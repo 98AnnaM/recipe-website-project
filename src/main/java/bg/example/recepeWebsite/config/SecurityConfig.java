@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,7 +25,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new Pbkdf2PasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -36,12 +37,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/recipes/**").permitAll()
-                .antMatchers("/api/**", "/maintenance/**").permitAll()
-                .antMatchers("/users/register/**", "/users/login", "/password/**").anonymous()
-                .antMatchers("/users/profile", "/recipes/add", "/users/profile/**").authenticated()
-                .antMatchers("/statistics").hasRole(RoleNameEnum.ADMIN.name())
+                .requestMatchers("/", "/recipes/**", "/api/**", "/maintenance/**").permitAll()
+                .requestMatchers("/users/register/**", "/users/login", "/password/**").anonymous()
+                .requestMatchers("/users/profile", "/recipes/add", "/users/profile/**").authenticated()
+                .requestMatchers("/statistics").hasRole(RoleNameEnum.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()

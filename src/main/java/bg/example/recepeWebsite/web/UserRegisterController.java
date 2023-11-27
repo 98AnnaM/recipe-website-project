@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
@@ -72,7 +72,13 @@ public class UserRegisterController {
     @GetMapping("/register/sendNewVerificationMail")
     public String sendNewVerificationEmail(@RequestParam("username") String username,
                                            HttpServletRequest request,
-                                           Model model) {
+                                           Model model, RedirectAttributes redirectAttributes) {
+
+        if (userService.findByUsername(username).isAccountVerified()){
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "This account is verified. You can login.");
+            return "redirect:/users/login";
+        }
 
         userService.sendVerificationMail(userService.findByUsername(username), localeResolver.resolveLocale(request));
         model.addAttribute("username", username);
