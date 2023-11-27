@@ -2,7 +2,7 @@ package bg.example.recepeWebsite.model.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 

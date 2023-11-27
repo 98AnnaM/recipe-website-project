@@ -1,14 +1,13 @@
 package bg.example.recepeWebsite.model.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
 public class CommentEntity extends BaseEntity {
 
-    @Column(nullable = false)
-    @Lob
+    @Column(nullable = false, length = 3000)
     private String textContent;
     @Column(name = "created", nullable = false)
     private LocalDateTime created;

@@ -4,8 +4,8 @@ import bg.example.recepeWebsite.model.entity.enums.CategoryNameEnum;
 import bg.example.recepeWebsite.model.entity.enums.LevelEnum;
 import bg.example.recepeWebsite.model.entity.enums.TypeNameEnum;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 

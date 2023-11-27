@@ -2,8 +2,8 @@ package bg.example.recepeWebsite.model.dto.forgotten_password;
 
 import bg.example.recepeWebsite.model.validation.FieldMatch;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @FieldMatch(
         first = "password",
