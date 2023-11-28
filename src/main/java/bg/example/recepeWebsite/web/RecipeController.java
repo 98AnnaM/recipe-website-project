@@ -195,7 +195,7 @@ public class RecipeController {
                               @Valid SearchRecipeDto searchRecipeDto,
                               BindingResult bindingResult,
                               Model model,
-                              @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
+                              @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("searchRecipeDto", searchRecipeDto);

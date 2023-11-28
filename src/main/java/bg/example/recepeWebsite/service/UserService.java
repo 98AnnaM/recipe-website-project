@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -160,5 +162,13 @@ public class UserService {
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException("User with username " + username + "not found!"));
+    }
+
+    public void cleanUpNotVerifiedUsers(){
+        List<UserEntity> usersToDelete = userRepository
+                .findAllByAccountVerifiedEqualsAndCreatedOnBefore(false,
+                        Timestamp.valueOf(LocalDateTime.now().minusMinutes(25)));
+
+        userRepository.deleteAll(usersToDelete);
     }
 }

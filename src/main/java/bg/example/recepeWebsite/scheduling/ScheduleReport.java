@@ -4,11 +4,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ScheduleTasks {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScheduleTasks.class);
+public class ScheduleReport {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScheduleReport.class);
     private final ReportService reportService;
 
-    public ScheduleTasks(ReportService reportService) {
+    public ScheduleReport(ReportService reportService) {
         this.reportService = reportService;
     }
 

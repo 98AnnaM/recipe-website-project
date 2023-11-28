@@ -1,6 +1,9 @@
 package bg.example.recepeWebsite.model.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -23,6 +26,9 @@ public class UserEntity extends BaseEntity {
     private List<RecipeEntity> addedRecipes;
     @Column
     private boolean accountVerified;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdOn;
 
     @ManyToMany()
     @JoinTable(
@@ -121,6 +127,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setAccountVerified(boolean accountVerified) {
         this.accountVerified = accountVerified;
+        return this;
+    }
+
+    public Timestamp getCreatedOn() {
+        return createdOn;
+    }
+
+    public UserEntity setCreatedOn(Timestamp createdOn) {
+        this.createdOn = createdOn;
         return this;
     }
 }
