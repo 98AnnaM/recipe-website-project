@@ -17,7 +17,7 @@ spring:
         enabled: true
   sql:
     init:
-      mode: always
+      mode: never
   jpa:
     # Choose either MySQL 8 or MySQL 5 below
     # For MySQL 8
@@ -25,7 +25,7 @@ spring:
     #For MySQL 5
     #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: false
     properties:
       hibernate:
@@ -44,5 +44,5 @@ mail:
   password: "btngewuzegmbptou"
 
 site:
-  base:
-    url: http://localhost:8080
+    base:
+      url: http://localhost:8080

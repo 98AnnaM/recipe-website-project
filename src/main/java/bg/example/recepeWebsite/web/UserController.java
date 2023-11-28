@@ -88,7 +88,7 @@ public class UserController {
     @GetMapping("/{id}/addedRecipes")
     public String addedRecipes(@PathVariable Long id,
                                Model model,
-                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
+                               @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
 
         Page<RecipeViewModel> recipes = recipeService.findAllRecipesUploadedByUserId(id, pageable);
         model.addAttribute("recipes", recipes);
@@ -103,7 +103,7 @@ public class UserController {
     @GetMapping("/{id}/favoriteRecipes")
     public String favoriteRecipes(@PathVariable Long id,
                                   Model model,
-                                  @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 12) Pageable pageable) {
+                                  @PageableDefault(sort = "name", direction = Sort.Direction.ASC, page = 0, size = 1) Pageable pageable) {
 
         Page<RecipeViewModel> recipes = recipeService.findAllFavoriteRecipesForUserId(id, pageable);
         model.addAttribute("recipes", recipes);
@@ -118,7 +118,7 @@ public class UserController {
     @GetMapping("/{id}/addedPictures")
     public String addedPictures(@PathVariable Long id,
                                 Model model,
-                                @PageableDefault(page = 0, size = 12) Pageable pageable) {
+                                @PageableDefault(page = 0, size = 1) Pageable pageable) {
 
         String principalUserName = userService.findById(id).getUsername();
         Page<PictureViewModel> pictures = pictureService.findAllPictureViewModelsByUsername(principalUserName, pageable);
