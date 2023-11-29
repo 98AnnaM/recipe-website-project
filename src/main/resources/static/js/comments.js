@@ -98,7 +98,7 @@ function deleteComment(commentId){
 
 
 function asComment(comment) {
-    let commentHtml = `<div id="commentCntr-${comment.commentId}" style="border-bottom: dimgrey 2px solid">`
+    let commentHtml = `<div id="commentCntr-${comment.commentId}" class="comment">`
 
     commentHtml += `<h4 style="text-decoration: underline;">${comment.user}</h4>`
     commentHtml += `<p class="font-italic">${comment.message}</p>`
