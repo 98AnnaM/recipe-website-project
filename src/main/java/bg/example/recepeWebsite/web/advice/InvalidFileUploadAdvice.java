@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 
 @ControllerAdvice
 public class InvalidFileUploadAdvice {

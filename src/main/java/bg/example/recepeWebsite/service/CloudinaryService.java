@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -31,9 +32,10 @@ public class CloudinaryService {
                     .uploader()
                     .upload(tempFile, Map.of());
 
-
-            String url = uploadResult.getOrDefault(URL, "https://i.pinimg.com/originals/c5/21/64/c52164749f7460c1ededf8992cd9a6ec.jpg");
+            String url = cloudinary.url().secure(true).generate(uploadResult.getOrDefault(PUBLIC_ID, ""));
             String publicId = uploadResult.getOrDefault(PUBLIC_ID, "");
+
+
 
             return new CloudinaryImage().setUrl(url).setPublicId(publicId);
         } finally {
