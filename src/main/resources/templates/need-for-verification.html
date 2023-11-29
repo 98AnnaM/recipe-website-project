@@ -10,27 +10,26 @@
 <div class="container-fluid mb-5">
     <div class="row mx-0 mx-lg-3">
         <div class="register-image col-lg-6 col-sm-12 p-0 d-flex align-items-center justify-content-center">
-            <img src="/images/register.jpg" alt="register-img" class="w-100" />
+            <img src="/images/register.jpg" alt="register-img" class="w-100"/>
         </div>
-        <div class="main-form col-sm-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
+        <div class="main-form col-sm-12 col-lg-6 d-flex flex-column align-items-center justify-content-center p-5">
 
 
-            <h2 class="text-center text-white mt-4 mb-0">Welcome to BestCook!</h2>
-            <p class="text-center text-white mt-0 mb-4">In order to complete your registration, please go to your email to verify your account!</p>
+            <h3 class="text-center text-white mt-4 mb-0">Welcome to BestCook!</h3>
+            <p class="text-center text-white mt-0 mb-4">In order to complete your registration, please go to your email
+                to verify your account!</p>
 
 
-
-                    <div class="row">
-                        <a th:href="@{/users/register/sendNewVerificationMail(username=${username})}"
-                           class="mb-0">Click here and a new mail with a verification link will be sent to you.</a>
-                    </div>
-                </div>
-            </form>
+                <a th:href="@{/users/register/sendNewVerificationMail(username=${username})}"
+                   class="text-center mb-0">Click here and a new mail with a verification link will be sent to you.</a>
 
         </div>
+
 
     </div>
+
 </div>
+
 
 <div class="mt-5">
     <footer th:replace="~{fragments/commons::footer}"></footer>

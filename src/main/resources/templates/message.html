@@ -4,30 +4,27 @@
 
 <body>
 <div>
-  <nav th:replace="~{fragments/commons::navigation}"></nav>
+    <nav th:replace="~{fragments/commons::navigation}"></nav>
 </div>
 
 <div class="container-fluid mb-5">
-  <div class="row mx-0 mx-lg-3">
-    <div class="register-image col-lg-6 col-sm-12 p-0 d-flex align-items-center justify-content-center">
-      <img src="/images/register.jpg" alt="register-img" class="w-100" />
+    <div class="row mx-0 mx-lg-3">
+        <div class="register-image col-lg-6 col-sm-12 p-0 d-flex align-items-center justify-content-center">
+            <img src="/images/register.jpg" alt="register-img" class="w-100"/>
+        </div>
+        <div class="main-form col-sm-12 col-lg-6 d-flex flex-column align-items-center justify-content-center p-5"
+        >
+            <h4 class="text-center text-white my-2 mb-4"
+                th:text="${message}"></h4>
+
+
+        </div>
+
     </div>
-    <div
-            class="main-form col-sm-12 col-lg-6 d-flex flex-column align-items-center justify-content-center"
-    >
-      <h3 class="text-center text-white my-2 mb-4"
-          th:text="${message}"></h3>
-
-
-    </form>
-
-  </div>
-
-</div>
 </div>
 
 <div class="mt-5">
-  <footer th:replace="~{fragments/commons::footer}"></footer>
+    <footer th:replace="~{fragments/commons::footer}"></footer>
 </div>
 </body>
 </html>
