@@ -208,6 +208,10 @@ public class RecipeService {
                 .orElseThrow(() -> new ObjectNotFoundException("Recipe with ID " + recipeId + " not found!"));
 
         recipe.getPictures().forEach(picture -> pictureService.deletePicture(picture.getId()));
+        recipe.getFavoriteUsers().forEach(user -> {
+            user.getFavorites().remove(recipe);
+            userRepository.save(user);
+        });
         recipeRepository.deleteById(recipeId);
     }
 
