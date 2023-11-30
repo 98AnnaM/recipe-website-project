@@ -8,14 +8,11 @@ $(document).ready(function(){
             $('#mainPictureId').val(pictureId); // Use .val() to set the value
         }
 
-        var submitButton = $('#deleteImg');
+        var deleteButton = $('#deleteImg');
 
         console.log('pictureId:', pictureId);
 
-        submitButton.css('display', (pictureId !== null && pictureId !== undefined) ? 'block' : 'none');
-
-        // Enable or disable the submit button based on canNotDelete
-        submitButton.prop('disabled', canNotDelete);
+        deleteButton.css('display', canNotDelete ? 'none' : 'block');
     }
 
     function updateMainImageOnClick(element) {
