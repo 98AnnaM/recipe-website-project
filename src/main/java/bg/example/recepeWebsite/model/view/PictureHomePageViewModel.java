@@ -4,7 +4,7 @@ public class PictureHomePageViewModel {
 
     private String url;
     private Long recipeId;
-    String authorUsername;
+    String authorFullName;
 
     public String getUrl() {
         return url;
@@ -24,12 +24,12 @@ public class PictureHomePageViewModel {
         return this;
     }
 
-    public String getAuthorUsername() {
-        return authorUsername;
+    public String getAuthorFullName() {
+        return authorFullName;
     }
 
-    public PictureHomePageViewModel setAuthorUsername(String authorUsername) {
-        this.authorUsername = authorUsername;
+    public PictureHomePageViewModel setAuthorFullName(String authorFullName) {
+        this.authorFullName = authorFullName;
         return this;
     }
 }

@@ -12,7 +12,6 @@ import bg.example.recepeWebsite.repository.TypeRepository;
 import bg.example.recepeWebsite.repository.UserRepository;
 import bg.example.recepeWebsite.web.exception.InvalidFileException;
 import bg.example.recepeWebsite.web.exception.ObjectNotFoundException;
-import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -118,7 +117,7 @@ public class PictureService {
     public PictureHomePageViewModel mapToPictureHomePageViewModel(PictureEntity picture) {
         PictureHomePageViewModel pictureHomePageViewModel = modelMapper.map(picture, PictureHomePageViewModel.class);
         pictureHomePageViewModel.setRecipeId(picture.getRecipe().getId())
-                .setAuthorUsername(picture.getAuthor().getUsername());
+                .setAuthorFullName(picture.getAuthor().getFirstName() + " " + picture.getAuthor().getLastName());
         return pictureHomePageViewModel;
     }
 
