@@ -33,11 +33,11 @@ For authenticated users:
   `/recipes/details/{recipeId}/picture/delete?pictureId=`
 - Each user can add or remove a recipe from his list of favorite recipes (by recipe id, POST request to rest API):
   `/api/recipes/{id}/addOrRemoveFromFavorites`
-- View posted comments for a recipe (by recipe id, by GET request to rest API):
+- View posted comments for a recipe (wih path variable recipe id) by GET request to:
   `/api/{recipeId}/comments`
-- Post comments for a recipe (with paht variable recipeId) by POST request to:`/api/{recipeId}/comments`
-  (the request accepts request parameter a valid  CommentDto:)
-- Delete a comment (by recipe Id and commentId) allowed only for the owner of the comment and the admin:
+- Post comments for a recipe (with path variable recipeId) by POST request to:`/api/{recipeId}/comments`
+  (the request accepts request parameter a valid  CommentDto)
+- Delete a comment (by recipeId and commentId) allowed only for the owner of the comment and the admin:
   `/api/{recipeId}/comments/{commentId}`
 - View profile details allowed only for the owner of the profile (by userId): `"/users/profile/{id}`
 - Edit profile details allowed only for the owner of the profile (by userId): `/users/profile/{id}/editProfile`
@@ -45,6 +45,10 @@ For authenticated users:
 - List all pictures uploaded by a user, allowed only for the user (by userId): `/users/profile/{id}/addedPictures`
 - List users favotite recipes, allowed only for the user (by userId): `/users/profile/{id}/favoriteRecipes`
 - Delete a picture added by user, allowed only for the user (by userId and pictureId):
+  `/users/{id}/deletePicture?pictureId=`
+
+For admins:
+- View number of registered users, all uploaded recipes, number of vegan, vegetarian and with meat recipes:
   `/users/{id}/deletePicture?pictureId=`
 
 ## Live Demo
