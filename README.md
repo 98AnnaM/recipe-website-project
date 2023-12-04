@@ -48,7 +48,7 @@ For authenticated users:
   `/users/{id}/deletePicture?pictureId=`
 
 ## Live Demo
-- Web app live demo: https://contactbook.nakov.repl.co
+- Web app live demo: https://am-spring-app-recipe-website.azuremicroservices.io/
 
 ## App Details
 
