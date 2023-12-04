@@ -19,7 +19,7 @@ For not authenticated users:
   on the email given in the form: `/users/register`
 - Requesting a new mail with verification token in case the first one was deleted (by username). This
   request is allowed only for users with not verified profiles:
-  `/users/register/sendNewVerificationMail?username="`
+  `/users/register/sendNewVerificationMail?username=`
 - Reset forgotten password via secure token send on email: `/password/reset`
 - Login by username and password allowed only for verified profiles: `/users/login`
 
