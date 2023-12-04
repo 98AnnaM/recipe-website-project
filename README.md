@@ -11,7 +11,7 @@ For all users:
 - List recipes with meat: `/recipes/withMeat`
 - List vegetarian recipes: `/recipes/vegetarian`
 - List vegan recipes: `/recipes/vegan`
-- View single recipe details (by id): `/recipes/details/id`
+- View single recipe details (by id): `/recipes/details/{id}`
 - Search for recipes by different parameters (each parameter is optional): `/recipes/search`
 
 For not authenticated users:
@@ -25,47 +25,51 @@ For not authenticated users:
 
 For authenticated users:
 - Add recipe: `/recipes/add`
-- Update recipe (by id) allowed only for the owner of the recipe and the admin: `/recipes/edit/id`
-- Delete recipe (by id) allowed only for the owner of the recipe and the admin: `/recipes/delete/id`
-- Upload picture for a recipe (by recipe id) allowed for all authenticated users:
-  `/recipes/details/id/picture/add`
+- Update recipe (by id) allowed only for the owner of the recipe and the admin: `/recipes/edit/{id}`
+- Delete recipe (by id) allowed only for the owner of the recipe and the admin: `/recipes/delete/{id}`
+- Upload picture for a recipe (by recipe id) allowed for all authenticated users. Post request:
+  `/recipes/details/{id}/picture/add`
 - Delete picture (by recipe id and picture id) allowed for the owner of the picture and the admin:
-  `/recipes/details/recipeId/picture/delete?pictureId=`
-- Each user can add or remove a recipe from his list of favorite recipes (by recipe id, using rest API):
-  `/api/recipes/id/addOrRemoveFromFavorites`
+  `/recipes/details/{recipeId}/picture/delete?pictureId=`
+- Each user can add or remove a recipe from his list of favorite recipes (by recipe id, POST request to rest API):
+  `/api/recipes/{id}/addOrRemoveFromFavorites`
 - View posted comments for a recipe (by recipe id, by GET request to rest API):
-  `/api/recipeId/comments`
-- Post comments for a recipe (with paht variable recipeId) by POST request to:`/api/recipeId/comments`
+  `/api/{recipeId}/comments`
+- Post comments for a recipe (with paht variable recipeId) by POST request to:`/api/{recipeId}/comments`
   (the request accepts request parameter a valid  CommentDto:)
 - Delete a comment (by recipe Id and commentId) allowed only for the owner of the comment and the admin:
   `/api/{recipeId}/comments/{commentId}`
-- View profile details allowed only for the owner of the profile (by userId): `"/users/{id}"`
-- Edit profile details allowed only for the owner of the profile (by userId): `/users/{id}/editProfile`
-- List all recipes uploaded by a user, allowed only for the user (by userId): `/users/{id}/addedRecipes`
-- List all pictures uploaded by a user, allowed only for the user (by userId): `/users/{id}/addedPictures`
-- List users favotite recipes, allowed only for the user (by userId): `/users/{id}/favoriteRecipes`
+- View profile details allowed only for the owner of the profile (by userId): `"/users/profile/{id}`
+- Edit profile details allowed only for the owner of the profile (by userId): `/users/profile/{id}/editProfile`
+- List all recipes uploaded by a user, allowed only for the user (by userId): `/users/profile/{id}/addedRecipes`
+- List all pictures uploaded by a user, allowed only for the user (by userId): `/users/profile/{id}/addedPictures`
+- List users favotite recipes, allowed only for the user (by userId): `/users/profile/{id}/favoriteRecipes`
 - Delete a picture added by user, allowed only for the user (by userId and pictureId):
   `/users/{id}/deletePicture?pictureId=`
-
-
-
-
-## App Details
-
-The app is based on Java + js
-- It has MySQL database.
 
 ## Live Demo
 - Web app live demo: https://contactbook.nakov.repl.co
 
-## RESTful API
+## App Details
 
-The following endpoints are supported:
-- `GET /api` - list all API endpoints
-- `GET /api/contacts` - list all contacts
-- `GET /api/contact/:id` - returns a contact by given `id`
-- `GET /api/contacts/search/:keyword` - list all contacts matching given keyword
-- `POST /api/contacts` - create a new contact (post a JSON objects in the request body, e.g. `{"firstName":"Marie", "lastName":"Curie", "email":"marie67@gmail.com", "phone":"+1 800 200 300", "comments":"Old friend"}`
+- SpringBoot application
+- MySQL database
+- BootStrap Library
+- HTML
+- CSS
+- JS
+- Model Mapper
+- Maintenance interceptor - the recipe website should be closed due to maintenance every day between 11:30 and midnight.
+  The interceptor checks the current time and if it is maintenance time, redirects to the "/maintenance" endpoint.
+- Scheduler: 
+  - the application sends to the admins automatically generated message wirh the count of all registered users,
+    the counts of the vegan, vegetarian and meat recipes.
+  - the application changes the index page message and pictures every day at 11:00, 15:00, 17:00 and 00:00 oclock
+    showing three random lunch, dinner, afternoon desert and breakfast recipes.
+  - a scheduled task cleans up the database from expired tokens and users not verified profiles on every 30 mins.
+- Cloudinary - the application uses Cloudinary for image upload.
+- Exception handling - via @ControllerAdvice and @ExceptionHandler.
+
 
 ## Screenshots
 
