@@ -384,17 +384,17 @@ INSERT INTO recipes_types(recipe_entity_id, types_id) values (12, 1);
 
 INSERT INTO pictures(id, public_id, title, url, author_id, recipe_id) VALUES
                                                                           (1, "qxdwncydidkgbtbxxdge", "Torta-Rafaelo-IMG-9410.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974385/qxdwncydidkgbtbxxdge.jpg", 1, 1),
-                                                                          (2, "ascuodu7vbbpvbh9pnvw", "Бисквитена_торта", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699973987/ascuodu7vbbpvbh9pnvw.jpg", 1, 2),
-                                                                          (3, "pbypwfbpmzuem7xcj3l4", "batch_Бабин_кекс_с_бял_шоколад_IMG_2647.jfif", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974026/pbypwfbpmzuem7xcj3l4.jpg", 1, 3),
-                                                                          (4, "wfk1vuztxmvx70sjqhrk", "IMG-7603.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974369/wfk1vuztxmvx70sjqhrk.jpg", 1, 4),
-                                                                          (5, "cmaywl1uitsufju601ji", "IMG-5444.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974135/cmaywl1uitsufju601ji.jpg", 2, 5),
-                                                                          (6, "vcfubhf3xtqp0ngxjaex", "KFC_Пържено_пиле_IMG_1160.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974098/vcfubhf3xtqp0ngxjaex.jpg", 2, 6),
-                                                                          (7, "fuldqjk3ypzqjrutfgcf", "batch_Пържено_IMG_3948.jfif", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699973936/fuldqjk3ypzqjrutfgcf.jpg", 2, 7),
+                                                                          (2, "pvadaiduxqvpm3y1n8a0", "Бисквитена_торта", "https://res.cloudinary.com/dkcphgfnh/image/upload/pvadaiduxqvpm3y1n8a0", 1, 2),
+                                                                          (3, "wjjozyngtkfmxvt4fqur", "batch_Бабин_кекс_с_бял_шоколад_IMG_2647.jfif", "https://res.cloudinary.com/dkcphgfnh/image/upload/wjjozyngtkfmxvt4fqur", 1, 3),
+                                                                          (4, "onpgcoyyjhbmvtexgcs4", "IMG-7603.jpg", "https://res.cloudinary.com/dkcphgfnh/image/upload/onpgcoyyjhbmvtexgcs4", 1, 4),
+                                                                          (5, "j0kgk3mzegvsotee8zlw", "IMG-5444.jpg", "https://res.cloudinary.com/dkcphgfnh/image/upload/j0kgk3mzegvsotee8zlw", 2, 5),
+                                                                          (6, "synv0nyrn7vvprzom54c", "KFC_Пържено_пиле_IMG_1160.jpg", "https://res.cloudinary.com/dkcphgfnh/image/upload/synv0nyrn7vvprzom54c", 2, 6),
+                                                                          (7, "kxvhmpcjjenrnaq6pt06", "batch_Пържено_IMG_3948.jfif", "https://res.cloudinary.com/dkcphgfnh/image/upload/kxvhmpcjjenrnaq6pt06", 2, 7),
                                                                           (8, "qxqcae5zaeaar06b7vqe", "IMG-7087.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1700004104/qxqcae5zaeaar06b7vqe.jpg", 2, 8),
-                                                                          (9, "gsftmf38ylnyh8mqgpu5", "batch_IMG_0449.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974076/gsftmf38ylnyh8mqgpu5.jpg", 3, 9),
+                                                                          (9, "dbxjhq81dpe7tkixqumv", "batch_IMG_0449.jpg", "https://res.cloudinary.com/dkcphgfnh/image/upload/dbxjhq81dpe7tkixqumv", 3, 9),
                                                                           (10, "fxh2ad24cxfsyaq91xku", "batch_!Чийзбургер_P1018383.jfif", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974406/fxh2ad24cxfsyaq91xku.jpg", 3, 10),
-                                                                          (11, "tbwyytdl7saxokfzgejc", "batch_IMG_0551_00_08_38_04_Still008.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974337/tbwyytdl7saxokfzgejc.jpg", 3, 11),
-                                                                          (12, "cbcp04h3pkqp5r6kauw5", "Кашкавалки_IMG_9354.jpg", "http://res.cloudinary.com/dkcphgfnh/image/upload/v1699974008/cbcp04h3pkqp5r6kauw5.jpg", 3, 12);
+                                                                          (11, "igri73uzba0sq0oztt3h", "batch_IMG_0551_00_08_38_04_Still008.jpg", "https://res.cloudinary.com/dkcphgfnh/image/upload/igri73uzba0sq0oztt3h", 3, 11),
+                                                                          (12, "h5cls1iyjw729rfouzgy", "Кашкавалки_IMG_9354.jpg", "https://res.cloudinary.com/dkcphgfnh/image/upload/v1701221316/h5cls1iyjw729rfouzgy.jpg", 3, 12);
 
 
 
