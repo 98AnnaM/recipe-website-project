@@ -1,6 +1,8 @@
 # Recipe Website Java App
 
-![image](https://github.com/98AnnaM/recipe-website-project/assets/147516467/5860f6ac-2002-417a-8bcb-a9e1e426b8c2)
+
+![image](https://github.com/98AnnaM/recipe-website-project/assets/147516467/9465916c-ea9b-4905-bafc-905cdac20ab1)
+
 
 The application has the basic functionalities of a recipe website. It supports the following operations:
 
