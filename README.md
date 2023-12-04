@@ -74,6 +74,10 @@ For admins:
 - Cloudinary - the application uses Cloudinary for image upload.
 - Exception handling - via @ControllerAdvice and @ExceptionHandler.
 
+## Installation Instructions:
+Before running the application open the application.yml and:
+- Configure the environment variables for database, email and cloudinary account.
+- Make sure the sql init mode is set to always, so it will execute the data.sql file when you run the application.
 
 ## Screenshots
 
