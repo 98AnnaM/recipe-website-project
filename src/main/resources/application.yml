@@ -5,8 +5,8 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://localhost:3306/recipe?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: root
-    password: 960928
+    username: ${USERNAME}
+    password: ${PASSWORD}
   servlet:
     multipart:
       max-file-size: 10MB
@@ -33,15 +33,15 @@ spring:
     defer-datasource-initialization: true
 #Cloudinary Properties
 cloudinary:
-  api-key: 993835859763347
-  api-secret: 5n9D9b6XK_SdxIobbfHv_YP1rp0
+  api-key: ${CLAUDINARY_API_KEY}
+  api-secret: ${CLAUDINARY_API_SECRET}
   cloud-name: dkcphgfnh
 
 mail:
   host: smtp.gmail.com
   port: 587
   username: anna.mileva92@gmail.com
-  password: "btngewuzegmbptou"
+  password: ${EMAIL_PASSWORD}
 
 site:
     base:
