@@ -63,7 +63,7 @@ For authenticated users:
   The interceptor checks the current time and if it is maintenance time, redirects to the "/maintenance" endpoint.
 - Scheduler: 
   - the application sends to the admins automatically generated message wirh the count of all registered users,
-    the counts of the vegan, vegetarian and meat recipes.
+    the counts of the vegan, vegetarian and meat recipes every day at midnight.
   - the application changes the index page message and pictures every day at 11:00, 15:00, 17:00 and 00:00 oclock
     showing three random lunch, dinner, afternoon desert and breakfast recipes.
   - a scheduled task cleans up the database from expired tokens and users not verified profiles on every 30 mins.
