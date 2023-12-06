@@ -62,6 +62,8 @@ For admins:
 - HTML
 - CSS
 - JS
+- Thymeleaf
+- Mockito
 - Model Mapper
 - Maintenance interceptor - the recipe website should be closed due to maintenance every day between 11:30 and midnight.
   The interceptor checks the current time and if it is maintenance time, redirects to the "/maintenance" endpoint.
